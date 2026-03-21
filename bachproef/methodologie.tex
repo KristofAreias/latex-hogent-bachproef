@@ -69,19 +69,18 @@ Door vooraf duidelijke criteria te bepalen, konden modellen op een objectieve ma
 
 \section*{Fase 3: Selectie van modellen en datasets}
 
-In plaats van een brede long-list op te stellen, werd rechtstreeks overgegaan tot een gerichte selectie van modellen en datasets op basis van de bevindingen uit de literatuurstudie en de geformuleerde requirements.
+In plaats van eerst een brede lijst met mogelijke modellen op te stellen, werd meteen een gerichte selectie gemaakt op basis van de literatuurstudie en de opgestelde vereisten. Dit zorgt ervoor dat enkel relevante en haalbare opties worden meegenomen in het experiment.
 
-De selectiecriteria omvatten onder andere:
-
+De selectie gebeurde op basis van criteria zoals:
 \begin{itemize}
-    \item beschikbaarheid als open-source implementatie,
-    \item ondersteuning voor fine-tuning,
-    \item toepasbaarheid in dense retailomgevingen,
+\item beschikbaarheid als open-source implementatie, zodat de modellen reproduceerbaar en praktisch inzetbaar zijn,
+\item ondersteuning voor fine-tuning, om ze aan te passen aan de retailcontext,
+\item geschiktheid voor drukke retailomgevingen met veel producten in één beeld.
 \end{itemize}
 
-Voor datasets werd gekeken naar representativiteit, annotatiekwaliteit en toepasbaarheid voor zowel training als evaluatie.
+Voor datasets werd gekeken naar hoe goed ze echte winkelbeelden voorstellen, hoe correct ze geannoteerd zijn en of ze geschikt zijn voor training en evaluatie. Dit is nodig om realistische resultaten te bekomen.
 
-De output van deze fase was een afgebakende experimentele set-up bestaande uit geselecteerde modellen en bijhorende beelddata.
+Deze fase resulteerde in een duidelijke experimentele set-up met een beperkte selectie van modellen en datasets.
 
 \section*{Fase 4: Ontwikkeling van een proof-of-concept}
 
@@ -100,7 +99,7 @@ De focus lag hierbij niet op het ontwikkelen van een nieuw model, maar op het ex
 
 \section*{Fase 5: Experimentele evaluatie}
 
-De experimentele evaluatie werd uitgevoerd op beelden verzameld in realistische omstandigheden, zoals supermarktbeelden of gecontroleerde schapopstellingen (bv. voorraadkastscenario).
+De experimentele evaluatie werd uitgevoerd op beelden verzameld in realistische omstandigheden, zoals supermarktbeelden of gecontroleerde schapopstellingen (bv. voorraadkastscenario) om zo realistische resultaten te bekomen.
 
 De testen werden opgezet om:
 
@@ -115,7 +114,7 @@ De evaluatie gebeurde aan de hand van vooraf gedefinieerde metriek(en), zoals mA
 
 \section*{Fase 6: Analyse en conclusie}
 
-In de laatste fase werden de experimentele resultaten statistisch en kwalitatief geanalyseerd. Hierbij werd nagegaan:
+In de laatste fase werden de experimentele resultaten geanalyseerd. Hierbij werd nagegaan:
 
 \begin{itemize}
     \item in welke mate de modellen voldeden aan de geformuleerde requirements,
