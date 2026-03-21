@@ -33,16 +33,22 @@
 % Wie zijn bachelorproef in het Nederlands schrijft, kan dit negeren, de inhoud
 % wordt niet in het document ingevoegd.
 
-\IfLanguageName{english}{%
-\selectlanguage{dutch}
-\chapter*{Samenvatting}
-\lipsum[1-4]
-\selectlanguage{english}
-}{}
+% \IfLanguageName{english}{%
+% \selectlanguage{dutch}
+% \chapter*{Samenvatting}
+% \lipsum[1-4]
+% \selectlanguage{english}
+% }{}
 
 %%---------- Samenvatting -----------------------------------------------------
 % De samenvatting in de hoofdtaal van het document
 
 \chapter*{\IfLanguageName{dutch}{Samenvatting}{Abstract}}
 
-\lipsum[1-4]
+De transparantie over het voedingsaanbod in Vlaamse supermarkten is beperkt, hoewel gezonde en duurzame voeding steeds centraler staan in beleid en onderzoek. 
+Er bestaat geen geautomatiseerde manier om het werkelijke assortiment in kaart te brengen, waardoor onderzoekers, beleidsmakers en consumenten onvoldoende zicht hebben op de aanwezigheid van productcategorieën, duurzame alternatieven en marktverhoudingen. 
+Dit onderzoek evalueert bestaande computer vision-modellen (bijv. YOLO-achtige object detectors, multimodale OCR- en beeld-classificatiemodellen) op de taak van automatische productherkenning in beeldmateriaal uit Vlaamse supermarkten, met als doel de nauwkeurigheid van detectie te beoordelen en eventueel te verbeteren via fine-tuning.
+Het doel is een reproduceerbare methodologie te ontwikkelen die beelddata verwerkt en productinformatie herkent. 
+De aanpak omvat het verzamelen van representatieve beelddata, het testen van modellen zoals YOLOv8 en Grounding DINO, het analyseren van prestaties via mAP en IoU-gebaseerde detectiemetrics, aangevuld met SKU-niveau Top-1 en Top-5 classificatie-accuratesse, macro-F1-scores en inventarisatiegerichte indicatoren zoals product coverage rate en assortimentsafwijking. 
+Verwacht wordt dat deze studie de haalbaarheid aantoont van automatische inventarisatie in een complex retailecosysteem en dat de resultaten bijdragen aan betere monitoring van duurzaamheid en gezondheid, met concrete meerwaarde voor onderzoekers, beleidsmakers, consumenten en retailers.
+

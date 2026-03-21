@@ -26,5 +26,101 @@
 %% Maak voor elke fase (behalve het literatuuronderzoek) een NIEUW HOOFDSTUK aan
 %% en geef het een gepaste titel.
 
-\lipsum[21-25]
+Dit hoofdstuk beschrijft de algemene onderzoeksaanpak die werd gevolgd om de onderzoeksvragen te beantwoorden. Het onderzoek werd gefaseerd uitgevoerd, waarbij elke fase een duidelijk afgebakende doelstelling en concrete output had. Deze studie combineert literatuuronderzoek met experimentele tests in een realistische retailomgeving.
+\section*{Onderzoeksopzet}
 
+Het onderzoek werd opgebouwd volgens zes opeenvolgende fasen:
+
+\begin{enumerate}
+    \item Literatuurstudie
+    \item Requirementsanalyse
+    \item Selectie van modellen en datasets
+    \item Ontwikkeling van een proof-of-concept (PoC)
+    \item Experimentele evaluatie
+    \item Analyse en conclusie
+\end{enumerate}
+
+Deze gefaseerde aanpak werd gekozen om eerst een theoretische onderbouwing te verzekeren alvorens over te gaan tot experimentele implementatie en evaluatie.
+
+\section*{Fase 1: Literatuurstudie}
+
+De eerste fase bestond uit een diepgaande literatuurstudie naar automatische productherkenning in supermarktcontext. Het doel van deze fase was:
+
+\begin{itemize}
+    \item inzicht verwerven in bestaande detectie- en herkenningsmethoden,
+    \item identificeren van relevante datasets,
+    \item analyseren van evaluatiemetrieken,
+    \item detecteren van gebrekken in het huidige onderzoekslandschap.
+\end{itemize}
+
+De literatuurstudie vormde de theoretische basis voor de verdere methodologische keuzes binnen dit onderzoek.
+
+\section*{Fase 2: Requirementsanalyse}
+
+Op basis van de literatuur werd een requirementsanalyse opgesteld. Het doel hiervan was het expliciet definiëren van:
+
+\begin{itemize}
+    \item functionele vereisten (bv. correcte detectie van producten in dense schapbeelden),
+    \item prestatiedrempels (bv. minimale detectienauwkeurigheid),
+    \item vereisten rond generaliseerbaarheid naar variabele beeldcondities.
+\end{itemize}
+
+Door vooraf duidelijke criteria te bepalen, konden modellen op een objectieve manier worden beoordeeld.
+
+\section*{Fase 3: Selectie van modellen en datasets}
+
+In plaats van een brede long-list op te stellen, werd rechtstreeks overgegaan tot een gerichte selectie van modellen en datasets op basis van de bevindingen uit de literatuurstudie en de geformuleerde requirements.
+
+De selectiecriteria omvatten onder andere:
+
+\begin{itemize}
+    \item beschikbaarheid als open-source implementatie,
+    \item ondersteuning voor fine-tuning,
+    \item toepasbaarheid in dense retailomgevingen,
+\end{itemize}
+
+Voor datasets werd gekeken naar representativiteit, annotatiekwaliteit en toepasbaarheid voor zowel training als evaluatie.
+
+De output van deze fase was een afgebakende experimentele set-up bestaande uit geselecteerde modellen en bijhorende beelddata.
+
+\section*{Fase 4: Ontwikkeling van een proof-of-concept}
+
+Op basis van de geselecteerde modellen werd een proof-of-concept (PoC) ontwikkeld. Dit PoC had als doel de praktische inzetbaarheid van bestaande AI-modellen voor productdetectie in supermarktbeelden te demonstreren.
+
+De ontwikkeling omvatte:
+
+\begin{itemize}
+    \item configuratie en eventuele fine-tuning van de modellen,
+    \item implementatie van een detectiepipeline,
+    \item verwerking van testbeelden,
+    \item opslag van detectieresultaten voor verdere analyse.
+\end{itemize}
+
+De focus lag hierbij niet op het ontwikkelen van een nieuw model, maar op het experimenteel evalueren van bestaande architecturen binnen een concrete retailcontext.
+
+\section*{Fase 5: Experimentele evaluatie}
+
+De experimentele evaluatie werd uitgevoerd op beelden verzameld in realistische omstandigheden, zoals supermarktbeelden of gecontroleerde schapopstellingen (bv. voorraadkastscenario).
+
+De testen werden opgezet om:
+
+\begin{itemize}
+    \item detectienauwkeurigheid te meten,
+    \item prestaties te evalueren bij variërende rekdichtheid,
+    \item robuustheid tegen veranderende camerahoek en afstand te analyseren,
+    \item eventuele verschillen tussen modeltypes te identificeren.
+\end{itemize}
+
+De evaluatie gebeurde aan de hand van vooraf gedefinieerde metriek(en), zoals mAP en classificatienauwkeurigheid.
+
+\section*{Fase 6: Analyse en conclusie}
+
+In de laatste fase werden de experimentele resultaten statistisch en kwalitatief geanalyseerd. Hierbij werd nagegaan:
+
+\begin{itemize}
+    \item in welke mate de modellen voldeden aan de geformuleerde requirements,
+    \item welke beeldfactoren significante invloed hadden op de prestaties,
+    \item welke modelarchitectuur het meest geschikt bleek binnen de onderzochte context.
+\end{itemize}
+
+De analyse vormde de basis voor de uiteindelijke conclusie en aanbevelingen voor toekomstig onderzoek.

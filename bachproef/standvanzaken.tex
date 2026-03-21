@@ -7,45 +7,203 @@
 
 % Pas na deze inleidende paragraaf komt de eerste sectiehoofding.
 
-Dit hoofdstuk bevat je literatuurstudie. De inhoud gaat verder op de inleiding, maar zal het onderwerp van de bachelorproef *diepgaand* uitspitten. De bedoeling is dat de lezer na lezing van dit hoofdstuk helemaal op de hoogte is van de huidige stand van zaken (state-of-the-art) in het onderzoeksdomein. Iemand die niet vertrouwd is met het onderwerp, weet nu voldoende om de rest van het verhaal te kunnen volgen, zonder dat die er nog andere informatie moet over opzoeken \autocite{Pollefliet2011}.
+% Dit hoofdstuk bevat je literatuurstudie. De inhoud gaat verder op de inleiding, maar zal het onderwerp van de bachelorproef *diepgaand* uitspitten. De bedoeling is dat de lezer na lezing van dit hoofdstuk helemaal op de hoogte is van de huidige stand van zaken (state-of-the-art) in het onderzoeksdomein. Iemand die niet vertrouwd is met het onderwerp, weet nu voldoende om de rest van het verhaal te kunnen volgen, zonder dat die er nog andere informatie moet over opzoeken \autocite{Pollefliet2011}.
 
-Je verwijst bij elke bewering die je doet, vakterm die je introduceert, enz.\ naar je bronnen. In \LaTeX{} kan dat met het commando \texttt{$\backslash${textcite\{\}}} of \texttt{$\backslash${autocite\{\}}}. Als argument van het commando geef je de ``sleutel'' van een ``record'' in een bibliografische databank in het Bib\LaTeX{}-formaat (een tekstbestand). Als je expliciet naar de auteur verwijst in de zin (narratieve referentie), gebruik je \texttt{$\backslash${}textcite\{\}}. Soms is de auteursnaam niet expliciet een onderdeel van de zin, dan gebruik je \texttt{$\backslash${}autocite\{\}} (referentie tussen haakjes). Dit gebruik je bv.~bij een citaat, of om in het bijschrift van een overgenomen afbeelding, broncode, tabel, enz. te verwijzen naar de bron. In de volgende paragraaf een voorbeeld van elk.
+% Je verwijst bij elke bewering die je doet, vakterm die je introduceert, enz.\ naar je bronnen. In \LaTeX{} kan dat met het commando \texttt{$\backslash${textcite\{\}}} of \texttt{$\backslash${autocite\{\}}}. Als argument van het commando geef je de ``sleutel'' van een ``record'' in een bibliografische databank in het Bib\LaTeX{}-formaat (een tekstbestand). Als je expliciet naar de auteur verwijst in de zin (narratieve referentie), gebruik je \texttt{$\backslash${}textcite\{\}}. Soms is de auteursnaam niet expliciet een onderdeel van de zin, dan gebruik je \texttt{$\backslash${}autocite\{\}} (referentie tussen haakjes). Dit gebruik je bv.~bij een citaat, of om in het bijschrift van een overgenomen afbeelding, broncode, tabel, enz. te verwijzen naar de bron. In de volgende paragraaf een voorbeeld van elk.
 
-\textcite{Knuth1998} schreef een van de standaardwerken over sorteer- en zoekalgoritmen. Experten zijn het erover eens dat cloud computing een interessante opportuniteit vormen, zowel voor gebruikers als voor dienstverleners op vlak van informatietechnologie~\autocite{Creeger2009}.
+% \textcite{Knuth1998} schreef een van de standaardwerken over sorteer- en zoekalgoritmen. Experten zijn het erover eens dat cloud computing een interessante opportuniteit vormen, zowel voor gebruikers als voor dienstverleners op vlak van informatietechnologie~\autocite{Creeger2009}.
 
-Let er ook op: het \texttt{cite}-commando voor de punt, dus binnen de zin. Je verwijst meteen naar een bron in de eerste zin die erop gebaseerd is, dus niet pas op het einde van een paragraaf.
+% Let er ook op: het \texttt{cite}-commando voor de punt, dus binnen de zin. Je verwijst meteen naar een bron in de eerste zin die erop gebaseerd is, dus niet pas op het einde van een paragraaf.
 
-\begin{figure}
-  \centering
-  \includegraphics[width=0.8\textwidth]{grail.jpg}
-  \caption[Voorbeeld figuur.]{\label{fig:grail}Voorbeeld van invoegen van een figuur. Zorg altijd voor een uitgebreid bijschrift dat de figuur volledig beschrijft zonder in de tekst te moeten gaan zoeken. Vergeet ook je bronvermelding niet!}
-\end{figure}
+% \begin{figure}
+%   \centering
+%   \includegraphics[width=0.8\textwidth]{grail.jpg}
+%   \caption[Voorbeeld figuur.]{\label{fig:grail}Voorbeeld van invoegen van een figuur. Zorg altijd voor een uitgebreid bijschrift dat de figuur volledig beschrijft zonder in de tekst te moeten gaan zoeken. Vergeet ook je bronvermelding niet!}
+% \end{figure}
 
-\begin{listing}
-  \begin{minted}{python}
-    import pandas as pd
-    import seaborn as sns
+% \begin{listing}
+%   \begin{minted}{python}
+%     import pandas as pd
+%     import seaborn as sns
 
-    penguins = sns.load_dataset('penguins')
-    sns.relplot(data=penguins, x="flipper_length_mm", y="bill_length_mm", hue="species")
-  \end{minted}
-  \caption[Voorbeeld codefragment]{Voorbeeld van het invoegen van een codefragment.}
-\end{listing}
+%     penguins = sns.load_dataset('penguins')
+%     sns.relplot(data=penguins, x="flipper_length_mm", y="bill_length_mm", hue="species")
+%   \end{minted}
+%   \caption[Voorbeeld codefragment]{Voorbeeld van het invoegen van een codefragment.}
+% \end{listing}
 
-\lipsum[7-20]
+% \lipsum[7-20]
 
-\begin{table}
-  \centering
-  \begin{tabular}{lcr}
-    \toprule
-    \textbf{Kolom 1} & \textbf{Kolom 2} & \textbf{Kolom 3} \\
-    $\alpha$         & $\beta$          & $\gamma$         \\
-    \midrule
-    A                & 10.230           & a                \\
-    B                & 45.678           & b                \\
-    C                & 99.987           & c                \\
-    \bottomrule
-  \end{tabular}
-  \caption[Voorbeeld tabel]{\label{tab:example}Voorbeeld van een tabel.}
-\end{table}
+% \begin{table}
+%   \centering
+%   \begin{tabular}{lcr}
+%     \toprule
+%     \textbf{Kolom 1} & \textbf{Kolom 2} & \textbf{Kolom 3} \\
+%     $\alpha$         & $\beta$          & $\gamma$         \\
+%     \midrule
+%     A                & 10.230           & a                \\
+%     B                & 45.678           & b                \\
+%     C                & 99.987           & c                \\
+%     \bottomrule
+%   \end{tabular}
+%   \caption[Voorbeeld tabel]{\label{tab:example}Voorbeeld van een tabel.}
+% \end{table}
 
+Dit hoofdstuk bouwt voort op de inleiding en plaatst het onderzoek in de bredere wetenschappelijke context van automatische productherkenning in retailomgevingen. Waar het vorige hoofdstuk het probleem en de onderzoeksvraag definieerde, bespreekt dit hoofdstuk bestaande datasets, methodes en manieren om resultaten te evalueren binnen grocery product recognition. Deze literatuurstudie vormt de theoretische basis voor de experimentele opzet die in het volgende hoofdstuk wordt beschreven.
+
+\subsection*{1. Productherkenning als detectie- en identificatieprobleem}
+
+Automatische productherkenning in supermarktcontext kan worden opgevat als een tweestapsprobleem bestaande uit (1) lokalisatie van producten in een schapbeeld en (2) identificatie op merk- of SKU-niveau. Volgens \textcite{MELEK2024108452} moet een goed werkend systeem niet alleen objecten correct detecteren, maar ze ook tot op productniveau kunnen onderscheiden (fine-grained classificatie). Dit is nodig omdat toepassingen in de retail vaak een hoge nauwkeurigheid per individueel product vereisen.
+
+In tegenstelling tot algemene objectdetectietaken (zoals COCO), hebben supermarktbeelden enkele specifieke kenmerken:
+
+\begin{itemize}
+\item er staan vaak veel producten dicht bij elkaar,
+\item producten lijken sterk op elkaar,
+\item producten overlappen elkaar regelmatig,
+\item verschillen tussen varianten van hetzelfde product zijn vaak klein.
+\end{itemize}
+
+\textcite{FRANCO2017163} tonen aan dat een belangrijke aanname uit klassieke objectdetectie vaak niet klopt in de retailcontext. Meestal gaat men ervan uit dat trainingsdata goed overeenkomt met de situatie in de praktijk. In supermarkten is dat echter vaak niet het geval. Trainingsbeelden worden genomen in gecontroleerde omstandigheden, terwijl beelden in winkels veel variatie en beweging bevatten. Daardoor ontstaat er een verschil tussen training en gebruik in de praktijk.
+
+Productherkenning moet daarom niet alleen goed omgaan met overlappende producten en verschillen in grootte, maar ook met producten die sterk op elkaar lijken.
+
+\subsection*{2. Datasetkarakteristieken en representativiteit}
+
+Datasetkwaliteit vormt een fundamentele beperkende factor binnen grocery product recognition. De systematische review van \textcite{MELEK2024108452} toont aan dat bestaande datasets op meerdere punten tekortschieten:
+
+\begin{itemize}
+\item er is weinig variatie in het aantal producten,
+\item beelden worden vaak genomen onder gecontroleerde belichting en vanuit vaste camerahoeken,
+\item er staan relatief weinig producten in één beeld,
+\item het annoteren van producten met bounding boxes is tijdsintensief en duur.
+\end{itemize}
+
+Daardoor lijken resultaten op deze datasets vaak beter dan ze in een echte winkelomgeving zouden zijn.
+
+\textcite{TONIONI201810733} tonen ook aan dat herkenning op basis van embeddings sterk afhangt van de trainingsdata. Als variaties zoals belichting, camerahoek of productrotatie onvoldoende aanwezig zijn, daalt de performantie merkbaar.
+
+Daarnaast tonen recente studies aan dat domeinadaptatie belangrijk is om het verschil tussen gecontroleerde datasets en echte winkelbeelden te verkleinen \autocite{wei2020retail}. Toch zijn er weinig grote en actuele retaildatasets beschikbaar. Dit komt onder andere door commerciële beperkingen en privacyredenen.
+
+De kwaliteit en representativiteit van datasets is dus geen detail, maar heeft een grote invloed op hoe goed modellen presteren.
+
+\subsection*{3. Klassieke computer vision benaderingen}
+
+Voor de opkomst van deep learning maakten productherkenningssystemen gebruik van handgemaakte visuele kenmerken zoals:
+\begin{itemize}
+\item SURF-descriptoren; voor opvallende details zoals hoeken en randen,
+\item kleurhistogrammen; voor de kleurverdeling van producten zoals welke kleuren er aanwezig zijn en in welke verhouding,
+\item textuurfeatures; voor patronen in verpakkingen zoals verpakkingstructuren,
+\item Bag-of-Visual-Words representaties; voor een visuele representatie zoals een verzmaling van de belangrijkste visuele kenmerken.
+\end{itemize}
+
+\textcite{FRANCO2017163} vergelijken deze klassieke technieken met deep learning features in een systeem met meerdere stappen, zoals pre-selectie, fine-selectie en post-processing. Hun resultaten tonen aan dat kleur- en textuurinformatie belangrijk blijven in een retailcontext. Tegelijk blijkt dat klassieke methoden moeilijk opschalen wanneer het aantal producten sterk toeneemt.
+
+Hoewel deze technieken historisch belangrijk zijn, werken ze minder goed bij grote productassortimenten en wanneer producten binnen dezelfde categorie sterk van elkaar verschillen.
+
+\subsection*{4. CNN-gebaseerde objectdetectie en embedding-methoden}
+
+Met de introductie van convolutionele neurale netwerken (CNN’s) verschoof de focus naar modellen die end-to-end getraind kunnen worden.
+
+Volgens \textcite{MELEK2024108452} domineren CNN-gebaseerde detectiearchitecturen het huidige retailonderzoek. Deze modellen leren zelf kenmerken uit de data en gaan beter om met verschillen in schaal en rotatie dan klassieke methoden.
+
+\textcite{TONIONI201810733} stellen een aanpak voor waarbij detectie en herkenning apart gebeuren. Eerst worden producten gelokaliseerd in het beeld, daarna wordt via embedding-gebaseerde matching bepaald om welk product het precies gaat. Hierdoor wordt het probleem herleid tot het zoeken naar het meest gelijkaardige product in een feature-ruimte.
+
+Hoewel CNN-gebaseerde systemen duidelijke prestatievoordelen bieden, blijven ze gevoelig voor:
+
+\begin{itemize}
+\item kleine producten,
+\item overlappende producten,
+\item visueel sterk gelijkende verpakkingen,
+\item veranderende verpakkingdesigns.
+\end{itemize}
+
+Ook hier blijft de kwaliteit van de trainingsdata een belangrijke factor.
+
+\subsection*{5. Transformer-gebaseerde detectiearchitecturen}
+
+Recente ontwikkelingen binnen objectdetectie introduceren transformer-gebaseerde modellen als alternatief voor traditionele anchor-based detectie.
+
+Het Detection Transformer (DETR)-model herformuleert detectie als een set-predictietaak zonder non-maximum suppression \autocite{carion2020}. Door bipartite matching wordt een één-op-één correspondentie geleerd tussen voorspellingen en ground-truth objecten.
+
+Deformable DETR optimaliseert deze aanpak door efficiëntere attention-mechanismen te introduceren, wat leidt tot snellere convergentie en betere prestaties bij kleine objecten \autocite{zhu2021}. Dit is bijzonder relevant voor supermarktbeelden met hoge objectdensiteit.
+
+Transformer-gebaseerde modellen bieden theoretische voordelen in complexe scenestructuren, maar vereisen doorgaans grotere trainingsdatasets.
+
+\subsection*{6. Fine-grained classificatie op SKU-niveau}
+
+Productherkenning in retail gaat verder dan gewone objectdetectie, omdat producten tot op SKU-niveau herkend moeten worden. Dit betekent dat het systeem zeer kleine visuele verschillen moet kunnen onderscheiden.
+
+\textcite{PETTERSSON202410549} tonen aan dat visuele embeddings vaak niet voldoende onderscheid maken wanneer verpakkingen sterk op elkaar lijken. Kleine verschillen, zoals tekst, volume-aanduidingen of kleuraccenten, kunnen nochtans belangrijk zijn om producten correct te identificeren.
+
+Daarom is het nodig om representaties te gebruiken die gevoelig zijn voor subtiele verschillen, zonder dat ze te sterk reageren op irrelevante details.
+
+\subsection*{7. Multimodale benaderingen met beeld en tekst}
+
+Om verwarring tussen sterk gelijkende producten te verminderen, kan men beeld- en tekstinformatie combineren.
+
+Volgens \textcite{PETTERSSON202410549} zorgt het toevoegen van OCR-teksten aan visuele kenmerken voor een duidelijke verbetering van SKU-herkenning. Tekst zoals merk en producttype helpt om producten correct te identificeren.
+
+Vision-language modellen zoals CLIP leren een gezamenlijke ruimte voor beeld en tekst. Daardoor kunnen tekstbeschrijvingen eenvoudig vergeleken worden met beeldfeatures.
+
+Dergelijke multimodale modellen zijn robuuster tegen overlappende producten en visuele verwarring.
+
+\subsection*{8. Open-vocabulary en zero-shot detectie}
+
+Traditionele detectiemodellen werken vaak met een vaste set categorieën. In retail verandert het assortiment echter voortdurend, omdat er regelmatig nieuwe producten worden geïntroduceerd.
+
+Open-vocabulary detectie combineert visuele detectie met tekstuele aanwijzingen. Met Grounding DINO kunnen objecten worden gedetecteerd op basis van vrije tekstbeschrijvingen \autocite{wei2020retail}, waardoor het model minder afhankelijk is van vaste labels.
+
+Zero-shot herkenning via vision-language modellen maakt het mogelijk om producten van niet-getrainde categorieën te classificeren \autocite{radford2021clip}. Dit opent mogelijkheden voor monitoring van dynamische assortimenten.
+
+De uitdagingen van open-set herkenning worden besproken in de literatuur \autocite{peng2021rp2klargescaleretailproduct}, waar wordt benadrukt dat modellen onbekende klassen moeten kunnen detecteren zonder verkeerde toewijzingen.
+
+\subsection*{9. Generaliseerbaarheid en domeinadaptatie}
+
+In retailherkenning is domeinverschuiving een terugkerend probleem.
+
+Volgens \textcite{FRANCO2017163} presteren modellen minder goed als testbeelden afwijken in belichting of camerastandpunt. Data-augmentatie en domeinadversarial training kunnen helpen om modellen beter te laten generaliseren \autocite{wei2020retail}, maar ze lossen het probleem niet helemaal op.
+
+Het is daarom belangrijk om de generaliseerbaarheid te evalueren onder verschillende beeldomstandigheden, niet alleen op uniforme testsets.
+
+\subsection*{10. Evaluatiekaders voor retaildetectie}
+
+Evaluatie van productherkenning vereist een combinatie van detectie- en classificatiemetrieken.
+
+Mean Average Precision (mAP) wordt gebruikt om lokalisatiekwaliteit te meten \autocite{MELEK2024108452}. mAP kijkt niet alleen naar of een product is gevonden, maar ook of het correct is omkaderd en hoe betrouwbaar de voorspellingen zijn over meerdere drempels. Andere metrics zoals IoU of F1-score per object zijn te beperkt: ze geven alleen informatie per detectie en samenvatten prestaties niet over categorieën of drempels. Daarom is mAP de standaard in situaties waar het gaat om het lokaliseren van vele SKU’s in beelden.
+
+Recall meet hoeveel producten daadwerkelijk worden gevonden. In retailtoepassingen is dit cruciaal, omdat het missen van een product (false negative) vaak grotere gevolgen heeft dan een fout-positief detectie, bijvoorbeeld bij voorraadmonitoring of prijscontrole \autocite{FRANCO2017163}. Precision wordt minder zwaar meegewogen, omdat enkele foutieve detecties relatief makkelijk handmatig of automatisch gecorrigeerd kunnen worden. Andere metrics zoals F1-score wegen false positives en false negatives gelijk, maar dat weerspiegelt niet de praktijkbehoefte in winkels.
+
+Voor fine-grained classificatie worden Top-1 en Top-5 accuracy gebruikt \autocite{PETTERSSON202410549}. Top-1 laat zien of het model exact het juiste product (SKU) voorspelt. Top-5 is nuttig wanneer producten visueel sterk op elkaar lijken; het geeft aan of het juiste product in de vijf beste voorspellingen zit. Andere metrics zoals macro-F1 of gemiddelde accuracy over alle categorieën zijn minder informatief bij grote hoeveelheden SKU’s, omdat zij de prestatie per klasse gelijk wegen en de impact van veelvoorkomende producten onderschatten.
+
+Bij open-set scenario’s moet gekeken worden naar foutieve toewijzing van onbekende producten \autocite{peng2021rp2klargescaleretailproduct}. Klassieke metrics zoals mAP of Top-1 negeren onbekende klassen volledig, waardoor ze onvoldoende weergeven hoe goed een model onbekende producten kan herkennen zonder deze verkeerd in te delen. Dit is van groot belang in dynamische retailomgevingen, waar regelmatig nieuwe producten verschijnen.
+
+\subsection*{11. Geïdentificeerde tekortkomingen in de literatuur}
+
+Uit de literatuur blijkt dat er verschillende belangrijke hiaten bestaan in onderzoek naar automatische productherkenning in supermarkten.
+
+Ten eerste werken veel studies met gecontroleerde datasets die niet lijken op echte winkelomstandigheden, waar producten dicht op elkaar staan, belichting varieert en verpakkingen overlappen \autocite{MELEK2024108452}.
+
+Ten tweede worden verschillende modellen zelden onder identieke omstandigheden vergeleken. De meeste studies testen één model of pipeline \autocite{TONIONI201810733}, waardoor we niet goed kunnen zien welk type model echt beter presteert.
+
+Daarnaast is er weinig onderzoek naar de invloed van beeldfactoren zoals camerahoek, resolutie, afstand tot het rek of productdichtheid. Domeinverschuiving wordt wel genoemd \autocite{FRANCO2017163}, maar vaak ontbreekt kwantitatief bewijs over welke factoren detectieprestaties het meest beïnvloeden.
+
+Ook blijft de evaluatie van nieuwe of onbekende producten beperkt. Modellen worden vaak getest op een vaste set categorieën \autocite{peng2021rp2klargescaleretailproduct}, terwijl assortimenten in supermarkten voortdurend veranderen.
+
+Kortom, ondanks vooruitgang in technologie is er nog steeds nood aan systematische, reproduceerbare evaluaties in echte winkelomstandigheden.
+
+\subsection*{12. Positionering van dit onderzoek binnen de literatuur}
+
+Deze bachelorproef onderzoekt hoe goed bestaande AI-modellen werken voor het automatisch detecteren van producten in echte supermarktbeelden.
+
+In tegenstelling tot studies die een nieuwe architectuur of pipeline voorstellen, ligt de focus hier op:
+
+\begin{itemize}
+\item de experimentele vergelijking van verschillende modeltypes (klassieke objectdetectie, transformer-gebaseerde detectie en multimodale benaderingen),
+\item de analyse van detectieprestaties onder variërende beeldcondities,
+\item de evaluatie van generaliseerbaarheid binnen een concrete Vlaamse supermarktcontext.
+\end{itemize}
+
+Door verschillende modellen onder dezelfde experimentele omstandigheden te testen, geeft dit onderzoek een beter inzicht in hun sterktes en beperkingen in drukke retailomgevingen.
+
+Daarmee sluit het aan bij de nood aan contextspecifieke en reproduceerbare evaluaties van detectiemodellen, zoals beschreven in de literatuur \autocite{MELEK2024108452}.

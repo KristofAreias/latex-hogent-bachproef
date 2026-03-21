@@ -417,18 +417,19 @@
     }
 
     % Use a unicode-compliant sans serif math font
-    \IfFontExistsTF{Fira Math Regular}{%
-        \setmathfont{Fira Math Regular}[BoldFont=Fira Math Bold]
-        \setmathfont{Fira Math Regular}[FakeSlant, range={bfit->it}]
-    }{%
-        \setmathfont{FiraMath-Regular.otf}[
-            Path = fonts/FiraMath/,
-            BoldFont=FiraMath-Bold.otf]
-        \setmathfont{FiraMath-Regular.otf}[
-            Path = fonts/FiraMath/,
-            FakeSlant,
-            range={bfit->it}]
-    }
+    % \IfFontExistsTF{Fira Math Regular}{%
+    %     \setmathfont{Fira Math Regular}[BoldFont=Fira Math Bold]
+    %     \setmathfont{Fira Math Regular}[FakeSlant, range={bfit->it}]
+    % }{%
+    %     \setmathfont{FiraMath-Regular.otf}[
+    %         Path = fonts/FiraMath/,
+    %         BoldFont=FiraMath-Bold.otf]
+    %     \setmathfont{FiraMath-Regular.otf}[
+    %         Path = fonts/FiraMath/,
+    %         FakeSlant,
+    %         range={bfit->it}]
+    % }
+    \setmathfont{Fira Math}
 
     \def\titlestyle{\titlefont\bfseries}
 

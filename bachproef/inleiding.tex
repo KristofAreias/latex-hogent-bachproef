@@ -5,32 +5,74 @@
 \chapter{\IfLanguageName{dutch}{Inleiding}{Introduction}}%
 \label{ch:inleiding}
 
-De inleiding moet de lezer net genoeg informatie verschaffen om het onderwerp te begrijpen en in te zien waarom de onderzoeksvraag de moeite waard is om te onderzoeken. In de inleiding ga je literatuurverwijzingen beperken, zodat de tekst vlot leesbaar blijft. Je kan de inleiding verder onderverdelen in secties als dit de tekst verduidelijkt. Zaken die aan bod kunnen komen in de inleiding~\autocite{Pollefliet2011}:
+De samenstelling van het voedingsaanbod in supermarkten speelt een cruciale rol in consumentengedrag, gezondheid en duurzaamheid. Beleidsinitiatieven rond gezonde voeding en ecologische impact vertrekken vaak vanuit productinformatie zoals voedingswaarden, labels of duurzaamheidsindicatoren. Toch ontbreekt in Vlaanderen een systematische en schaalbare methode om het werkelijke schapaanbod objectief te registreren.
 
-\begin{itemize}
-  \item context, achtergrond
-  \item afbakenen van het onderwerp
-  \item verantwoording van het onderwerp, methodologie
-  \item probleemstelling
-  \item onderzoeksdoelstelling
-  \item onderzoeksvraag
-  \item \ldots
-\end{itemize}
+Traditionele inventarisatiemethoden zijn voornamelijk manueel: onderzoekers noteren producten ter plaatse of verwerken kassadata indien beschikbaar. Deze aanpak is arbeidsintensief, beperkt in schaal en moeilijk reproduceerbaar. Bovendien geven kassadata enkel inzicht in verkochte producten, niet in het volledige aangeboden assortiment.
+
+Tegelijkertijd hebben recente ontwikkelingen binnen computer vision aangetoond dat objectdetectie- en beeldclassificatiemodellen in staat zijn om objecten in complexe visuele omgevingen te lokaliseren en te identificeren. Architecturen zoals YOLO-gebaseerde detectiemodellen en transformer-gebaseerde modellen tonen sterke prestaties in generieke beeldherkenningstaken. De toepassing van dergelijke modellen in realistische supermarktcontexten blijft echter uitdagend door factoren zoals hoge rekdichtheid, overlappende producten, variabele lichtomstandigheden en sterk gelijkende verpakkingen.
+
+Deze bachelorproef onderzoekt of bestaande AI-modellen voldoende performant en robuust zijn om ingezet te worden voor automatische productdetectie in Vlaamse supermarktbeelden. De focus ligt expliciet op technische haalbaarheid en reproduceerbare evaluatie, niet op commerciële implementatie of beleidsanalyse. Door modellen systematisch te vergelijken onder gecontroleerde omstandigheden wordt nagegaan of automatische assortimentsinventarisatie via beelddata een realistische onderzoeksstrategie kan vormen.
 
 \section{\IfLanguageName{dutch}{Probleemstelling}{Problem Statement}}%
 \label{sec:probleemstelling}
 
-Uit je probleemstelling moet duidelijk zijn dat je onderzoek een meerwaarde heeft voor een concrete doelgroep. De doelgroep moet goed gedefinieerd en afgelijnd zijn. Doelgroepen als ``bedrijven,'' ``KMO's'', systeembeheerders, enz.~zijn nog te vaag. Als je een lijstje kan maken van de personen/organisaties die een meerwaarde zullen vinden in deze bachelorproef (dit is eigenlijk je steekproefkader), dan is dat een indicatie dat de doelgroep goed gedefinieerd is. Dit kan een enkel bedrijf zijn of zelfs één persoon (je co-promotor/opdrachtgever).
+Onderzoekers binnen voedings- en duurzaamheidsstudies beschikken momenteel niet over een schaalbare methode om het feitelijke supermarktassortiment systematisch in kaart te brengen. Bestaande studies maken gebruik van manuele inventarisaties of steekproeven, wat tijdsintensief, foutgevoelig en moeilijk reproduceerbaar is. 
+
+Voor Vlaamse onderzoeksgroepen die het aanbod van gezonde of duurzame producten willen monitoren (bijvoorbeeld in het kader van Nutri-Score, eco-score of productdiversiteit), ontbreekt een geautomatiseerde beeldgebaseerde aanpak die toelaat om op regelmatige basis het schapaanbod te analyseren.
+
+Het gebrek aan een dergelijke methode beperkt:
+\begin{itemize}
+    \item zien hoe het aanbod in de winkel evolueert,
+    \item objectieve vergelijking tussen supermarktlocaties,
+    \item schaalbare analyse van productcategorieën.
+\end{itemize}
+
+Deze bachelorproef richt zich specifiek op de technische haalbaarheid van automatische productherkenning als eerste stap richting geautomatiseerde assortimentsanalyse.
 
 \section{\IfLanguageName{dutch}{Onderzoeksvraag}{Research question}}%
 \label{sec:onderzoeksvraag}
 
-Wees zo concreet mogelijk bij het formuleren van je onderzoeksvraag. Een onderzoeksvraag is trouwens iets waar nog niemand op dit moment een antwoord heeft (voor zover je kan nagaan). Het opzoeken van bestaande informatie (bv. ``welke tools bestaan er voor deze toepassing?'') is dus geen onderzoeksvraag. Je kan de onderzoeksvraag verder specifiëren in deelvragen. Bv.~als je onderzoek gaat over performantiemetingen, dan 
+De centrale onderzoeksvraag luidt:
+
+\begin{quote}
+\textbf{In welke mate kunnen bestaande AI-modellen, al dan niet met bijkomende fine-tuning, producten in Vlaamse supermarkt, beelden correct herkennen als eerste stap richting geautomatiseerde assortimentsinventarisatie?}
+\end{quote}
+
+Om deze onderzoeksvraag te beantwoorden, wordt het probleem verder opgesplitst in een aantal deelvragen binnen het probleemdomein:
+
+\begin{itemize}
+    \item Wat is het effect van gecontroleerde variaties in belichting (lux-niveau), beeldresolutie (px) en rekdichtheid (aantal producten per m²) op de mAP- en recall-scores van geselecteerde detectiemodellen?
+    \item Welke bestaande open datasets of online databronnen bevatten geschikt beeldmateriaal van supermarktproducten voor training en evaluatie van productherkenningsmodellen?
+\end{itemize}
+
+Daarnaast worden deelvragen geformuleerd binnen het oplossingsdomein, die focussen op de technische haalbaarheid van automatische productherkenning:
+
+\begin{itemize}
+    \item Welke mAP@0.5:0.95-, recall- en SKU-level Top-1 accuracyscores behalen geselecteerde AI-modellen bij detectie van producten in supermarktbeelden met hoge rekdichtheid (>X producten per beeld)?
+    \item Hoe verschillen YOLOv8 en Grounding-DINO in termen van mAP, recall en detectiesnelheid bij identieke supermarktbeelden?
+    \item Wat is het effect van beperkte fine-tuning op mAP- en SKU-level accuracy ten opzichte van het vooraf getrainde basismodel?
+\end{itemize}
+
 
 \section{\IfLanguageName{dutch}{Onderzoeksdoelstelling}{Research objective}}%
 \label{sec:onderzoeksdoelstelling}
 
-Wat is het beoogde resultaat van je bachelorproef? Wat zijn de criteria voor succes? Beschrijf die zo concreet mogelijk. Gaat het bv.\ om een proof-of-concept, een prototype, een verslag met aanbevelingen, een vergelijkende studie, enz.
+De doelstelling van deze bachelorproef is het uitvoeren van een technisch onderbouwde vergelijkende studie naar de prestaties van bestaande computer vision-modellen voor productherkenning in Vlaamse supermarktbeelden.
+
+Het beoogde resultaat is:
+\begin{itemize}
+    \item een reproduceerbare experimentele evaluatie-opzet,
+    \item een kwantitatieve vergelijking van modelprestaties,
+    \item een proof-of-concept pipeline die detectie en metadata-koppeling integreert,
+    \item concrete aanbevelingen over minimale prestatiedrempels voor inzetbaarheid in assortimentsmonitoring.
+\end{itemize}
+
+Het onderzoek wordt als succesvol beschouwd wanneer:
+\begin{itemize}
+    \item modelprestaties reproduceerbaar gemeten kunnen worden,
+    \item verschillen tussen modellen statistisch aantoonbaar zijn,
+    \item we objectief kunnen nagaan of de methode bruikbaar is voor het inventariseren van assortimenten.
+\end{itemize}
 
 \section{\IfLanguageName{dutch}{Opzet van deze bachelorproef}{Structure of this bachelor thesis}}%
 \label{sec:opzet-bachelorproef}
@@ -41,9 +83,9 @@ Wat is het beoogde resultaat van je bachelorproef? Wat zijn de criteria voor suc
 
 De rest van deze bachelorproef is als volgt opgebouwd:
 
-In Hoofdstuk~\ref{ch:stand-van-zaken} wordt een overzicht gegeven van de stand van zaken binnen het onderzoeksdomein, op basis van een literatuurstudie.
+In Hoofdstuk~\ref{ch:stand-van-zaken} bespreekt de stand van zaken binnen automatische productherkenning en objectdetectie in retailomgevingen. Hier worden relevante modelarchitecturen, evaluatiemetrieken en gekende uitdagingen in supermarktcontexten toegelicht.
 
-In Hoofdstuk~\ref{ch:methodologie} wordt de methodologie toegelicht en worden de gebruikte onderzoekstechnieken besproken om een antwoord te kunnen formuleren op de onderzoeksvragen.
+In Hoofdstuk~\ref{ch:methodologie} beschrijft de experimentele opzet van het onderzoek. Dit omvat de selectie en voorbereiding van beelddata, de configuratie van de gekozen AI-modellen, de operationalisering van evaluatiemetrieken en de experimentele vergelijkingsstrategie.
 
 % TODO: Vul hier aan voor je eigen hoofstukken, één of twee zinnen per hoofdstuk
 
