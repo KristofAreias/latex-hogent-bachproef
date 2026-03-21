@@ -15,37 +15,47 @@
 \section{Inleiding}%
 \label{sec:inleiding}
 
-Waarover zal je bachelorproef gaan? Introduceer het thema en zorg dat volgende zaken zeker duidelijk aanwezig zijn:
+In Vlaamse supermarkten is weinig transparantie beschikbaar over hoe duurzaam en gezond het werkelijk aangeboden assortiment is. Onderzoekers signaleren dat winkelomgevingen een bepalende invloed hebben op consumentengedrag en gezondheid, maar betrouwbare gegevens over het daadwerkelijke schapaanbod ontbreken grotendeels \autocite{wur2025, rug2024}. De overheid benadrukt de nood aan duidelijkere informatie rond duurzame voeding, maar stuit op het gebrek aan een schaalbare methode om producten in winkels objectief te registreren \autocite{rvo2025}.
 
+In de praktijk gebeurt inventarisatie vandaag handmatig, wat tijdrovend, foutgevoelig en ongeschikt is voor grootschalige monitoring. Tegelijk evolueren technieken uit artificiële intelligentie, meer bepaald computer vision, snel. Modellen voor objectdetectie worden al getest in retail, maar de complexiteit van echte supermarktomgevingen, zoals hoge rekdichtheid, occlusies en sterk gelijkende verpakkingen, blijft een uitdaging \autocite{santra2019, fuchs2019}.
+
+Dit onderzoek richt zich op het toepassen en evalueren van bestaande AI-modellen voor automatische productherkenning in Vlaamse supermarkten. De doelgroep omvat IT-professionals, data-engineers en onderzoekers die nood hebben aan een reproduceerbare, geautomatiseerde methode om supermarktassortimenten te analyseren. De centrale onderzoeksvraag luidt:
+
+\begin{quote}
+\textbf{In welke mate kunnen bestaande AI-modellen, al dan niet met bijkomende fine-tuning, producten in Vlaamse supermarktbeelden correct herkennen om zo transparantie te creëren over het voedingsaanbod?}
+\end{quote}
+
+% De doelstelling van deze bachelorproef is het ontwikkelen van een technisch onderbouwde vergelijkende studie, aangevuld met een proof-of-concept pipeline die productherkenning uitvoert en herkende items koppelt aan open databronnen. Een succesvol eindresultaat omvat een meetbaar inzicht in modelprestaties, een werkende prototype-implementatie en aanbevelingen voor verdere toepassing binnen onderzoek en beleid.
+Om deze onderzoeksvraag te concretiseren, wordt het probleem verder opgesplitst in een aantal deelvragen binnen het probleemdomein:
 \begin{itemize}
-  \item kaderen thema
-  \item de doelgroep
-  \item de probleemstelling en (centrale) onderzoeksvraag
-  \item de onderzoeksdoelstelling
+    \item Wat is het effect van gecontroleerde variaties in belichting (lux-niveau), beeldresolutie (px) en rekdichtheid (aantal producten per m²) op de mAP- en recall-scores van geselecteerde detectiemodellen?
+    \item Welke bestaande open datasets of online databronnen bevatten geschikt beeldmateriaal van supermarktproducten voor training en evaluatie van productherkenningsmodellen?
 \end{itemize}
 
-Denk er aan: een typische bachelorproef is \textit{toegepast onderzoek}, wat betekent dat je start vanuit een concrete probleemsituatie in bedrijfscontext, een \textbf{casus}. Het is belangrijk om je onderwerp goed af te bakenen: je gaat voor die \textit{ene specifieke probleemsituatie} op zoek naar een goede oplossing, op basis van de huidige kennis in het vakgebied.
+Daarnaast worden deelvragen geformuleerd binnen het oplossingsdomein, die focussen op de technische haalbaarheid van automatische productherkenning:
+\begin{itemize}
+    \item Welke mAP@0.5:0.95-, recall- en SKU-level Top-1 accuracyscores behalen geselecteerde AI-modellen bij detectie van producten in supermarktbeelden met hoge rekdichtheid (>X producten per beeld)?
+    \item Hoe verschillen YOLOv8 (gesloten-klassenset objectdetectie) en Grounding-DINO (open-vocabulary detectie) in termen van mAP, recall en detectiesnelheid (inference time per beeld) bij identieke supermarktbeelden?
+    \item Wat is het effect van beperkte fine-tuning (≤10 epochs, enkel laatste detectielagen geüpdatet) op mAP- en SKU-level accuracy ten opzichte van het vooraf getrainde basismodel?
+\end{itemize}
 
-De doelgroep moet ook concreet en duidelijk zijn, dus geen algemene of vaag gedefinieerde groepen zoals \emph{bedrijven}, \emph{developers}, \emph{Vlamingen}, enz. Je richt je in elk geval op it-professionals, een bachelorproef is geen populariserende tekst. Eén specifiek bedrijf (die te maken hebben met een concrete probleemsituatie) is dus beter dan \emph{bedrijven} in het algemeen.
+Om de centrale onderzoeksvraag objectief te beantwoorden, wordt gebruikgemaakt van gangbare evaluatiemetrieken uit objectdetectieonderzoek. Met mAP@0.5:0.95 krijg je een globaal beeld van correcte herkenningen, maar is onvoldoende in situaties met veel objecten per beeld. Precision en recall zijn daarom essentieel om respectievelijk fout-positieve detecties en gemiste producten te analyseren. 
 
-Formuleer duidelijk de onderzoeksvraag! De begeleiders lezen nog steeds te veel voorstellen waarin we geen onderzoeksvraag terugvinden.
+De mean Average Precision (mAP) wordt gebruikt als kernmetriek, omdat deze zowel lokalisatie als classificatie over meerdere drempels combineert en toelaat modellen onderling te vergelijken in complexe omgevingen. Deze metriek sluit rechtstreeks aan bij de onderzoeksvraag, aangezien transparantie over het assortiment enkel zinvol is wanneer producten consistent en betrouwbaar worden herkend.
 
-Schrijf ook iets over de doelstelling. Wat zie je als het concrete eindresultaat van je onderzoek, naast de uitgeschreven scriptie? Is het een proof-of-concept, een rapport met aanbevelingen, \ldots Met welk eindresultaat kan je je bachelorproef als een succes beschouwen?
 
 %---------- Stand van zaken ---------------------------------------------------
 
 \section{Literatuurstudie}%
 \label{sec:literatuurstudie}
 
-Hier beschrijf je de \emph{state-of-the-art} rondom je gekozen onderzoeksdomein, d.w.z.\ een inleidende, doorlopende tekst over het onderzoeksdomein van je bachelorproef. Je steunt daarbij heel sterk op de professionele \emph{vakliteratuur}, en niet zozeer op populariserende teksten voor een breed publiek. Wat is de huidige stand van zaken in dit domein, en wat zijn nog eventuele open vragen (die misschien de aanleiding waren tot je onderzoeksvraag!)?
+Automatische productherkenning in retailomgevingen is een actief onderzoeksdomein binnen computer vision. Hoewel commerciële oplossingen bestaan, blijkt uit onderzoek dat realistische supermarktcontexten bijzonder uitdagend zijn vanwege variabele lichtomstandigheden, occlusies, overlappingen en de sterke visuele gelijkenis tussen verpakkingen \autocite{santra2019}. Retailonderzoek draait vaak rond objectdetectie met convolutionele neurale netwerken of transformer-gebaseerde modellen zoals YOLO, EfficientDet en Vision Transformers.
 
-Je mag de titel van deze sectie ook aanpassen (literatuurstudie, stand van zaken, enz.). Zijn er al gelijkaardige onderzoeken gevoerd? Wat concluderen ze? Wat is het verschil met jouw onderzoek?
+\textcite{fuchs2019} tonen aan dat deep-learning-modellen goed presteren in gecontroleerde omstandigheden, maar dat prestaties dalen wanneer rekdichtheid en variabele camerastandpunten toenemen. Ook generaliseerbaarheid naar nieuwe productvarianten blijft een probleem. Recente modellen zoals YOLOv8, Grounding-DINO en CLIP-gebaseerde pipelines combineren detectie en multimodale embedding-technieken om robuustere herkenning mogelijk te maken, maar hun prestaties in de Belgische of Vlaamse supermarktcontext zijn nog niet onderzocht.
 
-Verwijs bij elke introductie van een term of bewering over het domein naar de vakliteratuur, bijvoorbeeld~\autocite{Hykes2013}! Denk zeker goed na welke werken je refereert en waarom.
+Daarnaast is de koppeling met externe databronnen een belangrijk aspect. OpenFoodFacts is internationaal gebruikt in diverse voedingsstudies, maar de volledigheid en correctheid van bepaalde metadata, zoals eco-scores en detailingrediënten, blijkt wisselend, wat uitdagingen creëert voor automatische productkoppeling \autocite{wur2025}.
 
-Draag zorg voor correcte literatuurverwijzingen! Een bronvermelding hoort thuis \emph{binnen} de zin waar je je op die bron baseert, dus niet er buiten! Maak meteen een verwijzing als je gebruik maakt van een bron. Doe dit dus \emph{niet} aan het einde van een lange paragraaf. Baseer nooit teveel aansluitende tekst op eenzelfde bron.
-
-Als je informatie over bronnen verzamelt in JabRef, zorg er dan voor dat alle nodige info aanwezig is om de bron terug te vinden (zoals uitvoerig besproken in de lessen Research Methods).
+Uit de literatuur blijkt dat er een duidelijke lacune is: weinig studies richten zich op lokale supermarktcontexten, en er is een gebrek aan evaluaties die modellen vergelijken onder realistische omstandigheden. Dit onderzoek sluit hierop aan door een experimentele studie uit te voeren binnen Vlaamse supermarkten en de prestaties van meerdere AI-modellen systematisch te toetsen.
 
 % Voor literatuurverwijzingen zijn er twee belangrijke commando's:
 % \autocite{KEY} => (Auteur, jaartal) Gebruik dit als de naam van de auteur
@@ -54,31 +64,70 @@ Als je informatie over bronnen verzamelt in JabRef, zorg er dan voor dat alle no
 %   functie heeft in de zin (bv. ``Uit onderzoek door Doll & Hill (1954) bleek
 %   ...'')
 
-Je mag deze sectie nog verder onderverdelen in subsecties als dit de structuur van de tekst kan verduidelijken.
-
 %---------- Methodologie ------------------------------------------------------
 \section{Methodologie}%
 \label{sec:methodologie}
 
-Hier beschrijf je hoe je van plan bent het onderzoek te voeren. Welke onderzoekstechniek ga je toepassen om elk van je onderzoeksvragen te beantwoorden? Gebruik je hiervoor literatuurstudie, interviews met belanghebbenden (bv.~voor requirements-analyse), experimenten, simulaties, vergelijkende studie, risico-analyse, PoC, \ldots?
+Het onderzoek volgt een experimenteel-opgezette vergelijkende studie. Elke fase van het stappenplan levert observaties of meetresultaten op die rechtstreeks terugkoppelen naar de centrale onderzoeksvraag, namelijk de mate waarin bestaande AI-modellen bruikbaar zijn voor het creëren van transparantie over het voedingsaanbod in Vlaamse supermarkten. De methodologie bestaat uit vier fases:
 
-Valt je onderwerp onder één van de typische soorten bachelorproeven die besproken zijn in de lessen Research Methods (bv.\ vergelijkende studie of risico-analyse)? Zorg er dan ook voor dat we duidelijk de verschillende stappen terug vinden die we verwachten in dit soort onderzoek!
+\subsection*{1. Verzamelen en voorbereiden van beelddata}
+Tijdens deze fase wordt een systematische verkenning uitgevoerd van bestaande open datasets en publiek toegankelijke online databronnen met productbeelden. Deze bronnen worden geëvalueerd op resolutie, labelkwaliteit en beschikbaarheid van metadata. De geschiktheid van deze datasets voor de Vlaamse supermarktcontext wordt beoordeeld op basis van producttypes, verpakkingsvormen en schapstructuren.
+Alle data worden geanonimiseerd en verwerkt volgens ethische richtlijnen.
 
-Vermijd onderzoekstechnieken die geen objectieve, meetbare resultaten kunnen opleveren. Enquêtes, bijvoorbeeld, zijn voor een bachelorproef informatica meestal \textbf{niet geschikt}. De antwoorden zijn eerder meningen dan feiten en in de praktijk blijkt het ook bijzonder moeilijk om voldoende respondenten te vinden. Studenten die een enquête willen voeren, hebben meestal ook geen goede definitie van de populatie, waardoor ook niet kan aangetoond worden dat eventuele resultaten representatief zijn.
+\subsection*{2. Selectie en configuratie van AI-modellen}
+De volgende modellen worden geselecteerd op basis van hun geschiktheid voor retaildetectie:
+\begin{itemize}
+    \item YOLOv8 (objectdetectie, hoge snelheid),
+    \item Grounding-DINO (open-vocab detection),
+    \item CLIP-gebaseerde pipelines (multimodale classificatie).
+\end{itemize}
+De selectie van zowel een klassiek objectdetectiemodel als open-vocab en multimodale modellen laat toe om verschillen in detectiegedrag te observeren. Door deze modellen onder identieke omstandigheden toe te passen, kan onderzocht worden in welke mate de modelkeuze invloed heeft op de betrouwbaarheid van automatische productherkenning in supermarktcontexten.
 
-Uit dit onderdeel moet duidelijk naar voor komen dat je bachelorproef ook technisch voldoen\-de diepgang zal bevatten. Het zou niet kloppen als een bachelorproef informatica ook door bv.\ een student marketing zou kunnen uitgevoerd worden.
+\subsection*{3. Experimentele evaluatie}
+Voor elk model worden prestaties gemeten onder variabele omstandigheden. De detectieresultaten van de modellen worden onder identieke datasets en instellingen vergeleken om verschillen in robuustheid en foutpatronen bloot te leggen. Voor en na fine-tuning worden de prestaties vergeleken om het effect van beperkte lokale training op detectienauwkeurigheid te kwantificeren. De volgende metrieken worden systematisch gemeten:
+\begin{itemize}
+    \item mAP@0.5:0.95,
+    \item Recall,
+    \item SKU-level Top-1 accuracyscores.
+\end{itemize}
+De gekozen evaluatiemetrieken zijn afgestemd op de centrale onderzoeksvraag. mAP@0.5:0.95 wordt enkel indicatief gebruikt en niet als beslissende metriek, aangezien deze onvoldoende robuust is in beelden met meerdere objecten. SKU-level Top-1 accuracyscores en recall worden daarom afzonderlijk geanalyseerd om respectievelijk fout-positieve detecties en gemiste producten in kaart te brengen, wat essentieel is voor transparantie over het werkelijke assortiment.
 
-Je beschrijft ook al welke tools (hardware, software, diensten, \ldots) je denkt hiervoor te gebruiken of te ontwikkelen.
+De mean Average Precision (mAP) fungeert als kernmetriek, aangezien deze zowel lokalisatie als classificatie over meerdere drempels combineert en toelaat modellen onderling te vergelijken. Een hogere mAP-score wijst op consistente en reproduceerbare detectie, wat een noodzakelijke voorwaarde is om automatische inventarisatie bruikbaar te maken voor onderzoek en beleid.
+Modellen met lage SKU-level Top-1 accuracyscores of recall worden als onvoldoende beschouwd om het volledige assortiment betrouwbaar in kaart te brengen, aangezien zowel over- als onderdetectie de transparantie van het aanbod vertekenen.
 
-Probeer ook een tijdschatting te maken. Hoe lang zal je met elke fase van je onderzoek bezig zijn en wat zijn de concrete \emph{deliverables} in elke fase?
+De prestaties worden niet enkel globaal geëvalueerd, maar ook uitgesplitst per beeldfactor (licht, resolutie, camerahoek en rekdichtheid) om hun invloed op de herkenningsnauwkeurigheid te kwantificeren.
 
+\subsection*{4. Koppeling van herkende producten aan open databronnen}
+Deze fase beantwoordt de deelvraag in welke mate detectieresultaten praktisch bruikbaar zijn voor verdere analyse. Voor elk herkend product wordt nagegaan of voldoende informatie beschikbaar is om een overeenkomst te vinden met een item in OpenFoodFacts. Het aandeel succesvolle koppelingen en de aard van mislukte pogingen worden gerapporteerd als indicatie van de toepasbaarheid van automatische productherkenning in combinatie met open databronnen.
+Hierbij wordt gebruikgemaakt van barcodes, tekstextractie (OCR) en visuele embeddings.
+
+\subsection*{Planning en deliverables}
+\begin{itemize}
+    \item Week 1–3: literatuurstudie, dataverzameling.
+    \item Week 4–7: modelselectie, opzetten testomgeving, eerste metingen.
+    \item Week 8–10: fine-tuning en uitgebreide evaluatie.
+    \item Week 11–12: implementatie koppeling met open databronnen.
+    \item Week 13–14: analyse, rapportage, aanbevelingen.
+\end{itemize}
+
+Door modelprestaties, gevoeligheid voor beeldfactoren, het effect van fine-tuning en de praktische koppelbaarheid aan open databronnen gezamenlijk te analyseren, laat deze methodologie toe om objectief te bepalen in welke mate bestaande AI-modellen inzetbaar zijn voor transparante en schaalbare inventarisatie van het supermarktassortiment.
 %---------- Verwachte resultaten ----------------------------------------------
 \section{Verwacht resultaat, conclusie}%
 \label{sec:verwachte_resultaten}
 
-Hier beschrijf je welke resultaten je verwacht. Als je metingen en simulaties uitvoert, kan je hier al mock-ups maken van de grafieken samen met de verwachte conclusies. Benoem zeker al je assen en de onderdelen van de grafiek die je gaat gebruiken. Dit zorgt ervoor dat je concreet weet welk soort data je moet verzamelen en hoe je die moet meten.
+De resultaten zijn afhankelijk van de beschikbaarheid en kwaliteit van beelddata en kunnen niet zonder meer worden veralgemeend naar alle supermarktketens.
 
-Wat heeft de doelgroep van je onderzoek aan het resultaat? Op welke manier zorgt jouw bachelorproef voor een meerwaarde?
+De verwachting is dat de performantie van de geselecteerde modellen sterk varieert afhankelijk van beeldomstandigheden. YOLOv8 wordt vermoedelijk het snelst met stabiele baseline-prestaties, terwijl Grounding-DINO mogelijk betere herkenning biedt bij sterk variërende verpakkingen maar trager werkt. Fine-tuning op Vlaamse beelden zal naar verwachting een merkbare verbetering opleveren in mAP-scores, vooral voor sterk gelijkende producten.
 
-Hier beschrijf je wat je verwacht uit je onderzoek, met de motivatie waarom. Het is \textbf{niet} erg indien uit je onderzoek andere resultaten en conclusies vloeien dan dat je hier beschrijft: het is dan juist interessant om te onderzoeken waarom jouw hypothesen niet overeenkomen met de resultaten.
+Een voorbeeld van een te verwachten grafiek is een vergelijkende staafdiagram met op de X-as de verschillende modellen (YOLOv8, CLIP-gebaseerde pipelines, Grounding-DINO) en op de Y-as de mAP-score per conditie (normaal licht, lage resolutie, schuine hoek). Deze visualiseert welke modellen het meest robuust blijven onder realistische omstandigheden.
+
+De beoogde meerwaarde voor de doelgroep bestaat uit:
+\begin{itemize}
+    \item een objectieve evaluatie van AI-modellen specifiek in Vlaamse supermarktcontexten,
+    \item een reproduceerbare testopzet die door andere onderzoekers hergebruikt kan worden,
+    \item een proof-of-concept dat beleidsmakers en onderzoekers toelaat om het supermarktassortiment automatisch in kaart te brengen.
+\end{itemize}
+
+Zelfs wanneer bepaalde modellen onvoldoende presteren, biedt dit onderzoek waardevolle inzichten in hun beperkingen en vereisten voor verdere ontwikkeling. De bachelorproef levert daarmee directe praktische en wetenschappelijke waarde op voor voedingsonderzoek, data-engineering en retailinnovatie.
+
 
