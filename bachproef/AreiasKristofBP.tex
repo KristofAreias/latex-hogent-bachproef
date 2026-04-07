@@ -133,7 +133,9 @@
 \input{inleiding}
 \input{standvanzaken}
 \input{methodologie}
-
+\input{requirementsanalyse}
+\input{selectie}
+\input{poc}
 % Voeg hier je eigen hoofdstukken toe die de ``corpus'' van je bachelorproef
 % vormen. De structuur en titels hangen af van je eigen onderzoek. Je kan bv.
 % elke fase in je onderzoek in een apart hoofdstuk bespreken.
@@ -156,6 +158,33 @@ Het onderwerp van deze bachelorproef is gebaseerd op een onderzoeksvoorstel dat 
 %\section*{Samenvatting}
 
 % Kopieer en plak hier de samenvatting (abstract) van je onderzoeksvoorstel.
+In Vlaamse supermarkten is weinig transparantie beschikbaar over hoe duurzaam en gezond het werkelijk aangeboden assortiment is. Onderzoekers signaleren dat winkelomgevingen een bepalende invloed hebben op consumentengedrag en gezondheid, maar betrouwbare gegevens over het daadwerkelijke schapaanbod ontbreken grotendeels \autocite{wur2025, rug2024}. De overheid benadrukt de nood aan duidelijkere informatie rond duurzame voeding, maar stuit op het gebrek aan een schaalbare methode om producten in winkels objectief te registreren \autocite{rvo2025}.
+
+In de praktijk gebeurt inventarisatie vandaag handmatig, wat tijdrovend, foutgevoelig en ongeschikt is voor grootschalige monitoring. Tegelijk evolueren technieken uit artificiële intelligentie, meer bepaald computer vision, snel. Modellen voor objectdetectie worden al getest in retail, maar de complexiteit van echte supermarktomgevingen, zoals hoge rekdichtheid, occlusies en sterk gelijkende verpakkingen, blijft een uitdaging \autocite{santra2019, fuchs2019}.
+
+Dit onderzoek richt zich op het toepassen en evalueren van bestaande AI-modellen voor automatische productherkenning in Vlaamse supermarkten. De doelgroep omvat IT-professionals, data-engineers en onderzoekers die nood hebben aan een reproduceerbare, geautomatiseerde methode om supermarktassortimenten te analyseren. De centrale onderzoeksvraag luidt:
+
+\begin{quote}
+\textbf{In welke mate kunnen bestaande AI-modellen, al dan niet met bijkomende fine-tuning, producten in Vlaamse supermarktbeelden correct herkennen om zo transparantie te creëren over het voedingsaanbod?}
+\end{quote}
+
+% De doelstelling van deze bachelorproef is het ontwikkelen van een technisch onderbouwde vergelijkende studie, aangevuld met een proof-of-concept pipeline die productherkenning uitvoert en herkende items koppelt aan open databronnen. Een succesvol eindresultaat omvat een meetbaar inzicht in modelprestaties, een werkende prototype-implementatie en aanbevelingen voor verdere toepassing binnen onderzoek en beleid.
+Om deze onderzoeksvraag te concretiseren, wordt het probleem verder opgesplitst in een aantal deelvragen binnen het probleemdomein:
+\begin{itemize}
+    \item Wat is het effect van gecontroleerde variaties in belichting (lux-niveau), beeldresolutie (px) en rekdichtheid (aantal producten per m²) op de mAP- en recall-scores van geselecteerde detectiemodellen?
+    \item Welke bestaande open datasets of online databronnen bevatten geschikt beeldmateriaal van supermarktproducten voor training en evaluatie van productherkenningsmodellen?
+\end{itemize}
+
+Daarnaast worden deelvragen geformuleerd binnen het oplossingsdomein, die focussen op de technische haalbaarheid van automatische productherkenning:
+\begin{itemize}
+    \item Welke mAP@0.5:0.95-, recall- en SKU-level Top-1 accuracyscores behalen geselecteerde AI-modellen bij detectie van producten in supermarktbeelden met hoge rekdichtheid (>X producten per beeld)?
+    \item Hoe verschillen YOLOv8 (gesloten-klassenset objectdetectie) en Grounding-DINO (open-vocabulary detectie) in termen van mAP, recall en detectiesnelheid (inference time per beeld) bij identieke supermarktbeelden?
+    \item Wat is het effect van beperkte fine-tuning (≤10 epochs, enkel laatste detectielagen geüpdatet) op mAP- en SKU-level accuracy ten opzichte van het vooraf getrainde basismodel?
+\end{itemize}
+
+Om de centrale onderzoeksvraag objectief te beantwoorden, wordt gebruikgemaakt van gangbare evaluatiemetrieken uit objectdetectieonderzoek. Met mAP@0.5:0.95 krijg je een globaal beeld van correcte herkenningen, maar is onvoldoende in situaties met veel objecten per beeld. Precision en recall zijn daarom essentieel om respectievelijk fout-positieve detecties en gemiste producten te analyseren. 
+
+De mean Average Precision (mAP) wordt gebruikt als kernmetriek, omdat deze zowel lokalisatie als classificatie over meerdere drempels combineert en toelaat modellen onderling te vergelijken in complexe omgevingen. Deze metriek sluit rechtstreeks aan bij de onderzoeksvraag, aangezien transparantie over het assortiment enkel zinvol is wanneer producten consistent en betrouwbaar worden herkend.
 
 % Verwijzing naar het bestand met de inhoud van het onderzoeksvoorstel
 \input{../voorstel/voorstel-inhoud}

@@ -1,0 +1,41 @@
+\chapter{\IfLanguageName{dutch}{Requirementsanalyse}{Requirements Analysis}}%
+\label{ch:requirementsanalyse}
+
+In dit hoofdstuk bespreken we modellen die we in de literatuurstudie al zijn tegengekomen en bespreken we de functionele vereisten, prestatievereisten en vereisten op het gebied van robuustheid en generaliseerbaarheid. Zo kunnen we de beste modellen voor onze toepassing selecteren.
+
+\section{Functionele vereisten}
+
+Op basis van de literatuurstudie kunnen we de volgende functionele vereisten opstellen. Het model moet:
+\begin{itemize}
+    \item producten kunnen detecteren in schapbeelden met hoge objectdensiteit.
+    \item individuele producten kunnen lokaliseren door gebruik van bounding boxes.
+    \item producten correct kunnen identificeren op SKU-niveau.
+    \item kunnen omgaan met overlappende producten of scheve/beschadigde producten.
+    \item visueel sterk gelijkende producten kunnen onderscheiden van elkaar.
+    \item meerdere producten tegelijk kunnen verwerken binnen één beeld.
+\end{itemize}
+
+
+\section{Prestatievereisten}
+
+Op basis van prestatiedrempels kunnen we modellen objectief vergelijken. Het is moeilijk om al vaste waarden te geven voor de drempels, daarom zullen we simpelweg een top 3 houden. Als de waarden ondermaats scoren op basis van de andere modelscores zal dit model niet meegenomen worden verder in deze proef. We kiezen onze top 3 modellen op basis van volgende criteria:
+\begin{itemize}
+    \item Het model moet een mAP-score behalen op de testdataset dat niet ondermaats is in vergelijking met de andere modellen.
+    \item Het model moet een hoge recall behalen, aangezien het missen van producten vermeden moet worden.
+    \item Voor classificatie moet een hoge Top-1 accuracy worden nagestreefd.
+    \item Top-5 accuracy wordt gebruikt als aanvullende metric voor visueel gelijkaardige producten.
+\end{itemize}
+
+
+
+\section{Robuustheid en generaliseerbaarheid}
+
+Retialomgevingen variëren veel, daarom moet het model robuust zijn tegen variaties in beeldcondities. Hiervoor kijken we naar:
+\begin{itemize}
+    \item variaties in belichting,
+    \item verschillende camerahoeken en afstanden,
+    \item variërende productdichtheid in schappen,
+    \item en veranderingen in verpakking en productdesign.
+\end{itemize}
+
+De modellen moeten goed werken op beelden die lijken op de trainingsdata maar het is ook zeer belangrijk dat de modellen ook goed presteren op nieuwe of andere situaties.
