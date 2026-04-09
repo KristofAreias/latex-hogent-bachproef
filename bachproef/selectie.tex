@@ -1,2 +1,30 @@
 \chapter{\IfLanguageName{dutch}{Selectie van modellen en datasets}{Selection of Models and Datasets}}%
 \label{ch:selectie}
+
+
+In dit hoofdstuk bespreken we de selectie van modellen en datasets die we zullen gebruiken in deze proef. We baseren onze selectie op de functionele vereisten, prestatievereisten en vereisten op het gebied van robuustheid en generaliseerbaarheid die we in hoofdstuk \ref{ch:requirementsanalyse} hebben opgesteld.
+
+\section{Geselecteerde modellen}
+
+Op basis van de literatuur en de gedefinieerde criteria wordt een selectie gemaakt van modellen uit verschillende categorieën.
+
+\subsection{CNN-gebaseerde objectdetectie}
+
+Als representatief model voor klassieke deep learning detectie wordt YOLOv8 gekozen. YOLO-modellen staan bekend om hun goede balans tussen snelheid en nauwkeurigheid en worden vaak gebruikt in real-time toepassingen.
+
+Volgens de literatuur worden CNN-modellen vaak gebruikt binnen voor retailtoepassingen \autocite{MELEK2024108452}.
+
+\subsection{Transformer-gebaseerde detectie}
+
+Daarnaast wordt een transformer-gebaseerd model geselecteerd. Volgens de literatuur biedt dit type model voordelen bij complexe beelden waar vele objecten en overlappende producten in voorkomen \autocite{zhu2021}.
+
+Dit maakt het model bijzonder geschikt voor supermarktbeelden met hoge objectdensiteit.
+
+\subsection{Multimodale benadering}
+
+Om de beperkingen van visuele gelijkenis tussen producten te onderzoeken, wordt een vision-language model zoals CLIP bekeken.
+
+Volgens \textcite{PETTERSSON202410549} kan het combineren van beeld en tekst helpen bij het onderscheiden van sterk gelijkende producten op SKU-niveau.
+
+\section{Geselecteerde datasets}
+
