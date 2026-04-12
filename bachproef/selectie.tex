@@ -10,7 +10,7 @@ Op basis van de literatuur en de gedefinieerde criteria wordt een selectie gemaa
 
 \subsection{CNN-gebaseerde objectdetectie}
 
-Als representatief model voor klassieke deep learning detectie wordt YOLOv8 gekozen. YOLO-modellen staan bekend om hun goede balans tussen snelheid en nauwkeurigheid en worden vaak gebruikt in real-time toepassingen.
+Als representatief model voor klassieke deep learning detectie wordt YOLOv8 gekozen \autocite{goldman2019dense}. YOLO-modellen staan bekend om hun goede balans tussen snelheid en nauwkeurigheid en worden vaak gebruikt in real-time toepassingen.
 
 Volgens de literatuur worden CNN-modellen vaak gebruikt binnen voor retailtoepassingen \autocite{MELEK2024108452}.
 
@@ -20,11 +20,20 @@ Daarnaast wordt een transformer-gebaseerd model geselecteerd. Volgens de literat
 
 Dit maakt het model bijzonder geschikt voor supermarktbeelden met hoge objectdensiteit.
 
+nog meer uitleg over waarom RT-DETR gekozen werd (gouden standaar, beter dan DINO en DETR). rtdetr-l en rtdetr-x zijn veel te zwaar voor de hardware tot mijn beschikking daarom gebruik ik lichter model: YOLOv11s. Hoewel YOLOv11s ook CNN based is bevat het ook een transformer-gebaseerde "self-attention". 
+ 
+
 \subsection{Multimodale benadering}
 
 Om de beperkingen van visuele gelijkenis tussen producten te onderzoeken, wordt een vision-language model zoals CLIP bekeken.
 
 Volgens \textcite{PETTERSSON202410549} kan het combineren van beeld en tekst helpen bij het onderscheiden van sterk gelijkende producten op SKU-niveau.
+
+uitleg over waarom OWL-v2 gekozen werd van Google. Dit is ook te zwaar dus gebruik ik NanoOWL, een lichtere variant
+
+
+
+lichtere varianten werden vaak gekozen door het gebrek aan hardware capaciteiten maar ook zodat de modellen uiteindelijk op consumentenhardware zou kunnen draaien zoals slimme camera's en handscanners.
 
 \section{Geselecteerde datasets}
 

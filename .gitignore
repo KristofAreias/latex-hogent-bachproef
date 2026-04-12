@@ -136,3 +136,4 @@ output/
 out/
 bachproef/datasets/
 bachproef/run/
+*.pt
