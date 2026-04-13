@@ -10,18 +10,23 @@ Op basis van de literatuur en de gedefinieerde criteria wordt een selectie gemaa
 
 \subsection{CNN-gebaseerde objectdetectie}
 
-Als representatief model voor klassieke deep learning detectie wordt YOLOv8 gekozen \autocite{goldman2019dense}. YOLO-modellen staan bekend om hun goede balans tussen snelheid en nauwkeurigheid en worden vaak gebruikt in real-time toepassingen.
+Als representatief model voor klassieke deep learning detectie wordt YOLOv8 gekozen \autocite{yolov8_ultralytics}. YOLO-modellen staan bekend om hun goede balans tussen snelheid en nauwkeurigheid en worden vaak gebruikt in real-time toepassingen \cite{ultralytics_docs}.
 
-Volgens de literatuur worden CNN-modellen vaak gebruikt binnen voor retailtoepassingen \autocite{MELEK2024108452}.
+Volgens de literatuur worden CNN-modellen vaak gebruikt binnen voor retailtoepassingen, omdat ze zeer geschikt zijn voor het herkennen van producten \autocite{MELEK2024108452}. Ze zijn bovendien ook snel en betrouwbaar bij real-time systemen \cite{chadha2025vision}. 
+Echter, CNN-modellen kunnen moeite hebben met het onderscheiden van sterk gelijkende producten, vooral in drukke beelden \autocite{PETTERSSON202410549}.
 
 \subsection{Transformer-gebaseerde detectie}
 
 Daarnaast wordt een transformer-gebaseerd model geselecteerd. Volgens de literatuur biedt dit type model voordelen bij complexe beelden waar vele objecten en overlappende producten in voorkomen \autocite{zhu2021}.
 
+Modellen zoals RT-DETR maken gebruik van deze transformer-architectuur die de globale context beter begrijpt dan CNN-modellen, wat zeker ten goede komt bij beelden met hoge objectdensiteit zoals in een supermarkt \cite{carion2020endtoendobjectdetectiontransformers}.
 Dit maakt het model bijzonder geschikt voor supermarktbeelden met hoge objectdensiteit.
 
-nog meer uitleg over waarom RT-DETR gekozen werd (gouden standaar, beter dan DINO en DETR). rtdetr-l en rtdetr-x zijn veel te zwaar voor de hardware tot mijn beschikking daarom gebruik ik lichter model: YOLOv11s. Hoewel YOLOv11s ook CNN based is bevat het ook een transformer-gebaseerde "self-attention". 
- 
+Initieel werd er gekozen voor RT-DETR vanwege de sterke prestaties in objectdetectie, maar door gebrek aan hardwarecapaciteit werd uiteindelijk gekozen voor een lichtere variant, namelijk YOLOv11s \cite{ultralytics_docs}. 
+Dit is een groot nadeel van transformer-gebaseerde modellen, ze vragen steeds meer rekenkracht en geheugen \cite{zhao2024detrsbeatyolosrealtime}, wat een uitdaging kan zijn bij het trainen en implementeren op consumentenhardware.
+Moderne YOLO-architecturen maken steeds meer gebruik van aandachtmechanismen ("attention"). Dit helpt het model om zich te focussen op de meest relevante delen van een beeld en zijn geïnspireerd door transformer-architecturen \autocite{vaswani2023attentionneed}.
+Hoewel YOLOv11s een hybride aanpak is, doordat het zowel CNN-gebaseerd als transformer-gebaseerd is, blijft het binnen de context van deze proef steeds relevant \cite{yolo11_ultralytics}.
+
 
 \subsection{Multimodale benadering}
 
@@ -37,5 +42,8 @@ lichtere varianten werden vaak gekozen door het gebrek aan hardware capaciteiten
 
 \section{Geselecteerde datasets}
 
-Er werd gekozen voor dataset SKU-110K \autocite{goldman2019dense} vanwege de hoge dichtheid aan objecten en de aanwezigheid van sterk gelijkende producten, wat aansluit bij de functionele vereisten van onze proef. 
-Om te testen hoe goed het model presteert op nieuwe beelden word er ook gebruik gemaakt van een tweede dataset, namelijk een zelf samengestelde dataset van beelden van Open Food Facts \autocite{openfoodfacts}.
+Er werd gekozen voor dataset SKU-110K \autocite{goldman2019dense} vanwege de hoge dichtheid aan objecten en de aanwezigheid van sterk gelijkende producten, wat aansluit bij de functionele vereisten van onze proef. Dit is een enorm grote dataset met 110.000 geannoteerde producten in 11.762 beelden, wat voldoende is voor training en evaluatie voor de gekozen modellen.
+
+De SKU-110K dataset bevat train, test en validatie images, wat het mogelijk maakt om de modellen volledig te trainen maar ook te valideren en te testen. De beelden zijn afkomstig van echte winkels en simuleren dus zeer realistische omstandigheden.
+
+% Om te testen hoe goed het model presteert op nieuwe beelden word er ook gebruik gemaakt van een tweede dataset, namelijk een zelf samengestelde dataset van beelden van Open Food Facts \autocite{openfoodfacts}. Hierdoor word getest of de modellen effectief kunnen herkennen of dit product in beeld is. 
