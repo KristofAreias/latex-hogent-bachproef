@@ -15,6 +15,7 @@ Als representatief model voor klassieke deep learning detectie wordt YOLOv8 geko
 Volgens de literatuur worden CNN-modellen vaak gebruikt binnen voor retailtoepassingen, omdat ze zeer geschikt zijn voor het herkennen van producten \autocite{MELEK2024108452}. Ze zijn bovendien ook snel en betrouwbaar bij real-time systemen \cite{chadha2025vision}. 
 Echter, CNN-modellen kunnen moeite hebben met het onderscheiden van sterk gelijkende producten, vooral in drukke beelden \autocite{PETTERSSON202410549}.
 
+Doordat dit model geen classificatie-model is word er geen Top-1 en Top-5 berekent.
 \subsection{Transformer-gebaseerde detectie}
 
 Daarnaast wordt een transformer-gebaseerd model geselecteerd. Volgens de literatuur biedt dit type model voordelen bij complexe beelden waar vele objecten en overlappende producten in voorkomen \autocite{zhu2021}.
@@ -26,6 +27,8 @@ Initieel werd er gekozen voor RT-DETR vanwege de sterke prestaties in objectdete
 Dit is een groot nadeel van transformer-gebaseerde modellen, ze vragen steeds meer rekenkracht en geheugen \cite{zhao2024detrsbeatyolosrealtime}, wat een uitdaging kan zijn bij het trainen en implementeren op consumentenhardware.
 Moderne YOLO-architecturen maken steeds meer gebruik van aandachtmechanismen ("attention"). Dit helpt het model om zich te focussen op de meest relevante delen van een beeld en zijn geïnspireerd door transformer-architecturen \autocite{vaswani2023attentionneed}.
 Hoewel YOLOv11s een hybride aanpak is, doordat het zowel CNN-gebaseerd als transformer-gebaseerd is, blijft het binnen de context van deze proef steeds relevant \cite{yolo11_ultralytics}.
+
+We zien een goede verbetering met YOLOv11s tegenover YOLOv8n, dus zal er vooral op dit model gefocust worden. We zien wel dat YOLOv11s al de limieten van de hardware nadert. Het is niet nuttig verdere YOLO modellen te testen doordat deze veel trager en meer belastend zijn voor minimale verbetering.
 
 
 \subsection{Multimodale benadering}
@@ -63,7 +66,8 @@ Het model heeft ook handige modi die direct bruikbaar zijn:
 
 Door deze combinatie kan Florence-2 zelf een product analyseren en beschrijven zonder vooraf input van de gebruiker. Dit maakt het model praktischer en betrouwbaarder voor het onderscheiden van sterk gelijkende producten.
 
-
+Bij het initieel testen van dit model op alleenstaande producten bleek Detailed Caption al meer dan genoeg te omschrijven van het product. Zo las het ook de voornaamste zaken die op het product staan zoals het merk maar ook de verpakking en generieke kleur.
+Als blijkt dat dit later in de proef toch niet voldoende is kan er nog verder gekeken worden of er verbeteringen mogelijk zijn met OCR, maar dit lijkt momenteel onwaarschijnlijk.
 
 Lichtere varianten werden vaak gekozen tijdens deze proef door het gebrek aan hardware capaciteiten maar ook zodat de modellen uiteindelijk op consumentenhardware zou kunnen draaien zoals slimme camera's en handscanners.
 
