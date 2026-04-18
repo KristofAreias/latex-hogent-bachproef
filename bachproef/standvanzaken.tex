@@ -148,15 +148,15 @@ Vision-language modellen zoals CLIP leren een gezamenlijke ruimte voor beeld en 
 
 Dergelijke multimodale modellen zijn robuuster tegen overlappende producten en visuele verwarring.
 
-\subsection*{8. Open-vocabulary en zero-shot detectie}
+% \subsection*{8. Open-vocabulary en zero-shot detectie}
 
-Traditionele detectiemodellen werken vaak met een vaste set categorieën. In retail verandert het assortiment echter voortdurend, omdat er regelmatig nieuwe producten worden geïntroduceerd.
+% Traditionele detectiemodellen werken vaak met een vaste set categorieën. In retail verandert het assortiment echter voortdurend, omdat er regelmatig nieuwe producten worden geïntroduceerd.
 
-Open-vocabulary detectie combineert visuele detectie met tekstuele aanwijzingen. Met Grounding DINO kunnen objecten worden gedetecteerd op basis van vrije tekstbeschrijvingen \autocite{wei2020retail}, waardoor het model minder afhankelijk is van vaste labels.
+% Open-vocabulary detectie combineert visuele detectie met tekstuele aanwijzingen. Met Grounding DINO kunnen objecten worden gedetecteerd op basis van vrije tekstbeschrijvingen \autocite{wei2020retail}, waardoor het model minder afhankelijk is van vaste labels.
 
-Zero-shot herkenning via vision-language modellen maakt het mogelijk om producten van niet-getrainde categorieën te classificeren \autocite{radford2021clip}. Dit opent mogelijkheden voor monitoring van dynamische assortimenten.
+% Zero-shot herkenning via vision-language modellen maakt het mogelijk om producten van niet-getrainde categorieën te classificeren \autocite{radford2021clip}. Dit opent mogelijkheden voor monitoring van dynamische assortimenten.
 
-De uitdagingen van open-set herkenning worden besproken in de literatuur \autocite{peng2021rp2klargescaleretailproduct}, waar wordt benadrukt dat modellen onbekende klassen moeten kunnen detecteren zonder verkeerde toewijzingen.
+% De uitdagingen van open-set herkenning worden besproken in de literatuur \autocite{peng2021rp2klargescaleretailproduct}, waar wordt benadrukt dat modellen onbekende klassen moeten kunnen detecteren zonder verkeerde toewijzingen.
 
 \subsection*{9. Generaliseerbaarheid en domeinadaptatie}
 
@@ -174,9 +174,9 @@ Mean Average Precision (mAP) wordt gebruikt om lokalisatiekwaliteit te meten \au
 
 Recall meet hoeveel producten daadwerkelijk worden gevonden. In retailtoepassingen is dit cruciaal, omdat het missen van een product (false negative) vaak grotere gevolgen heeft dan een fout-positief detectie, bijvoorbeeld bij voorraadmonitoring of prijscontrole \autocite{FRANCO2017163}. Precision wordt minder zwaar meegewogen, omdat enkele foutieve detecties relatief makkelijk handmatig of automatisch gecorrigeerd kunnen worden. Andere metrics zoals F1-score wegen false positives en false negatives gelijk, maar dat weerspiegelt niet de praktijkbehoefte in winkels.
 
-Voor fine-grained classificatie worden Top-1 en Top-5 accuracy gebruikt \autocite{PETTERSSON202410549}. Top-1 laat zien of het model exact het juiste product (SKU) voorspelt. Top-5 is nuttig wanneer producten visueel sterk op elkaar lijken; het geeft aan of het juiste product in de vijf beste voorspellingen zit. Andere metrics zoals macro-F1 of gemiddelde accuracy over alle categorieën zijn minder informatief bij grote hoeveelheden SKU’s, omdat zij de prestatie per klasse gelijk wegen en de impact van veelvoorkomende producten onderschatten.
+% Voor fine-grained classificatie worden Top-1 en Top-5 accuracy gebruikt \autocite{PETTERSSON202410549}. Top-1 laat zien of het model exact het juiste product (SKU) voorspelt. Top-5 is nuttig wanneer producten visueel sterk op elkaar lijken; het geeft aan of het juiste product in de vijf beste voorspellingen zit. Andere metrics zoals macro-F1 of gemiddelde accuracy over alle categorieën zijn minder informatief bij grote hoeveelheden SKU’s, omdat zij de prestatie per klasse gelijk wegen en de impact van veelvoorkomende producten onderschatten.
 
-Bij open-set scenario’s moet gekeken worden naar foutieve toewijzing van onbekende producten \autocite{peng2021rp2klargescaleretailproduct}. Klassieke metrics zoals mAP of Top-1 negeren onbekende klassen volledig, waardoor ze onvoldoende weergeven hoe goed een model onbekende producten kan herkennen zonder deze verkeerd in te delen. Dit is van groot belang in dynamische retailomgevingen, waar regelmatig nieuwe producten verschijnen.
+Bij open-set scenario’s moet gekeken worden naar foutieve toewijzing van onbekende producten \autocite{peng2021rp2klargescaleretailproduct}. Klassieke metrics zoals mAP negeren onbekende klassen volledig, waardoor ze onvoldoende weergeven hoe goed een model onbekende producten kan herkennen zonder deze verkeerd in te delen. Dit is van groot belang in dynamische retailomgevingen, waar regelmatig nieuwe producten verschijnen.
 
 \subsection*{11. Geïdentificeerde tekortkomingen in de literatuur}
 

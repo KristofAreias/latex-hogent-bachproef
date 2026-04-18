@@ -177,9 +177,9 @@ Om deze onderzoeksvraag te concretiseren, wordt het probleem verder opgesplitst 
 
 Daarnaast worden deelvragen geformuleerd binnen het oplossingsdomein, die focussen op de technische haalbaarheid van automatische productherkenning:
 \begin{itemize}
-    \item Welke mAP@0.5:0.95-, recall- en SKU-level Top-1 accuracyscores behalen geselecteerde AI-modellen bij detectie van producten in supermarktbeelden met hoge rekdichtheid (>X producten per beeld)?
-    \item Hoe verschillen YOLOv8 (gesloten-klassenset objectdetectie) en Grounding-DINO (open-vocabulary detectie) in termen van mAP, recall en detectiesnelheid (inference time per beeld) bij identieke supermarktbeelden?
-    \item Wat is het effect van beperkte fine-tuning (≤10 epochs, enkel laatste detectielagen geüpdatet) op mAP- en SKU-level accuracy ten opzichte van het vooraf getrainde basismodel?
+    \item Welke mAP@0.5:0.95-, recall- en precisionscores behalen geselecteerde AI-modellen bij detectie van producten in supermarktbeelden met hoge rekdichtheid?
+    \item Hoe verschillen YOLO modellen in termen van mAP, recal en precision bij identieke supermarktbeelden?
+    \item Wat is het effect van beperkte fine-tuning op mAP, recal en precision ten opzichte van het vooraf getrainde basismodel?
 \end{itemize}
 
 Om de centrale onderzoeksvraag objectief te beantwoorden, wordt gebruikgemaakt van gangbare evaluatiemetrieken uit objectdetectieonderzoek. Met mAP@0.5:0.95 krijg je een globaal beeld van correcte herkenningen, maar is onvoldoende in situaties met veel objecten per beeld. Precision en recall zijn daarom essentieel om respectievelijk fout-positieve detecties en gemiste producten te analyseren. 
