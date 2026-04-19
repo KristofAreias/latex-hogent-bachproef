@@ -61,7 +61,7 @@ Op basis van de literatuur werd een requirementsanalyse opgesteld. Het doel hier
 
 \begin{itemize}
     \item functionele vereisten (bv. correcte detectie van producten in dense schapbeelden),
-    \item prestatiedrempels (bv. minimale detectienauwkeurigheid),
+    \item prestaties (mAP, Recall en Precision),
     \item vereisten rond generaliseerbaarheid naar variabele beeldcondities.
 \end{itemize}
 
@@ -75,6 +75,7 @@ De selectie gebeurde op basis van criteria zoals:
 \begin{itemize}
 \item beschikbaarheid als open-source implementatie, zodat de modellen reproduceerbaar en praktisch inzetbaar zijn,
 \item ondersteuning voor fine-tuning, om ze aan te passen aan de retailcontext,
+\item implementeerbaarheid binnen de proef,
 \item geschiktheid voor drukke retailomgevingen met veel producten in één beeld.
 \end{itemize}
 
@@ -89,7 +90,7 @@ Op basis van de geselecteerde modellen werd een proof-of-concept (PoC) ontwikkel
 De ontwikkeling omvatte:
 
 \begin{itemize}
-    \item configuratie en eventuele fine-tuning van de modellen,
+    \item configuratie en eventuele fine-tuning van de gekozen modellen,
     \item implementatie van een detectiepipeline,
     \item verwerking van testbeelden,
     \item opslag van detectieresultaten voor verdere analyse.

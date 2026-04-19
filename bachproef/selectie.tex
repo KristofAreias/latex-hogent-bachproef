@@ -75,6 +75,10 @@ Lichtere varianten werden vaak gekozen tijdens deze proef door het gebrek aan ha
 
 Er werd gekozen voor dataset SKU-110K \autocite{goldman2019dense} vanwege de hoge dichtheid aan objecten en de aanwezigheid van sterk gelijkende producten, wat aansluit bij de functionele vereisten van onze proef. Dit is een enorm grote dataset met 110.000 geannoteerde producten in 11.762 beelden, wat voldoende is voor training en evaluatie voor de gekozen modellen.
 
-De SKU-110K dataset bevat train, test en validatie images, wat het mogelijk maakt om de modellen volledig te trainen maar ook te valideren en te testen. De beelden zijn afkomstig van echte winkels en simuleren dus zeer realistische omstandigheden.
+In sectie 2 van de literatuurstudie werd diep ingegaan op de tekortkomingen van bestaande datasets. SKU-110K verschilt hier enorm van doordat deze dataset duidelijk rekening gehouden heeft met wat er ontbreekt in andere datasets. Zo zijn de afbeeldingen variërend in het aantal producten, worden ze van andere hoeken en onder verschillende belichtingen genomen en staan ze vaak met volle schappen afgebeeld.
+
+Dit is dus ideaal voor onze modellen op te trainen doordat ze al in zeer goede mate de realistische winkel-omgevingen nabootst.
+
+De SKU-110K dataset bevat train, test en validatie images, wat het mogelijk maakt om de modellen volledig te trainen maar ook te valideren en te testen.
 
 % Om te testen hoe goed het model presteert op nieuwe beelden word er ook gebruik gemaakt van een tweede dataset, namelijk een zelf samengestelde dataset van beelden van Open Food Facts \autocite{openfoodfacts}. Hierdoor word getest of de modellen effectief kunnen herkennen of dit product in beeld is. 

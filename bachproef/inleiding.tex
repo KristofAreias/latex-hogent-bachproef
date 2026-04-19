@@ -11,7 +11,7 @@ Traditionele inventarisatiemethoden zijn voornamelijk manueel: onderzoekers note
 
 Tegelijkertijd hebben recente ontwikkelingen binnen computer vision aangetoond dat objectdetectie- en beeldclassificatiemodellen in staat zijn om objecten in complexe visuele omgevingen te lokaliseren en te identificeren. Architecturen zoals YOLO-gebaseerde detectiemodellen en transformer-gebaseerde modellen tonen sterke prestaties in generieke beeldherkenningstaken. De toepassing van dergelijke modellen in realistische supermarktcontexten blijft echter uitdagend door factoren zoals hoge rekdichtheid, overlappende producten, variabele lichtomstandigheden en sterk gelijkende verpakkingen.
 
-Deze bachelorproef onderzoekt of bestaande AI-modellen voldoende performant en robuust zijn om ingezet te worden voor automatische productdetectie in Vlaamse supermarktbeelden. De focus ligt expliciet op technische haalbaarheid en reproduceerbare evaluatie, niet op commerciële implementatie of beleidsanalyse. Door modellen systematisch te vergelijken onder gecontroleerde omstandigheden wordt nagegaan of automatische assortimentsinventarisatie via beelddata een realistische onderzoeksstrategie kan vormen.
+Deze bachelorproef onderzoekt of bestaande AI-modellen voldoende performant en robuust zijn om ingezet te worden voor automatische productdetectie in Vlaamse supermarktbeelden. De focus ligt expliciet op technische haalbaarheid en reproduceerbare evaluatie, niet op commerciële implementatie of beleidsanalyse. Door modellen systematisch te vergelijken onder gelijke omstandigheden wordt nagegaan of automatische assortimentsinventarisatie via beelddata een realistische onderzoeksstrategie kan vormen.
 
 \section{\IfLanguageName{dutch}{Probleemstelling}{Problem Statement}}%
 \label{sec:probleemstelling}
@@ -48,9 +48,9 @@ Om deze onderzoeksvraag te beantwoorden, wordt het probleem verder opgesplitst i
 Daarnaast worden deelvragen geformuleerd binnen het oplossingsdomein, die focussen op de technische haalbaarheid van automatische productherkenning:
 
 \begin{itemize}
-    \item Welke mAP@0.5:0.95-, recall- en SKU-level Top-1 accuracyscores behalen geselecteerde AI-modellen bij detectie van producten in supermarktbeelden met hoge rekdichtheid (>X producten per beeld)?
-    \item Hoe verschillen YOLOv8 en Grounding-DINO in termen van mAP, recall en detectiesnelheid bij identieke supermarktbeelden?
-    \item Wat is het effect van beperkte fine-tuning op mAP- en SKU-level accuracy ten opzichte van het vooraf getrainde basismodel?
+    \item Welke mAP@0.5:0.95-, recall en precisionscores behalen geselecteerde AI-modellen bij detectie van producten in supermarktbeelden met hoge rekdichtheid?
+    \item Hoe verschillen YOLO-modellen in termen van mAP, recall en detectiesnelheid bij identieke supermarktbeelden?
+    \item Wat is het effect van beperkte fine-tuning op mAP, recal en precision ten opzichte van het vooraf getrainde basismodel?
 \end{itemize}
 
 
@@ -61,7 +61,7 @@ De doelstelling van deze bachelorproef is het uitvoeren van een technisch onderb
 
 Het beoogde resultaat is:
 \begin{itemize}
-    \item een reproduceerbare experimentele evaluatie-opzet,
+    % \item een reproduceerbare experimentele evaluatie-opzet,
     \item een kwantitatieve vergelijking van modelprestaties,
     \item een proof-of-concept pipeline die detectie en metadata-koppeling integreert,
     \item concrete aanbevelingen over minimale prestatiedrempels voor inzetbaarheid in assortimentsmonitoring.

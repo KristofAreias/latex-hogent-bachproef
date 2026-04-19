@@ -53,7 +53,7 @@ Dit hoofdstuk bouwt voort op de inleiding en plaatst het onderzoek in de bredere
 
 \subsection*{1. Productherkenning als detectie- en identificatieprobleem}
 
-Automatische productherkenning in supermarktcontext kan worden opgevat als een tweestapsprobleem bestaande uit (1) lokalisatie van producten in een schapbeeld en (2) identificatie op merk- of SKU-niveau. Volgens \textcite{MELEK2024108452} moet een goed werkend systeem niet alleen objecten correct detecteren, maar ze ook tot op productniveau kunnen onderscheiden (fine-grained classificatie). Dit is nodig omdat toepassingen in de retail vaak een hoge nauwkeurigheid per individueel product vereisen.
+Automatische productherkenning in supermarktcontext kan worden opgevat als een tweestapsprobleem bestaande uit (1) lokalisatie van producten in een schapbeeld en (2) identificatie op merk- of SKU-niveau. Volgens \textcite{MELEK2024108452} moet een goed werkend systeem niet alleen objecten correct detecteren, maar ze ook tot op productniveau kunnen onderscheiden. Dit is nodig omdat toepassingen in de retail vaak een hoge nauwkeurigheid per individueel product vereisen.
 
 In tegenstelling tot algemene objectdetectietaken (zoals COCO), hebben supermarktbeelden enkele specifieke kenmerken:
 
@@ -61,7 +61,7 @@ In tegenstelling tot algemene objectdetectietaken (zoals COCO), hebben supermark
 \item er staan vaak veel producten dicht bij elkaar,
 \item producten lijken sterk op elkaar,
 \item producten overlappen elkaar regelmatig,
-\item verschillen tussen varianten van hetzelfde product zijn vaak klein.
+\item verschillen tussen varianten van hetzelfde product zijn vaak klein (zoals zero-varianten).
 \end{itemize}
 
 \textcite{FRANCO2017163} tonen aan dat een belangrijke aanname uit klassieke objectdetectie vaak niet klopt in de retailcontext. Meestal gaat men ervan uit dat trainingsdata goed overeenkomt met de situatie in de praktijk. In supermarkten is dat echter vaak niet het geval. Trainingsbeelden worden genomen in gecontroleerde omstandigheden, terwijl beelden in winkels veel variatie en beweging bevatten. Daardoor ontstaat er een verschil tussen training en gebruik in de praktijk.
@@ -85,7 +85,7 @@ Daardoor lijken resultaten op deze datasets vaak beter dan ze in een echte winke
 
 Daarnaast tonen recente studies aan dat domeinadaptatie belangrijk is om het verschil tussen gecontroleerde datasets en echte winkelbeelden te verkleinen \autocite{wei2020retail}. Toch zijn er weinig grote en actuele retaildatasets beschikbaar. Dit komt onder andere door commerciële beperkingen en privacyredenen.
 
-De kwaliteit en representativiteit van datasets is dus geen detail, maar heeft een grote invloed op hoe goed modellen presteren.
+De kwaliteit en representativiteit van datasets is dus geen detail, maar heeft een grote invloed op hoe goed modellen presteren en is hierdoor een enorm belangrijk onderdeel in de proef.
 
 \subsection*{3. Klassieke computer vision benaderingen}
 
@@ -122,13 +122,13 @@ Ook hier blijft de kwaliteit van de trainingsdata een belangrijke factor.
 
 \subsection*{5. Transformer-gebaseerde detectiearchitecturen}
 
-Recente ontwikkelingen binnen objectdetectie introduceren transformer-gebaseerde modellen als alternatief voor traditionele anchor-based detectie.
+Recente ontwikkelingen in objectdetectie maken steeds vaker gebruik van transformer-modellen als alternatief voor de klassieke methodes.
 
-Het Detection Transformer (DETR)-model herformuleert detectie als een set-predictietaak zonder non-maximum suppression \autocite{carion2020}. Door bipartite matching wordt een één-op-één correspondentie geleerd tussen voorspellingen en ground-truth objecten.
+Een bekend voorbeeld is DETR (Detection Transformer). Dit model bekijkt objectdetectie op een nieuwe manier: in plaats van veel overlappende voorspellingen te maken en die achteraf op te schonen, probeert het meteen een vaste set objecten in een afbeelding te voorspellen \autocite{carion2020}. Daarbij leert het model direct welke voorspelling bij welk echt object hoort.
 
-Deformable DETR optimaliseert deze aanpak door efficiëntere attention-mechanismen te introduceren, wat leidt tot snellere convergentie en betere prestaties bij kleine objecten \autocite{zhu2021}. Dit is bijzonder relevant voor supermarktbeelden met hoge objectdensiteit.
+Een verbeterde versie hiervan is Deformable DETR. Dit model werkt efficiënter doordat het zich beter kan focussen op relevante delen van een afbeelding \autocite{zhu2021}. Hierdoor leert het sneller en presteert het beter, vooral bij kleine objecten die moeilijk te detecteren zijn. Dit is bijzonder relevant voor supermarktbeelden met hoge objectdensiteit.
 
-Transformer-gebaseerde modellen bieden theoretische voordelen in complexe scenestructuren, maar vereisen doorgaans grotere trainingsdatasets.
+Transformer-gebaseerde modellen bieden theoretische voordelen bij complexere beelden, maar vereisen ook grotere trainingsdatasets.
 
 \subsection*{6. Fine-grained classificatie op SKU-niveau}
 
@@ -148,6 +148,7 @@ Vision-language modellen zoals CLIP leren een gezamenlijke ruimte voor beeld en 
 
 Dergelijke multimodale modellen zijn robuuster tegen overlappende producten en visuele verwarring.
 
+% weggelaten want niet toepasbaar binnen deze proef.
 % \subsection*{8. Open-vocabulary en zero-shot detectie}
 
 % Traditionele detectiemodellen werken vaak met een vaste set categorieën. In retail verandert het assortiment echter voortdurend, omdat er regelmatig nieuwe producten worden geïntroduceerd.
@@ -180,7 +181,7 @@ Bij open-set scenario’s moet gekeken worden naar foutieve toewijzing van onbek
 
 \subsection*{11. Geïdentificeerde tekortkomingen in de literatuur}
 
-Uit de literatuur blijkt dat er verschillende belangrijke hiaten bestaan in onderzoek naar automatische productherkenning in supermarkten.
+Uit de literatuur blijkt dat er verschillende belangrijke gaten bestaan in onderzoek naar automatische productherkenning in supermarkten.
 
 Ten eerste werken veel studies met gecontroleerde datasets die niet lijken op echte winkelomstandigheden, waar producten dicht op elkaar staan, belichting varieert en verpakkingen overlappen \autocite{MELEK2024108452}.
 
