@@ -137,3 +137,4 @@ out/
 bachproef/datasets/
 bachproef/run/
 *.pt
+crops/
