@@ -138,3 +138,4 @@ bachproef/datasets/
 bachproef/run/
 *.pt
 crops/
+faiss_progress/
