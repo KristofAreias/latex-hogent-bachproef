@@ -1,0 +1,123 @@
+\chapter{\IfLanguageName{dutch}{Experimentele evaluatie}{Experimental evaluation}}%
+\label{ch:experieval}
+
+In dit hoofdstuk wordt de experimentele evaluatie van de proof-of-concept besproken. De focus ligt op het analyseren van de impact van verschillende modelcomponenten en hun onderlinge gewichten. Daarnaast worden de belangrijkste problemen en beperkingen van het systeem in detail beschreven.
+
+\section{Invloed van modelgewichten}
+
+Tijdens de experimenten werd onderzocht hoe belangrijk elke component in de pipeline is voor het eindresultaat. Hierbij werd specifiek gekeken naar de bijdrage van drie onderdelen:
+\begin{itemize}
+    \item CLIP (visuele embedding)
+    \item OCR via Florence-2 (tekstembedding)
+    \item Florence-2 visual (visuele embedding)
+\end{itemize}
+
+Voor elk van deze componenten werd een gewicht ingesteld. Deze gewichten bepalen hoeveel invloed een bepaalde embedding heeft in de uiteindelijke gecombineerde vector.
+
+Door deze gewichten systematisch aan te passen, kon geobserveerd worden welke combinatie de beste resultaten opleverde.
+
+Uit deze experimenten bleek dat de visuele component van Florence-2 weinig tot geen positieve impact had. In veel gevallen zorgde deze zelfs voor slechtere resultaten. Hierdoor werd besloten om Florence-2 visual volledig weg te laten in de uiteindelijke configuratie.
+
+De beste resultaten werden bekomen met een combinatie van CLIP en OCR. Hierbij werd een bijna gelijke verdeling gebruikt. Concreet gaf een configuratie met CLIP op 0.55 en OCR op 0.45 de meest consistente resultaten.
+
+Dit toont aan dat tekstinformatie een zeer belangrijke rol speelt in productherkenning. Vooral bij producten met duidelijke merk- of productnamen op de verpakking helpt OCR om betere matches te vinden.
+
+\section{Analyse van resultaten}
+
+Bij het analyseren van de resultaten werd voornamelijk gekeken naar de top-5 matches die door het systeem worden teruggegeven.
+
+In veel gevallen bevat deze top-5 lijst correcte producten, maar de volgorde is niet altijd stabiel. De similarity scores van de top-5 liggen vaak zeer dicht bij elkaar. Dit zorgt ervoor dat kleine veranderingen in de input kunnen leiden tot een andere top-1 voorspelling.
+
+Dit probleem is duidelijk zichtbaar bij producten zoals cola-flessen. Wanneer een afbeelding bijvoorbeeld een standaard Coca-Cola fles bevat, verschijnen in de top-5 vaak ook varianten zoals Coca-Cola Zero.
+
+Een klein detail, zoals een grijze kleur op de verpakking van Coca-Cola Zero die naast een gewone Coca-Cola fles staat, kan een grote invloed hebben op de embedding. Wanneer een klein stukje van een ander product zichtbaar is in de crop, kan dit de matching verstoren.
+
+Omgekeerd gebeurt hetzelfde. Een Coca-Cola Zero fles kan soms gematcht worden met een gewone Coca-Cola. Dit komt doordat de algemene vorm en tekst zeer gelijkaardig zijn, en soms een rode kleur mee gecropt wordt.
+
+Daarnaast speelt taal ook een rol. Productnamen verschillen soms per regio. Zo kan ``Coca-Cola Zero'' ook aangeduid worden als ``Coke Zero''. OCR kan deze variaties oppikken, maar dit zorgt niet altijd voor consistente embeddings.
+
+\section{Problemen met de dataset}
+
+Een groot deel van de problemen kan gelinkt worden aan de dataset. De gebruikte dataset is afkomstig van OpenFoodFacts en bevat afbeeldingen die door verschillende gebruikers zijn geüpload.
+
+Dit zorgt voor een hoge mate van inconsistentie:
+\begin{itemize}
+    \item Sommige afbeeldingen zijn scherp en goed belicht
+    \item Andere afbeeldingen zijn wazig of donker
+    \item Soms is slechts een deel van het product zichtbaar
+    \item In sommige gevallen hoort de afbeelding zelfs niet bij het juiste product
+\end{itemize}
+
+Deze variatie maakt het moeilijk voor het model om consistente embeddings te leren. Wanneer de referentiebeelden zelf niet betrouwbaar zijn, wordt het ook moeilijk om correcte matches te vinden.
+
+Daarnaast zijn er verschillen in resolutie en framing. Sommige afbeeldingen tonen enkel de voorkant van een product, terwijl andere meerdere zijden of zelfs meerdere producten bevatten.
+
+Deze inconsistenties hebben een directe impact op de kwaliteit van de similarity search.
+
+\section{Problemen met objectdetectie}
+
+Naast de dataset speelt ook de detectiestap een belangrijke rol in de fouten.
+
+Zowel yolov8n als yolo11s tonen inconsistent gedrag bij het detecteren van producten. Vooral bij afbeeldingen die onder een hoek genomen zijn, worden vaak enkel de producten die zich dicht bij de camera bevinden correct gedetecteerd.
+
+Producten die verder naar achter staan of gedeeltelijk verborgen zijn, worden vaak gemist. Dit zorgt ervoor dat een groot deel van de producten in een afbeelding niet verwerkt wordt.
+
+Daarnaast zijn de bounding boxes niet altijd nauwkeurig. Omdat de crops rechthoekig zijn, bevatten ze vaak ook delen van naburige producten.
+
+Wanneer deze naburige producten een andere kleur of vorm hebben, beïnvloedt dit de embedding sterk. Zelfs een klein stuk van een ander product kan de vectorrepresentatie veranderen.
+
+Dit probleem komt vaak voor bij dicht gevulde schappen waar producten tegen elkaar staan.
+
+\section{Problemen met OCR}
+
+OCR vormt een extra bron van fouten binnen het systeem.
+
+Hoewel tekstinformatie zeer waardevol is, is de kwaliteit van OCR afhankelijk van de leesbaarheid van de verpakking. Wanneer tekst vervormd, verkreukeld of slecht zichtbaar is, kan de OCR foutieve output genereren.
+
+Voorbeelden van problemen:
+\begin{itemize}
+    \item Verkeerd herkende letters
+    \item Onvolledige woorden
+    \item Tekst die volledig gemist wordt
+\end{itemize}
+
+Deze fouten worden rechtstreeks doorgegeven aan de text encoder van CLIP, wat resulteert in een verkeerde embedding.
+
+Omdat OCR een relatief groot gewicht krijgt in de uiteindelijke combinatie, kunnen deze fouten een sterke impact hebben op het eindresultaat.
+
+\section{Algemene beperkingen}
+
+Een belangrijk inzicht uit de experimenten is dat geen van de gebruikte modellen specifiek ontworpen is voor deze toepassing.
+
+CLIP is getraind op algemene internetdata \cite{DBLP:journals/corr/abs-2103-00020} en is niet geoptimaliseerd voor productherkenning op SKU-niveau. Florence-2 is een algemeen vision-language model en heeft geen specifieke kennis van retailproducten \cite{xiao2023florence2advancingunifiedrepresentation}. YOLO-modellen zijn niet getraind op datasets met hoge productdensiteit zoals winkelschappen.
+
+Deze mismatch tussen trainingsdata en toepassing verklaart een groot deel van de inconsistenties in de resultaten.
+
+Het systeem werkt in veel gevallen redelijk goed, maar kleine veranderingen in input kunnen grote verschillen veroorzaken in output. Dit maakt het systeem gevoelig voor ruis en minder betrouwbaar in realistische scenario's.
+
+De combinatie van datasetproblemen, detectiefouten en modelbeperkingen zorgt ervoor dat de resultaten niet altijd stabiel zijn.
+
+\section{Finetuning van YOLO op SKU-110K}
+
+Naast het gebruik van bestaande YOLO-modellen werd ook onderzocht wat het effect is van finetuning op een dataset die specifiek gemaakt is voor retailtoepassingen. Hiervoor werd gebruik gemaakt van de SKU-110K dataset, een dataset die ontworpen is voor detectie van producten in winkelschappen met hoge objectdensiteit.
+
+Wanneer het standaard yolo11s model wordt toegepast op een afbeelding van een winkelschap, worden slechts een beperkt aantal producten gedetecteerd. In een testgeval werden bijvoorbeeld slechts 19 producten gevonden op een volledige schapafbeelding.
+
+Na finetuning van hetzelfde model op de SKU-110K dataset werd een zeer groot verschil waargenomen. Op exact dezelfde testafbeelding detecteerde het model plots 188 producten. Dit betekent dat er bijna tien keer meer producten gevonden werden.
+
+Dit verschil is zeer significant en toont duidelijk aan hoe belangrijk training op domeinspecifieke data is. De SKU-110K dataset bevat beelden die sterk lijken op de uiteindelijke toepassing: winkelschappen met veel producten dicht bij elkaar. Hierdoor leert het model beter omgaan met:
+\begin{itemize}
+    \item hoge productdichtheid,
+    \item overlappende objecten,
+    \item kleine en gedeeltelijk zichtbare producten.
+\end{itemize}
+
+De bounding boxes die door het gefinetunede model gegenereerd worden, zijn ook consistenter. Producten worden vaker volledig gecaptured en er wordt minder achtergrond meegenomen in de crops. Dit zorgt voor betere input voor de embedding stap.
+
+Daarnaast worden producten die verder naar achter staan of onder een hoek zichtbaar zijn, vaker correct gedetecteerd. Dit was een duidelijk probleem bij het niet-getrainde model.
+
+Toch zijn er nog steeds beperkingen. Sommige detecties blijven onnauwkeurig, vooral bij extreme hoeken of slechte beeldkwaliteit. Ook kunnen er nog steeds false positives optreden waarbij stukken van de achtergrond als product worden gezien.
+
+Ondanks deze beperkingen is het verschil tussen een niet-getraind model en een gefinetunede versie zeer groot. Dit benadrukt dat objectdetectie een van de belangrijkste stappen is in de volledige pipeline. Wanneer deze stap faalt, heeft dit een directe impact op alle volgende stappen.
+
+De resultaten tonen duidelijk aan dat finetuning op een relevante dataset zoals SKU-110K essentieel is voor toepassingen in retailomgevingen.
