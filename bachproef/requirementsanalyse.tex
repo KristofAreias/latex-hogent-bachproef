@@ -18,16 +18,14 @@ Op basis van de literatuurstudie kunnen we de volgende functionele vereisten ops
 
 \section{Prestatievereisten}
 
-Op basis van prestatiedrempels kunnen we modellen objectief vergelijken en bekijken. Het is moeilijk om hier vaste waarden op te plakken als drempels, daarom zullen we simpelweg een top 3 houden. Als de waarden ondermaats scoren op basis van de andere modelscores zal dit model niet meegenomen worden verder in deze proef. We kiezen onze top 3 modellen op basis van volgende criteria:
+Op basis van prestatiedrempels kunnen we modellen objectief vergelijken en bekijken. We kiezen onze modellen op basis van volgende criteria:
 \begin{itemize}
-    \item Het model moet een mAP-score behalen op de testdataset dat niet ondermaats is in vergelijking met de andere modellen.
-    \item Het model moet een hoge recall behalen, aangezien het missen van producten vermeden moet worden.
-    \item Het model moet een hoge precision behalen, aangezien het model accuraat moet zijn over de herkenning van de producten.
-    \item Voor classificatie moet een hoge Top-1 accuracy worden nagestreefd.
+    \item Het model moet een mAP-score behalen op de testdataset van minstens 85 procent.
+    \item Het model moet een hoge recall behalen van minstens 80 procent, aangezien het missen van producten vermeden moet worden.
+    \item Het model moet een hoge precision behalen die minstens 85 procent bedraagt, aangezien het model accuraat moet zijn over de herkenning van de producten.
+    \item Voor classificatie moet een hoge Top-1 accuracy worden nagestreefd die een drempelwaarde heeft van minstens 85 procent.
     \item Top-5 accuracy wordt gebruikt als aanvullende metric voor visueel gelijkaardige producten.
 \end{itemize}
-
-
 
 \section{Robuustheid en generaliseerbaarheid}
 
@@ -40,3 +38,23 @@ Retialomgevingen variëren veel, daarom moet het model robuust zijn tegen variat
 \end{itemize}
 
 De modellen moeten goed werken op beelden die lijken op de trainingsdata maar het is ook zeer belangrijk dat de modellen ook goed presteren op nieuwe of andere situaties.
+
+\section{Vertaling van vereisten naar modelkeuze en pipeline}
+
+De bovenstaande vereisten worden rechtstreeks vertaald naar de gekozen architectuur van de proof-of-concept. Geen enkel afzonderlijk model voldoet aan alle functionele en prestatievereisten tegelijk. Daarom wordt een combinatie van modellen gebruikt, waarbij elke component een specifieke taak uitvoert.
+
+Voor objectdetectie wordt kijken we naar YOLO-modellen. Deze modellen zijn geschikt voor real-time detectie en kunnen meerdere objecten tegelijk verwerken binnen één afbeelding. Het gebruik van bounding boxes sluit aan bij de functionele vereiste om individuele producten te lokaliseren. Er gaat moetten afgewogen worden tussen verschillende YOLO-varianten, waarbij de trade-off tussen nauwkeurigheid en snelheid in overweging wordt genomen.
+
+Voor productidentificatie wordt niet gewerkt met een klassiek classificatiemodel, maar met een embedding-gebaseerde aanpak. In plaats van een vaste set klassen te voorspellen, wordt elk product voorgesteld als een vector in een hoge-dimensionale ruimte. Deze aanpak maakt het mogelijk om flexibel om te gaan met grote aantallen producten en ondersteunt het onderscheiden van visueel gelijkaardige items.
+
+De embeddings worden gegenereerd met een combinatie van CLIP en Florence-2. CLIP levert een sterke algemene visuele representatie en presteert goed op globale kenmerken zoals kleur en merkidentiteit. Florence-2 vult dit aan met meer gedetailleerde visuele informatie, waardoor subtiele verschillen beter vastgelegd worden. Dit is noodzakelijk om te voldoen aan de vereiste om producten op SKU-niveau te onderscheiden.
+
+Daarnaast wordt OCR toegepast via Florence-2 om tekstinformatie uit productverpakkingen te extraheren. Deze tekst wordt omgezet naar een embedding met behulp van de text encoder van CLIP. Hierdoor wordt expliciete productinformatie zoals merknamen en labels geïntegreerd in de representatie. Dit versterkt de identificatie, vooral bij producten die visueel sterk op elkaar lijken.
+
+De combinatie van visuele en tekstuele embeddings wordt samengevoegd tot één vectorrepresentatie. Deze fusie zorgt ervoor dat verschillende informatiebronnen samen bijdragen aan de uiteindelijke vergelijking tussen producten.
+
+Voor het zoeken naar overeenkomsten wordt gebruik gemaakt van FAISS. Deze component maakt het mogelijk om snel en efficiënt de meest gelijkaardige producten te vinden in een grote dataset. In plaats van een directe classificatie wordt gewerkt met een top-k benadering, waarbij meerdere mogelijke matches worden teruggegeven. Dit sluit aan bij het gebruik van Top-5 accuracy als aanvullende metric.
+
+De gekozen pipeline ondersteunt verwerking van meerdere producten binnen één beeld. Elke detectie wordt afzonderlijk verwerkt, waardoor schaalbaarheid behouden blijft bij hoge objectdensiteit. Tegelijk blijft de kwaliteit afhankelijk van de nauwkeurigheid van de detectiestap en de representatiekracht van de embeddings.
+
+Op deze manier wordt een systeem opgebouwd dat de functionele vereisten afdekt en tegelijkertijd rekening houdt met de beperkingen van individuele modellen.

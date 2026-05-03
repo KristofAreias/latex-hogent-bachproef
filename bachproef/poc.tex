@@ -1,2 +1,147 @@
 \chapter{\IfLanguageName{dutch}{Ontwikkeling van een proof-of-concept}{Development of a Proof-of-Concept}}%
 \label{ch:poc}
+
+In dit hoofdstuk bespreken we de ontwikkeling van een proof-of-concept (PoC) voor het detecteren van producten in supermarktbeelden. Hierin zal de implementatie van de geselecteerde modellen beschreven worden, net als de uitdagingen en oplossingen die we tegenkwamen tijdens het ontwikkelingsproces.
+
+\section{Pipeline en architectuur}
+
+De proof-of-concept bestaat uit een volledige pipeline die start bij een afbeelding van een winkelschap en eindigt bij een lijst van mogelijke productmatches. Elke stap in deze pipeline heeft een specifieke functie en beïnvloedt rechtstreeks de kwaliteit van het eindresultaat.
+
+De algemene flow van het systeem is als volgt:
+\begin{verbatim}
+Shelf image → YOLO → crops → embeddings → FAISS → top matches
+\end{verbatim}
+
+\section{Inputdata}
+
+De input van het systeem is een afbeelding van een winkelschap. Deze afbeelding bevat typisch een groot aantal producten die dicht naast elkaar geplaatst zijn. De complexiteit van deze input is hoog door meerdere factoren.
+
+Ten eerste bevat een dergelijke afbeelding veel visuele informatie. Producten staan vaak gedeeltelijk achter elkaar, waardoor sommige objecten niet volledig zichtbaar zijn. Daarnaast zijn er variaties in perspectief. Producten aan de rand van de afbeelding worden vaak onder een andere hoek weergegeven dan producten in het midden.
+
+Verder spelen lichtomstandigheden een belangrijke rol. Reflecties op verpakkingen, vooral bij metalen blikjes en glazen flessen, zorgen voor visuele ruis. Ook schaduwen en overbelichting kunnen details verbergen of vervormen.
+
+Door deze complexiteit is het niet mogelijk om de volledige afbeelding rechtstreeks te gebruiken voor productherkenning. De afbeelding moet eerst opgesplitst worden in afzonderlijke producten.
+
+\section{Objectdetectie met YOLO11s}
+
+Voor het detecteren van individuele producten wordt gebruik gemaakt van het model yolo11s. Dit model analyseert de volledige afbeelding en probeert objecten te lokaliseren via bounding boxes.
+
+Oorspronkelijk werd ook yolov8n meegenomen maar yolo11s presteert al veel beter en is nog steeds snel genoeg, dus is er besloten om vooral op dit model te focussen.
+
+Voor elke detectie produceert het model:
+\begin{itemize}
+    \item Coördinaten van de bounding box: $(x_1, y_1, x_2, y_2)$
+    \item Een confidence score die aangeeft hoe zeker het model is
+\end{itemize}
+
+Op basis van deze bounding boxes worden crops gegenereerd. Elke crop bevat een uitgesneden deel van de originele afbeelding en stelt idealiter één product voor.
+
+Het aantal crops hangt af van het aantal gedetecteerde objecten. In een typische afbeelding kan dit variëren van enkele tientallen tot meer dan vijftig producten.
+
+\subsection{Beperkingen van detectie}
+
+Hoewel yolo11s efficiënt is, zijn er beperkingen.
+
+Bounding boxes zijn niet altijd nauwkeurig. In sommige gevallen bevatten ze te veel achtergrond, wat de kwaliteit van de crop verlaagt. In andere gevallen wordt slechts een deel van het product gedetecteerd, waardoor belangrijke visuele kenmerken ontbreken.
+
+Daarnaast kunnen producten volledig gemist worden. Dit gebeurt vooral bij kleine objecten of objecten die gedeeltelijk verborgen zijn.
+
+Deze fouten hebben een directe impact op de volgende stappen in de pipeline. Slechte crops leiden tot minder betrouwbare embeddings en dus tot slechtere zoekresultaten.
+
+\section{Representatie van afbeeldingen via embeddings}
+
+Na de detectiestap wordt elke crop omgezet naar een numerieke representatie, een zogenaamde embedding. Het doel van deze stap is om afbeeldingen op een betekenisvolle manier te kunnen vergelijken.
+
+Directe vergelijking van pixels is niet robuust. Kleine veranderingen in belichting of perspectief kunnen grote verschillen veroorzaken in pixelwaarden, terwijl het product zelf hetzelfde blijft.
+
+Embeddings lossen dit probleem op door afbeeldingen te projecteren in een vectorruimte. In deze ruimte liggen visueel gelijkaardige afbeeldingen dicht bij elkaar.
+
+Een embedding is een vector bestaande uit tientallen tot honderden getallen. De exacte waarden zijn niet interpreteerbaar voor mensen, maar de relatieve positie van vectoren ten opzichte van elkaar is betekenisvol.
+
+\section{CLIP als visuele encoder}
+
+CLIP wordt gebruikt als eerste model voor het genereren van embeddings. Dit model is getraind op een grote dataset van afbeeldingen en bijhorende tekstbeschrijvingen.
+
+De output van CLIP is een vector van 512 dimensies. Deze vector encodeert algemene visuele kenmerken van de afbeelding.
+
+CLIP is sterk in het herkennen van globale eigenschappen zoals kleur, vorm en merkidentiteit. Hierdoor werkt het goed voor producten met duidelijke visuele kenmerken.
+
+Er zijn echter beperkingen. CLIP maakt moeilijk onderscheid tussen producten die sterk op elkaar lijken. Variaties zoals smaakverschillen of light-versies van een product worden vaak als gelijkaardig beschouwd.
+
+\section{Florence-2 als aanvullende encoder}
+
+Naast CLIP werd er ook Florence-2 gebruikt om extra visuele informatie te extraheren. Dit model is ontworpen voor meerdere visuele taken en kan fijnere details detecteren.
+
+De afbeelding wordt door de vision encoder van Florence-2 gestuurd. De output bestaat uit meerdere tokens die vervolgens samengevoegd worden via mean pooling. Het resultaat is één vectorrepresentatie.
+
+Deze vector bevat meer detail dan de CLIP embedding. Subtiele verschillen in structuur en layout worden beter vastgelegd.
+
+Florence-2 is computationeel zwaarder dan CLIP, maar levert rijkere features op. Dit werd ook gedropt later in de poc omdat combinaties met enkel CLIP en OCR betere resultaten opleverden.
+
+\section{Tekstextractie met Florence-2 OCR}
+
+Een belangrijke uitbreiding in deze POC is het gebruik van OCR via Florence-2. Productverpakkingen bevatten vaak tekst zoals merknamen en productlabels. Deze informatie is zeer waardevol voor herkenning.
+
+De OCR-module van Florence-2 wordt gebruikt om tekst uit elke crop te extraheren. De output is een string die de herkende tekst bevat.
+
+Deze tekst wordt vervolgens verwerkt met de text encoder van CLIP. Hierdoor ontstaat een tekstembedding die in dezelfde vectorruimte ligt als de visuele embeddings.
+
+Dit maakt het mogelijk om visuele en tekstuele informatie te combineren.
+
+\section{Combineren van embeddings}
+
+De embeddings van CLIP en OCR worden samengevoegd tot één vector. Dit gebeurt in meerdere stappen.
+
+Eerst worden gewichten toegekend aan de verschillende embeddings. Dit laat toe om bepaalde componenten belangrijker te maken dan andere.
+
+Daarna worden de vectors samengevoegd via concatenatie. Dit betekent dat de vectors achter elkaar geplaatst worden tot één lange vector.
+
+Ten slotte wordt de gecombineerde vector genormaliseerd via L2-normalisatie. Hierdoor krijgt elke vector een lengte van 1. Dit zorgt ervoor dat vergelijkingen enkel gebaseerd zijn op richting en niet op schaal.
+
+Het resultaat is één uniforme representatie per afbeelding.
+
+\section{Dataset en preprocessing}
+
+De dataset die gebruikt wordt in deze POC is gebaseerd op OpenFoodFacts. Deze dataset werd gefilterd op belgische producten en hun afbeeldingen van de voorkant van het product en bevat na deze filtering rond de 70.000 productafbeeldingen, waarvan ongeveer 46.000 unieke producten.
+
+Elke afbeelding in de dataset wordt verwerkt via dezelfde pipeline als de crops. Dit betekent dat voor elke afbeelding een embedding wordt berekend.
+
+Naast embeddings wordt ook metadata opgeslagen. Deze metadata bevat informatie zoals productnaam, productcode en een URL naar de originele afbeelding. Dit word gebruikt om de resultaten na te kijken en te valideren maar ook zodat er later dan gebruik gemaakt kan worden voor andere mogelijke toepassingen.
+
+De embeddings en metadata worden opgeslagen zodat ze later efficiënt doorzocht kunnen worden.
+
+\section{FAISS voor similarity search}
+
+Voor het zoeken naar gelijkaardige producten wordt gebruik gemaakt van FAISS. Dit is een library die geoptimaliseerd is voor het zoeken in grote verzamelingen vectoren.
+
+De gekozen index is IndexFlatIP. Dit type index slaat alle vectors exact op en gebruikt inner product als maat voor gelijkaardigheid.
+
+Omdat alle vectors genormaliseerd zijn, komt inner product overeen met cosine similarity. Dit betekent dat de hoek tussen twee vectors bepaalt hoe gelijkaardig ze zijn.
+
+FAISS maakt het mogelijk om snel de meest gelijkaardige vectors te vinden, zelfs in grote datasets.
+
+\section{Zoekproces}
+
+Voor elke crop wordt het volgende proces uitgevoerd.
+
+Eerst wordt een embedding berekend via de combinatie van CLIP en OCR. Deze embedding stelt de query voor.
+
+Vervolgens wordt deze query naar de FAISS index gestuurd. De index zoekt naar de meest gelijkaardige vectors in de dataset.
+
+De output bestaat uit een lijst van indices en bijhorende similarity scores. Deze indices verwijzen naar specifieke producten in de dataset.
+
+Ten slotte wordt de metadata opgehaald voor deze indices. Dit resulteert in een lijst van mogelijke productmatches, inclusief naam en andere informatie.
+
+\section{Factoren die de kwaliteit beïnvloeden}
+
+De prestaties van het systeem worden bepaald door meerdere factoren.
+
+De eerste factor is de kwaliteit van de detectie. Onnauwkeurige bounding boxes leiden tot slechte input voor de embedding modellen.
+
+De tweede factor is de kwaliteit van de embeddings. Generalistische modellen hebben moeite met het onderscheiden van visueel gelijkaardige producten.
+
+De derde factor is de kwaliteit van de dataset. Foute of inconsistente data heeft een directe impact op de zoekresultaten.
+
+Daarnaast speelt ook OCR een rol. Foutieve tekstherkenning kan leiden tot verkeerde embeddings, vooral wanneer tekst zwaar doorweegt in de combinatie.
+
+Deze factoren samen bepalen hoe nauwkeurig het systeem producten kan herkennen.
