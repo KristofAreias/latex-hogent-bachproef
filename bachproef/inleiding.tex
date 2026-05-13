@@ -41,16 +41,23 @@ De centrale onderzoeksvraag luidt:
 Om deze onderzoeksvraag te beantwoorden, wordt het probleem verder opgesplitst in een aantal deelvragen binnen het probleemdomein:
 
 \begin{itemize}
-    \item Wat is het effect van gecontroleerde variaties in belichting (lux-niveau), beeldresolutie (px) en rekdichtheid (aantal producten per m²) op de mAP- en recall-scores van geselecteerde detectiemodellen?
+    \item Welke detectiemodellen presteren het best bij het onderscheiden van (sterk gelijkende) producten?
     \item Welke bestaande open datasets of online databronnen bevatten geschikt beeldmateriaal van supermarktproducten voor training en evaluatie van productherkenningsmodellen?
+    \item Welke factoren veroorzaken instabiliteit in top-k en top-5 similarity matching bij sterk gelijkende producten?
+    \item Welke combinatie van visuele en tekstuele embeddings levert de meest consistente productmatches op?
+    \item Welke impact heeft de kwaliteit en consistentie van de dataset op de prestaties van similarity-based productherkenning?
 \end{itemize}
 
-Daarnaast worden deelvragen geformuleerd binnen het oplossingsdomein, die focussen op de technische haalbaarheid van automatische productherkenning:
-
+Daarnaast worden deelvragen geformuleerd binnen het oplossingsdomein, die focussen op de technische haalbaarheid van automatische productherkenning.
+Voor prestaties van modellen te evalueren kijken we vooral naar mAP@0.5:0.95, precision en recall. Precision geeft de nauwkeurigheid van de positieve voorspellingen aan, terwijl recall de hoeveelheid van relevante items die correct worden geïdentificeerd meet. En hoge recall betekent dat het model bijna niets over het hoofd ziet en hoge precision geeft aan dat het model weinig fouten maakt.
+mAP@0.5:0.95 is een veelgebruikte metriek die we kunnen opdelen in 2 stukken. mAP@0.5 bekijkt of de prediction van waar het object is, minstens 50\% overlapt met waar het object effectief is. mAP@0.95 is hier een veel strengere versie van, waarbij er minstens 95\% overlap moet zijn. We nemen dan het gemiddelde van de scores. 
+Doordat we werken met beelden van winkelschappen, spreken we over objectdichtheid. Dit verwijst naar de dichtheid van objecten in zo een afbeelding. We spreken van hoge objectdichtheid wanneer de schappen optimaal benut worden, met weinig lege ruimte tussen producten. 
+YOLO-modellen zijn You Only Look Once-modellen, die snel en efficiënt zijn in het detecteren van objecten in afbeeldingen. Doordat deze modellen open-source zijn en performant, zijn ze ideaal voor deze toepassing. Deze informatie helpt om de deelvragen beter te begrijpen:
 \begin{itemize}
-    \item Welke mAP@0.5:0.95-, recall en precisionscores behalen geselecteerde AI-modellen bij detectie van producten in supermarktbeelden met hoge rekdichtheid?
-    \item Hoe verschillen YOLO-modellen in termen van mAP, recall en detectiesnelheid bij identieke supermarktbeelden?
-    \item Wat is het effect van beperkte fine-tuning op mAP, recal en precision ten opzichte van het vooraf getrainde basismodel?
+    \item Welke detectieprestaties behalen verschillende YOLO-modellen op supermarktbeelden met hoge objectdichtheid, uitgedrukt in mAP@0.5:0.95, precision en recall?
+    \item In welke mate verbetert fine-tuning van YOLO-modellen op SKU-110K de detectie van producten in winkelschappen?
+    \item Wat is het effect van beperkte fine-tuning van CLIP op de similarity scores en productmatching?
+    \item Welke combinatie van CLIP-, OCR- en Florence-2-embeddings levert de meest accurate productherkenning op?
 \end{itemize}
 
 

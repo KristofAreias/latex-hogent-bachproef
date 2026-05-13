@@ -121,3 +121,25 @@ Toch zijn er nog steeds beperkingen. Sommige detecties blijven onnauwkeurig, voo
 Ondanks deze beperkingen is het verschil tussen een niet-getraind model en een gefinetunede versie zeer groot. Dit benadrukt dat objectdetectie een van de belangrijkste stappen is in de volledige pipeline. Wanneer deze stap faalt, heeft dit een directe impact op alle volgende stappen.
 
 De resultaten tonen duidelijk aan dat finetuning op een relevante dataset zoals SKU-110K essentieel is voor toepassingen in retailomgevingen.
+
+\section{Finetuning van CLIP}
+
+Naast de eerder besproken componenten werd ook onderzocht of het mogelijk is om het CLIP-model verder te verbeteren via finetuning. Hierbij werd geëxperimenteerd met verschillende hyperparameters en configuraties.
+
+Tijdens deze experimenten werden meerdere batchgroottes getest, namelijk 64, 128, 256 en 512. Daarnaast werd er gevarieerd in het aantal epochs (5, 10 en 20) en de learning rate (1e-5, 1e-6 en 1e-7). Het doel hiervan was om te bepalen welke combinatie het meest stabiele en beste resultaat oplevert.
+
+Voor de finetuning werd ervoor gekozen om enkel de laatste lagen van het model aan te passen. Concreet werden de laatste vier lagen van CLIP getraind, wat neerkomt op ongeveer 655.000 parameters. Dit is slechts ongeveer 0.4\% van het totale aantal parameters van het model. Deze keuze werd gemaakt om overfitting te vermijden en de originele kennis van CLIP zoveel mogelijk te behouden.
+
+Er werd ook geëxperimenteerd met het vrijgeven van meer lagen. In een bepaalde configuratie werd tot ongeveer 14\% van het model trainbaar gemaakt. Dit leidde tot iets betere resultaten.
+
+Een belangrijke observatie is dat het gefinetunede model in de meeste gevallen ongeveer even goed presteert als het originele CLIP-model. Dit lijkt tegenintuïtief, maar kan verklaard worden door de aard van het model. CLIP is een zeer groot model dat getraind is op een enorme hoeveelheid data van het internet. Hierdoor heeft het een brede en sterke algemene representatie geleerd.
+
+De dataset die gebruikt werd voor finetuning is in vergelijking zeer klein. In de meeste experimenten werd gewerkt met ongeveer 8400 afbeeldingen. Voor een model van deze grootte is dit beperkt. Hierdoor is het moeilijk om het model effectief bij te sturen zonder de bestaande kennis te verstoren.
+
+Daarnaast speelt ook de kwaliteit van de data een rol. De gebruikte afbeeldingen en productnamen bevatten ruis en inconsistenties, wat het leerproces bemoeilijkt. Hierdoor leert het model soms verkeerde verbanden tijdens het finetunen.
+
+Samengevat tonen de resultaten aan dat finetuning van CLIP in deze context niet vanzelfsprekend is. Zonder een zeer grote en kwalitatieve dataset kan het model moeilijk verbeterd worden en bestaat de kans dat de prestaties zelfs achteruitgaan.
+
+Het opschonen van de "product\_name" kolom in de dataset had een duidelijk positieve impact op de training van CLIP. Door alle tekst naar lowercase te brengen en speciale karakters te verwijderen, werd de input consistenter en beter leesbaar voor het model. Hierdoor ontstonden er minder variaties van dezelfde productnaam (bijvoorbeeld door hoofdletters of symbolen), wat ervoor zorgde dat gelijkaardige producten ook effectief dichter bij elkaar in de embeddingruimte kwamen te liggen.
+
+Deze relatief eenvoudige preprocessing stap zorgde ervoor dat het model stabieler trainde en consistent hogere similarity scores behaalde. Zonder deze opschoning werden identieke of sterk gelijkaardige producten soms als verschillend geïnterpreteerd, puur door kleine verschillen in schrijfwijze. Dit toont aan dat datakwaliteit en consistente tekstrepresentatie een grote invloed hebben op de prestaties van CLIP.
