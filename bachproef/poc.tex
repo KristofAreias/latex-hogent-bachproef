@@ -10,7 +10,6 @@ De proof-of-concept bestaat uit een volledige pipeline die start bij een afbeeld
 De algemene flow van het systeem is als volgt:
 
 \vspace{0.3em}
-
 \begin{tikzpicture}[node distance=1.3cm]
     \tikzset{
         box/.style={rectangle, rounded corners, minimum width=4cm, minimum height=1cm, text centered, draw=black, fill=blue!10},
@@ -36,16 +35,53 @@ De algemene flow van het systeem is als volgt:
 De input van het systeem is een afbeelding van een winkelschap. Deze afbeelding bevat typisch een groot aantal producten die dicht naast elkaar geplaatst zijn.
 
 \begin{figure}[h]
-    \includegraphics[options]{r"C:\Users\krist\Documents\Hogent_IT\3de_jaar\Bachelorproef\bachproef26\latex-hogent-bachproef\bachproef\datasets\SKU-110K_fixed\images/test_0.jpg"}
-    \caption{Representatieve afbeelding uit de SKU-110K dataset.}
-    \label{fig: SKU-110k_afbeelding}
+    \centering
+    \begin{tikzpicture}[node distance=0.5cm] 
+        \node[inner sep=0pt] (img0) at (0,0)
+            {\includegraphics[width=0.3\textwidth]{C:/Users/krist/OneDrive/Documents/HoGent IT/BachproefHoGent/latex-hogent-bachproef/bachproef/datasets/SKU-110K_fixed/images/test_0.jpg}};
+            
+        \node[inner sep=0pt, right=of img0] (img1)
+            {\includegraphics[width=0.3\textwidth]{C:/Users/krist/OneDrive/Documents/HoGent IT/BachproefHoGent/latex-hogent-bachproef/bachproef/datasets/SKU-110K_fixed/images/train_0.jpg}};
+            
+        \node[inner sep=0pt, right=of img1] (img2)
+            {\includegraphics[width=0.3\textwidth]{C:/Users/krist/OneDrive/Documents/HoGent IT/BachproefHoGent/latex-hogent-bachproef/bachproef/datasets/SKU-110K_fixed/images/val_0.jpg}};
+    \end{tikzpicture}
+    \caption{Representatieve afbeeldingen uit de SKU-110K dataset (v.l.n.r. test\_0, train\_0 en val\_0).}
+    \label{fig:SKU-110k_representatief}
 \end{figure}
+
 
 De complexiteit van deze input is hoog door meerdere factoren.
 
 Ten eerste bevat een dergelijke afbeelding veel visuele informatie. Producten staan soms gedeeltelijk achter elkaar, waardoor sommige objecten niet volledig zichtbaar zijn. Daarnaast zijn er variaties in perspectief. Producten aan de rand van de afbeelding worden vaak onder een andere hoek weergegeven dan producten in het midden.
 
-Verder spelen lichtomstandigheden een belangrijke rol. Reflecties op verpakkingen, vooral bij metalen blikjes en glazen flessen, zorgen voor visuele ruis. Ook schaduwen en overbelichting kunnen details verbergen of vervormen.
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[node distance=0.5cm] 
+        \node[inner sep=0pt] (img0) at (0,0)
+            {\includegraphics[width=0.4\textwidth]{C:/Users/krist/Downloads/test_376_aangeduid.jpg}};
+            
+        \node[inner sep=0pt, right=of img0] (img1)
+            {\includegraphics[width=0.4\textwidth]{C:/Users/krist/Downloads/test_54_aangeduid.jpg}};
+    \end{tikzpicture}
+    \caption{Aangeduid waar overlapping voorkomt en visueel voorbeeld van afbeelding genomen van een hoek (v.l.n.r. test\_376\_aangeduid en test\_54\_aangeduid).}
+    \label{fig:overlapping_en_hoek}
+\end{figure}
+
+Verder spelen lichtomstandigheden een belangrijke rol. Reflecties op verpakkingen kunnen zorgen voor visuele ruis. Ook schaduwen en overbelichting kunnen details verbergen of vervormen.
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[node distance=0.5cm] 
+        \node[inner sep=0pt] (img0) at (0,0)
+            {\includegraphics[width=0.1\textwidth]{C:/Users/krist/Downloads/reflecties1.jpg}};
+            
+        \node[inner sep=0pt, right=of img0] (img1)
+            {\includegraphics[width=0.1\textwidth]{C:/Users/krist/Downloads/reflecties2.jpg}};
+    \end{tikzpicture}
+    \caption{Voorbeelden van reflecties op verpakkingen, na croppen bounding boxes van de originele afbeeldingen, test\_16 (v.l.n.r. reflecties1 en reflecties2).}
+    \label{fig:crops_reflecties}
+\end{figure}
 
 Door deze complexiteit is het niet mogelijk om de volledige afbeelding rechtstreeks te gebruiken voor productherkenning. De afbeelding moet eerst opgesplitst worden in afzonderlijke producten.
 
@@ -53,7 +89,7 @@ Door deze complexiteit is het niet mogelijk om de volledige afbeelding rechtstre
 
 Voor het detecteren van individuele producten wordt gebruik gemaakt van het model yolo11s. Dit model analyseert de volledige afbeelding en probeert objecten te lokaliseren via bounding boxes.
 
-Oorspronkelijk werd ook yolov8n meegenomen maar yolo11s presteert al veel beter en is nog steeds snel genoeg, dus is er besloten om vooral op dit model te focussen.
+Oorspronkelijk werd ook yolov8n meegenomen maar yolo11s presteert al veel beter en is nog steeds snel genoeg, dus is er besloten om vooral op dit model te focussen en yolov8n achter te laten.
 
 Voor elke detectie produceert het model:
 \begin{itemize}
@@ -64,6 +100,25 @@ Voor elke detectie produceert het model:
 Op basis van deze bounding boxes worden crops gegenereerd. Elke crop bevat een uitgesneden deel van de originele afbeelding en stelt idealiter één product voor.
 
 Het aantal crops hangt af van het aantal gedetecteerde objecten. In een typische afbeelding kan dit variëren van enkele tientallen tot meer dan vijftig producten.
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[node distance=0.5cm] 
+        \node[inner sep=0pt] (img0) at (0,0)
+            {\includegraphics[width=0.3\textwidth]{C:/Users/krist/OneDrive/Documents/HoGent IT/BachproefHoGent/latex-hogent-bachproef/bachproef/datasets/SKU-110K_fixed/images/test_16.jpg}};
+            
+        \node[inner sep=0pt, right=of img0] (img1)
+            {\includegraphics[width=0.3\textwidth]{C:/Users/krist/OneDrive/Documents/HoGent IT/BachproefHoGent/latex-hogent-bachproef/bachproef/test_16_boxes.jpg}};
+
+        \node[inner sep=0pt, right=of img1] (img2)
+            {\includegraphics[width=0.1\textwidth]{C:/Users/krist/Downloads/crop_ex1.jpg}};
+            
+        \node[inner sep=0pt, right=of img2] (img3)
+            {\includegraphics[width=0.085\textwidth]{C:/Users/krist/Downloads/crop_ex2.jpg}};
+    \end{tikzpicture}
+    \caption{Problemen die voorkomen bij detectie. Afbeelding van SKU-110k links en detecties rechts met 2 voorbeelden van crops (v.l.n.r. test\_16, test\_16\_boxes, crop\_ex1, crop\_ex2).}
+    \label{fig:detectie_crops}
+\end{figure}
 
 \subsection{Beperkingen van detectie}
 
