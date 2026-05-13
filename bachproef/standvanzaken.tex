@@ -64,9 +64,9 @@ In tegenstelling tot algemene objectdetectietaken (zoals COCO), hebben supermark
 \item verschillen tussen varianten van hetzelfde product zijn vaak klein (zoals zero-varianten).
 \end{itemize}
 
-\textcite{FRANCO2017163} tonen aan dat een belangrijke aanname uit klassieke objectdetectie vaak niet klopt in de retailcontext. Meestal gaat men ervan uit dat trainingsdata goed overeenkomt met de situatie in de praktijk. In supermarkten is dat echter vaak niet het geval. Trainingsbeelden worden genomen in gecontroleerde omstandigheden, terwijl beelden in winkels veel variatie en beweging bevatten. Daardoor ontstaat er een verschil tussen training en gebruik in de praktijk.
+\textcite{FRANCO2017163} tonen aan dat een belangrijke aanname uit klassieke objectdetectie vaak niet klopt in de retailcontext. Meestal gaat men ervan uit dat trainingsdata goed overeenkomt met de situatie in de praktijk. In supermarkten is dat echter vaak niet het geval. Trainingsbeelden worden genomen in gecontroleerde omstandigheden, terwijl beelden in winkels veel variatie bevatten. Daardoor ontstaat er een verschil tussen training en gebruik in de praktijk.
 
-Productherkenning moet daarom niet alleen goed omgaan met overlappende producten en verschillen in grootte, maar ook met producten die sterk op elkaar lijken.
+Productherkenning moet niet alleen goed omgaan met overlappende producten en verschillen in grootte, maar ook met producten die sterk op elkaar lijken.
 
 \subsection*{2. Datasetkarakteristieken en representativiteit}
 
@@ -183,13 +183,13 @@ Bij open-set scenario’s moet gekeken worden naar foutieve toewijzing van onbek
 
 Uit de literatuur blijkt dat er verschillende belangrijke gaten bestaan in onderzoek naar automatische productherkenning in supermarkten.
 
-Ten eerste werken veel studies met gecontroleerde datasets die niet lijken op echte winkelomstandigheden, waar producten dicht op elkaar staan, belichting varieert en verpakkingen overlappen \autocite{MELEK2024108452}.
+Veel studies werken met gecontroleerde datasets die niet lijken op echte winkelomstandigheden, waar producten dicht op elkaar staan, belichting varieert en verpakkingen overlappen \autocite{MELEK2024108452}.
 
-Ten tweede worden verschillende modellen zelden onder identieke omstandigheden vergeleken. De meeste studies testen één model of pipeline \autocite{TONIONI201810733}, waardoor we niet goed kunnen zien welk type model echt beter presteert.
+Er worden ook zelden verschillende modellen onder identieke omstandigheden vergeleken. De meeste studies testen één model of pipeline \autocite{TONIONI201810733}, waardoor we niet goed kunnen zien welk type model echt beter presteert.
 
-Daarnaast is er weinig onderzoek naar de invloed van beeldfactoren zoals camerahoek, resolutie, afstand tot het rek of productdichtheid. Domeinverschuiving wordt wel genoemd \autocite{FRANCO2017163}, maar vaak ontbreekt kwantitatief bewijs over welke factoren detectieprestaties het meest beïnvloeden.
+Onderzoek naar de invloed van beeldfactoren zoals camerahoek, resolutie, afstand tot het rek of productdichtheid komt niet veel voor. Domeinverschuiving wordt wel genoemd \autocite{FRANCO2017163}, maar vaak ontbreekt kwantitatief bewijs over welke factoren detectieprestaties het meest beïnvloeden.
 
-Ook blijft de evaluatie van nieuwe of onbekende producten beperkt. Modellen worden vaak getest op een vaste set categorieën \autocite{peng2021rp2klargescaleretailproduct}, terwijl assortimenten in supermarkten voortdurend veranderen.
+De evaluatie van nieuwe of onbekende producten blijft beperkt. Modellen worden vaak getest op een vaste set categorieën \autocite{peng2021rp2klargescaleretailproduct}, terwijl assortimenten in supermarkten voortdurend veranderen.
 
 Kortom, ondanks vooruitgang in technologie is er nog steeds nood aan systematische, reproduceerbare evaluaties in echte winkelomstandigheden.
 

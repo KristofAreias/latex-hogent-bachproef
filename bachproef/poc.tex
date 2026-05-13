@@ -8,9 +8,28 @@ In dit hoofdstuk bespreken we de ontwikkeling van een proof-of-concept (PoC) voo
 De proof-of-concept bestaat uit een volledige pipeline die start bij een afbeelding van een winkelschap en eindigt bij een lijst van mogelijke productmatches. Elke stap in deze pipeline heeft een specifieke functie en beïnvloedt rechtstreeks de kwaliteit van het eindresultaat.
 
 De algemene flow van het systeem is als volgt:
-\begin{verbatim}
-Shelf image → YOLO → crops → embeddings → FAISS → top matches
-\end{verbatim}
+
+\vspace{0.3em}
+
+\begin{tikzpicture}[node distance=1.3cm]
+    \tikzset{
+        box/.style={rectangle, rounded corners, minimum width=4cm, minimum height=1cm, text centered, draw=black, fill=blue!10},
+        arrow/.style={thick,->,>=stealth}
+    }
+
+    \node (img) [box] {Schapafbeelding};
+    \node (yolo) [box, below of=img] {Objectdetectie};
+    \node (crops) [box, below of=yolo] {Productextractie};
+    \node (emb) [box, below of=crops] {Vertaling naar vectoren};
+    \node (faiss) [box, below of=emb] {Gelijk product zoeken};
+    \node (top) [box, below of=faiss] {Meest gelijkaardige producten};
+
+    \draw [arrow] (img) -- (yolo);
+    \draw [arrow] (yolo) -- (crops);
+    \draw [arrow] (crops) -- (emb);
+    \draw [arrow] (emb) -- (faiss);
+    \draw [arrow] (faiss) -- (top);
+\end{tikzpicture}
 
 \section{Inputdata}
 

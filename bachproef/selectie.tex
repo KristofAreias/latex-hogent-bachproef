@@ -37,11 +37,6 @@ Om de beperkingen van visuele gelijkenis tussen producten te onderzoeken, wordt 
 
 Volgens \textcite{PETTERSSON202410549} kan het combineren van beeld en tekst helpen bij het onderscheiden van sterk gelijkende producten op SKU-niveau.
 
-uitleg over waarom OWL-v2 gekozen werd van Google. Dit is ook te zwaar dus gebruik ik NanoOWL, een lichtere variant maar dit bleek ook niet makkelijk implementeerbaar doordat je moet kenwoorden meegeven van wat het zou moetten detecteren. 
-Bij vele producten is dit moeilijk. Heb het getest op 1 product maar hij kon dit maar met enorm lage zekerheid herkennen dus heb ik ander model geprobeerd. Heb gekeken naar LLaVa omdat dit tekst kan lezen op de producten en tegelijkertijd ook visuele kenmerken kan beschrijven zoals de verpakking. 
-Maar dit is weer een zwaar model dus heb ik voor alternatief gekozen dat veel compacter en sneller is, Microsoft Florence-2. Het model is specifiek getraind voor taken zoals objectdetectie en heeft specifieke modi voor Detailed Caption en OCR (leg deze modi uit) waardoor
-het vanuit zichzelf het product kan omschrijven, bv Blikje fanta zero van aluminium.
-
 Om de beperkingen van visuele gelijkenis tussen producten te onderzoeken, werd eerst gekeken naar vision-language modellen zoals CLIP. CLIP combineert beeld en tekst waardoor het beter kan omgaan met subtiele verschillen tussen producten \cite{DBLP:journals/corr/abs-2103-00020}. Volgens \textcite{PETTERSSON202410549} helpt deze combinatie om producten die er bijna hetzelfde uitzien toch beter van elkaar te onderscheiden, bijvoorbeeld op SKU-niveau.  
 
 Daarna is er gekozen om OWL-v2 van Google te bekijken. Dit model is interessant omdat het objectdetectie kan uitvoeren op basis van tekst \cite{minderer2024scalingopenvocabularyobjectdetection}. Dit betekent dat je simpelweg beschrijft wat je zoekt (bijvoorbeeld “blikje cola”), en het model probeert dat object in een afbeelding te vinden. 
