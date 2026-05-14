@@ -14,6 +14,50 @@ Tijdens de experimenten werd onderzocht hoe belangrijk elke component in de pipe
 
 Voor elk van deze componenten werd een gewicht ingesteld. Deze gewichten bepalen hoeveel invloed een bepaalde embedding heeft in de uiteindelijke gecombineerde vector.
 
+\begin{table}[H]
+\centering
+\caption{Invloed van verschillende gewichtsconfiguraties op product retrieval similarity.}
+\label{tab:fusion_weights}
+
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Configuratie} & \textbf{CLIP} & \textbf{OCR} & \textbf{FL2} & \textbf{Similarity} \\
+\midrule
+
+Equal fusion                       & 0.33 & 0.33 & 0.33 & 0.7362 \\
+
+CLIP-dominant                      & 0.70 & 0.20 & 0.10 & 0.7878 \\
+CLIP-dominant                      & 0.60 & 0.25 & 0.15 & 0.8118 \\
+CLIP-dominant                      & 0.50 & 0.30 & 0.20 & 0.8179 \\
+
+OCR-dominant                       & 0.20 & 0.70 & 0.10 & 0.7059 \\
+OCR-dominant                       & 0.25 & 0.60 & 0.15 & 0.7221 \\
+OCR-dominant                       & 0.30 & 0.50 & 0.20 & 0.7516 \\
+
+FL2-dominant                       & 0.20 & 0.10 & 0.70 & 0.3725 \\
+FL2-dominant                       & 0.25 & 0.15 & 0.60 & 0.4764 \\
+FL2-dominant                       & 0.30 & 0.20 & 0.50 & 0.5870 \\
+
+\textbf{CLIP + OCR}                         & \textbf{0.55} & \textbf{0.45} & \textbf{0.00} & \textbf{0.8191} \\
+CLIP + OCR                         & 0.45 & 0.55 & 0.00 & 0.7904 \\
+CLIP + OCR                         & 0.50 & 0.50 & 0.00 & 0.8088 \\
+
+CLIP + FL2                         & 0.55 & 0.00 & 0.45 & 0.6049 \\
+CLIP + FL2                         & 0.50 & 0.00 & 0.50 & 0.5695 \\
+CLIP + FL2                         & 0.60 & 0.00 & 0.40 & 0.6337 \\
+
+OCR + FL2                          & 0.00 & 0.55 & 0.45 & 0.5535 \\
+OCR + FL2                          & 0.00 & 0.50 & 0.50 & 0.5211 \\
+OCR + FL2                          & 0.00 & 0.45 & 0.55 & 0.4835 \\
+
+Alleen CLIP                        & 1.00 & 0.00 & 0.00 & 0.6741 \\
+Alleen OCR                         & 0.00 & 1.00 & 0.00 & 0.6172 \\
+Alleen FL2                         & 0.00 & 0.00 & 1.00 & 0.1381 \\
+
+\bottomrule
+\end{tabular}
+\end{table}
+
 Door deze gewichten systematisch aan te passen, kon geobserveerd worden welke combinatie de beste resultaten opleverde.
 
 Uit deze experimenten bleek dat de visuele component van Florence-2 weinig tot geen positieve impact had. In veel gevallen zorgde deze zelfs voor slechtere resultaten. Hierdoor werd besloten om Florence-2 visual volledig weg te laten in de uiteindelijke configuratie.

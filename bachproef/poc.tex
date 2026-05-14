@@ -216,14 +216,12 @@ Ten slotte wordt de metadata opgehaald voor deze indices. Dit resulteert in een 
 
 \section{Factoren die de kwaliteit beïnvloeden}
 
-De prestaties van het systeem worden bepaald door meerdere factoren.
+De prestaties van het systeem worden beïnvloed door verschillende factoren die elkaar onderling versterken. Een eerste belangrijke factor is de kwaliteit van de detectie. Wanneer bounding boxes onnauwkeurig zijn, bevatten de crops vaak delen van andere producten of achtergrondinformatie, wat leidt tot minder betrouwbare input voor de embeddingmodellen.
 
-De eerste factor is de kwaliteit van de detectie. Onnauwkeurige bounding boxes leiden tot slechte input voor de embedding modellen.
+Daarnaast speelt de kwaliteit van de embeddings zelf een grote rol. Omdat de gebruikte modellen generalistisch zijn, hebben ze moeite om producten te onderscheiden die visueel sterk op elkaar lijken. Kleine verschillen in kleur, tekst of verpakking zijn daardoor niet altijd voldoende om consistente matches te verkrijgen.
 
-De tweede factor is de kwaliteit van de embeddings. Generalistische modellen hebben moeite met het onderscheiden van visueel gelijkaardige producten.
+Ook de kwaliteit van de dataset heeft een directe invloed op de resultaten. Inconsistente of foutieve afbeeldingen zorgen ervoor dat embeddings minder betrouwbaar worden en similarity search minder stabiel functioneert.
 
-De derde factor is de kwaliteit van de dataset. Foute of inconsistente data heeft een directe impact op de zoekresultaten.
+Verder draagt OCR eveneens bij aan de prestaties van het systeem. Wanneer tekst verkeerd of onvolledig wordt herkend, ontstaan foutieve tekstembeddings. Omdat tekstinformatie een relatief groot gewicht krijgt binnen de gecombineerde representatie, kunnen dergelijke fouten een sterke impact hebben op het eindresultaat.
 
-Daarnaast speelt ook OCR een rol. Foutieve tekstherkenning kan leiden tot verkeerde embeddings, vooral wanneer tekst zwaar doorweegt in de combinatie.
-
-Deze factoren samen bepalen hoe nauwkeurig het systeem producten kan herkennen.
+De uiteindelijke nauwkeurigheid van het systeem wordt dus bepaald door de interactie tussen detectie, embeddings, datasetkwaliteit en OCR.
