@@ -66,11 +66,35 @@ De beste resultaten werden bekomen met een combinatie van CLIP en OCR. Hierbij w
 
 Dit toont aan dat tekstinformatie een zeer belangrijke rol speelt in productherkenning. Vooral bij producten met duidelijke merk- of productnamen op de verpakking helpt OCR om betere matches te vinden.
 
+\subsection{Finetuning van CLIP}
+
+Daarnaast werd ook geëxperimenteerd met finetuning van het CLIP-model. Hierbij werden verschillende batchgroottes, learning rates en aantallen epochs getest. Hoewel bepaalde configuraties lichte verbeteringen opleverden, presteerde het gefinetunede model in de meeste gevallen ongeveer even goed als het originele CLIP-model (Tabel~\ref{tab:clip_evaluatie}).
+
+Een mogelijke verklaring hiervoor is dat CLIP reeds getraind is op een zeer grote hoeveelheid internetdata en daardoor sterke algemene representaties geleerd heeft. De gebruikte retaildataset was relatief klein en bevatte bovendien ruis en inconsistenties, waardoor het moeilijk was om het model verder te verbeteren zonder bestaande kennis te verstoren.
+
+Wel bleek dat preprocessing van productnamen een duidelijke positieve impact had. Door tekst te normaliseren, bijvoorbeeld via lowercase-conversie en het verwijderen van speciale karakters, ontstonden consistentere embeddings en stabielere similarity scores.
+
 \section{Analyse van resultaten}
 
 Bij het analyseren van de resultaten werd voornamelijk gekeken naar de top-5 matches die door het systeem worden teruggegeven.
 
-In veel gevallen bevat deze top-5 lijst correcte producten, maar de volgorde is niet altijd stabiel. De similarity scores van de top-5 liggen vaak zeer dicht bij elkaar. Dit zorgt ervoor dat kleine veranderingen in de input kunnen leiden tot een andere top-1 voorspelling.
+In veel gevallen bevat deze top-5 lijst correcte producten, maar de volgorde is niet altijd stabiel. 
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[node distance=0.5cm] 
+        \node[inner sep=0pt] (img0) at (0,0)
+            {\includegraphics[width=0.9\textwidth]{C:/Users/krist/Downloads/crop4_top5.jpg}};
+            
+        \node[inner sep=0pt, below=of img0] (img1)
+            {\includegraphics[width=0.9\textwidth]{C:/Users/krist/Downloads/crop24_top5.jpg}};
+
+    \end{tikzpicture}
+    \caption{De top 5 van 2 gecropte cola-flessen word bekeken. Boven goede voorspellingen maar onder heel verschillende. (v.l.n.r. crop4\_top5, crop24\_top5).}
+    \label{fig:top5_problemen}
+\end{figure}
+
+De similarity scores van de top-5 liggen vaak zeer dicht bij elkaar. Dit zorgt ervoor dat kleine veranderingen in de input kunnen leiden tot een andere top-1 voorspelling.
 
 Dit probleem is duidelijk zichtbaar bij producten zoals cola-flessen. Wanneer een afbeelding bijvoorbeeld een standaard Coca-Cola fles bevat, verschijnen in de top-5 vaak ook varianten zoals Coca-Cola Zero.
 
@@ -82,35 +106,77 @@ Daarnaast speelt taal ook een rol. Productnamen verschillen soms per regio. Zo k
 
 \section{Problemen met de dataset}
 
-Een groot deel van de problemen kan gelinkt worden aan de dataset. De gebruikte dataset is afkomstig van OpenFoodFacts en bevat afbeeldingen die door verschillende gebruikers zijn geüpload.
+Een deel van de problemen kan gelinkt worden aan de dataset. Omdat de gebruikte dataset afkomstig is van OpenFoodFacts en bestaat uit uploads van verschillende gebruikers, varieert de datakwaliteit sterk. 
 
-Dit zorgt voor een hoge mate van inconsistentie:
+Dit heeft zeker ook positieve gevolgen omdat de variatie in beelden en productnamen het model kan helpen om robuustere representaties te leren. 
+
+De grote problemen die voorkomen in de dataset zijn:
 \begin{itemize}
-    \item Sommige afbeeldingen zijn scherp en goed belicht
-    \item Andere afbeeldingen zijn wazig of donker
-    \item Soms is slechts een deel van het product zichtbaar
-    \item In sommige gevallen hoort de afbeelding zelfs niet bij het juiste product
+    \item Sommige afbeeldingen zijn onherkenbaar doordat ze te wazig of te donker zijn
+    \item In enkele gevallen hoort de afbeelding zelfs niet bij het juiste product
 \end{itemize}
 
-Deze variatie maakt het moeilijk voor het model om consistente embeddings te leren. Wanneer de referentiebeelden zelf niet betrouwbaar zijn, wordt het ook moeilijk om correcte matches te vinden.
+De afbeeldingen van de producten van OpenFoodFacts zijn URL's die dynamisch opgebouwd worden aan de hand van de metadata van dit product uit de dataset. De URL wordt samengesteld door de productcode (code), type afbeelding (key), revisie (rev) en resolutie (size) van het product. 
 
-Daarnaast zijn er verschillen in resolutie en framing. Sommige afbeeldingen tonen enkel de voorkant van een product, terwijl andere meerdere zijden of zelfs meerdere producten bevatten.
+Wanneer er een fout zit in deze metadata, bijvoorbeeld een verkeerde code of key, kan dit leiden tot een afbeelding die niet overeenkomt met het daadwerkelijke product.
 
-Deze inconsistenties hebben een directe impact op de kwaliteit van de similarity search.
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[node distance=0.5cm] 
+        \node[inner sep=0pt] (img0) at (0,0)
+            {\includegraphics[width=0.2\textwidth]{C:/Users/krist/Downloads/foute_foto_vb.jpg}};
+            
+        \node[inner sep=0pt, right=of img0] (img1)
+            {\includegraphics[width=0.3\textwidth]{C:/Users/krist/Downloads/foute_foto_vb2.jpg}};
+
+        \node[inner sep=0pt, right=of img1] (img2)
+            {\includegraphics[width=0.3\textwidth]{C:/Users/krist/Downloads/donker_wazig_vb.jpg}};
+        
+    \end{tikzpicture}
+    \caption{Inconsistenties in de dataset OpenFoodFacts. Foute productafbeeldingen onder een product links, en rechts voorbeeld van onherkenbare product (v.l.n.r. foute\_foto\_vb, foute\_foto\_vb2, donker\_wazig\_vb).}
+    \label{fig:inconsistenties_openfoodfacts}
+\end{figure}
+
+Deze inconsistenties maken het moeilijk voor het model om consistente embeddings te leren. Wanneer de referentiebeelden zelf niet betrouwbaar zijn, wordt het ook moeilijk om correcte matches te vinden.
+
 
 \section{Problemen met objectdetectie}
 
-Naast de dataset speelt ook de detectiestap een belangrijke rol in de fouten.
+Naast de dataset speelt ook de detectiestap een belangrijke rol in de fouten, maar deze konden geminimaliseerd worden.
 
-Zowel yolov8n als yolo11s tonen inconsistent gedrag bij het detecteren van producten. Vooral bij afbeeldingen die onder een hoek genomen zijn, worden vaak enkel de producten die zich dicht bij de camera bevinden correct gedetecteerd.
+Zowel yolov8n als yolo11s basis modellen toonden inconsistent gedrag bij het detecteren van producten. Vooral bij afbeeldingen die onder een hoek genomen zijn, werden vaak enkel de producten die zich dicht bij de camera bevinden correct gedetecteerd.
 
-Producten die verder naar achter staan of gedeeltelijk verborgen zijn, worden vaak gemist. Dit zorgt ervoor dat een groot deel van de producten in een afbeelding niet verwerkt wordt.
+Producten die verder naar achter staan of gedeeltelijk verborgen zijn, werden vaak gemist. Dit zorgde ervoor dat een hoop producten in een afbeelding niet verwerkt wordt. Na finetuning op de SKU-110K dataset werd dit probleem quasi opgelost, maar het blijft een uitdaging bij bepaalde hoeken of slechte beeldkwaliteit.
 
-Daarnaast zijn de bounding boxes niet altijd nauwkeurig. Omdat de crops rechthoekig zijn, bevatten ze vaak ook delen van naburige producten.
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[node distance=0.5cm] 
+        \node[inner sep=0pt] (img0) at (0,0)
+            {\includegraphics[width=0.5\textwidth]{C:/Users/krist/Downloads/test_17_comparison_aaanduiding.jpg}};
+
+        \node[inner sep=0pt, right=of img0] (img1)
+            {\includegraphics[width=0.475\textwidth]{C:/Users/krist/Downloads/test_18_comparison_aanduiding.jpg}};
+        
+    \end{tikzpicture}
+    \caption{Deze voorbeelden tonen het verschil in detectieprestaties na finetuning op de SKU-110K dataset (v.l.n.r. test\_17\_comparison, test\_18\_comparison).}
+    \label{fig:belang_fintuning_yolo}
+\end{figure}
+
+Daarnaast zijn de bounding boxes niet altijd nauwkeurig. Omdat de crops rechthoekig zijn, bevatten ze vaak ook delen van naburige producten. De producten hun achtergrond werwijderen werd geprobeerd maar was enorm inconsistent. Volledige producten werden verwijderd of slechts kleine stukjes werden ervan over gehouden.
 
 Wanneer deze naburige producten een andere kleur of vorm hebben, beïnvloedt dit de embedding sterk. Zelfs een klein stuk van een ander product kan de vectorrepresentatie veranderen.
 
 Dit probleem komt vaak voor bij dicht gevulde schappen waar producten tegen elkaar staan.
+
+\subsection{Belang van domeinspecifieke finetuning}
+
+De resultaten uit Tabel~\ref{tab:evaluatie_yolo} tonen duidelijk aan dat domeinspecifieke finetuning essentieel is voor productdetectie in retailomgevingen.
+
+Winkelschappen bevatten vaak honderden kleine objecten die dicht bij elkaar staan en elkaar gedeeltelijk overlappen. Generieke objectdetectiemodellen zijn hier niet specifiek voor ontworpen, waardoor veel producten gemist worden.
+
+Door finetuning op de SKU-110K dataset leerde YOLO11s beter omgaan met deze hoge productdichtheid en complexe winkelomgevingen. Dit leidde niet alleen tot een hoger aantal detecties, maar ook tot consistenter gecropte producten.
+
+Deze verbetering heeft een directe impact op de rest van de pipeline. Wanneer producten niet correct gedetecteerd worden, kunnen er geen embeddings gegenereerd worden en is retrieval onmogelijk. Objectdetectie vormt daarom een fundamentele stap binnen het volledige systeem.
 
 \section{Problemen met OCR}
 
@@ -122,10 +188,9 @@ Voorbeelden van problemen:
 \begin{itemize}
     \item Verkeerd herkende letters
     \item Onvolledige woorden
-    \item Tekst die volledig gemist wordt
 \end{itemize}
 
-Deze fouten worden rechtstreeks doorgegeven aan de text encoder van CLIP, wat resulteert in een verkeerde embedding.
+Deze fouten kunnen dan rechtstreeks doorgegeven worden aan de text encoder van CLIP, wat resulteert in een iets wat afwijkende embedding.
 
 Omdat OCR een relatief groot gewicht krijgt in de uiteindelijke combinatie, kunnen deze fouten een sterke impact hebben op het eindresultaat.
 
@@ -133,57 +198,11 @@ Omdat OCR een relatief groot gewicht krijgt in de uiteindelijke combinatie, kunn
 
 Een belangrijk inzicht uit de experimenten is dat geen van de gebruikte modellen specifiek ontworpen is voor deze toepassing.
 
-CLIP is getraind op algemene internetdata \cite{DBLP:journals/corr/abs-2103-00020} en is niet geoptimaliseerd voor productherkenning op SKU-niveau. Florence-2 is een algemeen vision-language model en heeft geen specifieke kennis van retailproducten \cite{xiao2023florence2advancingunifiedrepresentation}. YOLO-modellen zijn niet getraind op datasets met hoge productdensiteit zoals winkelschappen.
+CLIP is getraind op algemene internetdata \cite{DBLP:journals/corr/abs-2103-00020} en is niet geoptimaliseerd voor productherkenning op SKU-niveau. Florence-2 is een algemeen vision-language model en heeft geen specifieke kennis van retailproducten \cite{xiao2023florence2advancingunifiedrepresentation}. YOLO-modellen zijn niet voldoende getraind op datasets met hoge productdensiteit zoals winkelschappen.
 
 Deze mismatch tussen trainingsdata en toepassing verklaart een groot deel van de inconsistenties in de resultaten.
 
 Het systeem werkt in veel gevallen redelijk goed, maar kleine veranderingen in input kunnen grote verschillen veroorzaken in output. Dit maakt het systeem gevoelig voor ruis en minder betrouwbaar in realistische scenario's.
 
-De combinatie van datasetproblemen, detectiefouten en modelbeperkingen zorgt ervoor dat de resultaten niet altijd stabiel zijn.
+De combinatie van datasetproblemen, detectiefouten en vooral modelbeperkingen zorgt ervoor dat de resultaten niet altijd stabiel zijn.
 
-\section{Finetuning van YOLO op SKU-110K}
-
-Naast het gebruik van bestaande YOLO-modellen werd ook onderzocht wat het effect is van finetuning op een dataset die specifiek gemaakt is voor retailtoepassingen. Hiervoor werd gebruik gemaakt van de SKU-110K dataset, een dataset die ontworpen is voor detectie van producten in winkelschappen met hoge objectdensiteit.
-
-Wanneer het standaard yolo11s model wordt toegepast op een afbeelding van een winkelschap, worden slechts een beperkt aantal producten gedetecteerd. In een testgeval werden bijvoorbeeld slechts 19 producten gevonden op een volledige schapafbeelding.
-
-Na finetuning van hetzelfde model op de SKU-110K dataset werd een zeer groot verschil waargenomen. Op exact dezelfde testafbeelding detecteerde het model plots 188 producten. Dit betekent dat er bijna tien keer meer producten gevonden werden.
-
-Dit verschil is zeer significant en toont duidelijk aan hoe belangrijk training op domeinspecifieke data is. De SKU-110K dataset bevat beelden die sterk lijken op de uiteindelijke toepassing: winkelschappen met veel producten dicht bij elkaar. Hierdoor leert het model beter omgaan met:
-\begin{itemize}
-    \item hoge productdichtheid,
-    \item overlappende objecten,
-    \item kleine en gedeeltelijk zichtbare producten.
-\end{itemize}
-
-De bounding boxes die door het gefinetunede model gegenereerd worden, zijn ook consistenter. Producten worden vaker volledig gecaptured en er wordt minder achtergrond meegenomen in de crops. Dit zorgt voor betere input voor de embedding stap.
-
-Daarnaast worden producten die verder naar achter staan of onder een hoek zichtbaar zijn, vaker correct gedetecteerd. Dit was een duidelijk probleem bij het niet-getrainde model.
-
-Toch zijn er nog steeds beperkingen. Sommige detecties blijven onnauwkeurig, vooral bij extreme hoeken of slechte beeldkwaliteit. Ook kunnen er nog steeds false positives optreden waarbij stukken van de achtergrond als product worden gezien.
-
-Ondanks deze beperkingen is het verschil tussen een niet-getraind model en een gefinetunede versie zeer groot. Dit benadrukt dat objectdetectie een van de belangrijkste stappen is in de volledige pipeline. Wanneer deze stap faalt, heeft dit een directe impact op alle volgende stappen.
-
-De resultaten tonen duidelijk aan dat finetuning op een relevante dataset zoals SKU-110K essentieel is voor toepassingen in retailomgevingen.
-
-\section{Finetuning van CLIP}
-
-Naast de eerder besproken componenten werd ook onderzocht of het mogelijk is om het CLIP-model verder te verbeteren via finetuning. Hierbij werd geëxperimenteerd met verschillende hyperparameters en configuraties.
-
-Tijdens deze experimenten werden meerdere batchgroottes getest, namelijk 64, 128, 256 en 512. Daarnaast werd er gevarieerd in het aantal epochs (5, 10 en 20) en de learning rate (1e-5, 1e-6 en 1e-7). Het doel hiervan was om te bepalen welke combinatie het meest stabiele en beste resultaat oplevert.
-
-Voor de finetuning werd ervoor gekozen om enkel de laatste lagen van het model aan te passen. Concreet werden de laatste vier lagen van CLIP getraind, wat neerkomt op ongeveer 655.000 parameters. Dit is slechts ongeveer 0.4\% van het totale aantal parameters van het model. Deze keuze werd gemaakt om overfitting te vermijden en de originele kennis van CLIP zoveel mogelijk te behouden.
-
-Er werd ook geëxperimenteerd met het vrijgeven van meer lagen. In een bepaalde configuratie werd tot ongeveer 14\% van het model trainbaar gemaakt. Dit leidde tot iets betere resultaten.
-
-Een belangrijke observatie is dat het gefinetunede model in de meeste gevallen ongeveer even goed presteert als het originele CLIP-model. Dit lijkt tegenintuïtief, maar kan verklaard worden door de aard van het model. CLIP is een zeer groot model dat getraind is op een enorme hoeveelheid data van het internet. Hierdoor heeft het een brede en sterke algemene representatie geleerd.
-
-De dataset die gebruikt werd voor finetuning is in vergelijking zeer klein. In de meeste experimenten werd gewerkt met ongeveer 8400 afbeeldingen. Voor een model van deze grootte is dit beperkt. Hierdoor is het moeilijk om het model effectief bij te sturen zonder de bestaande kennis te verstoren.
-
-Daarnaast speelt ook de kwaliteit van de data een rol. De gebruikte afbeeldingen en productnamen bevatten ruis en inconsistenties, wat het leerproces bemoeilijkt. Hierdoor leert het model soms verkeerde verbanden tijdens het finetunen.
-
-Samengevat tonen de resultaten aan dat finetuning van CLIP in deze context niet vanzelfsprekend is. Zonder een zeer grote en kwalitatieve dataset kan het model moeilijk verbeterd worden en bestaat de kans dat de prestaties zelfs achteruitgaan.
-
-Het opschonen van de "product\_name" kolom in de dataset had een duidelijk positieve impact op de training van CLIP. Door alle tekst naar lowercase te brengen en speciale karakters te verwijderen, werd de input consistenter en beter leesbaar voor het model. Hierdoor ontstonden er minder variaties van dezelfde productnaam (bijvoorbeeld door hoofdletters of symbolen), wat ervoor zorgde dat gelijkaardige producten ook effectief dichter bij elkaar in de embeddingruimte kwamen te liggen.
-
-Deze relatief eenvoudige preprocessing stap zorgde ervoor dat het model stabieler trainde en consistent hogere similarity scores behaalde. Zonder deze opschoning werden identieke of sterk gelijkaardige producten soms als verschillend geïnterpreteerd, puur door kleine verschillen in schrijfwijze. Dit toont aan dat datakwaliteit en consistente tekstrepresentatie een grote invloed hebben op de prestaties van CLIP.

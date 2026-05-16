@@ -99,7 +99,7 @@ Voor elke detectie produceert het model:
 
 Op basis van deze bounding boxes worden crops gegenereerd. Elke crop bevat een uitgesneden deel van de originele afbeelding en stelt idealiter één product voor.
 
-Het aantal crops hangt af van het aantal gedetecteerde objecten. In een typische afbeelding kan dit variëren van enkele tientallen tot meer dan vijftig producten.
+Het aantal crops hangt af van het aantal gedetecteerde objecten. In een typische afbeelding kan dit variëren van enkele tientallen tot meer dan honderd producten.
 
 \begin{figure}[H]
     \centering
@@ -126,9 +126,41 @@ Hoewel yolo11s efficiënt is, zijn er beperkingen.
 
 Bounding boxes zijn niet altijd nauwkeurig. In sommige gevallen bevatten ze te veel achtergrond, wat de kwaliteit van de crop verlaagt. In andere gevallen wordt slechts een deel van het product gedetecteerd, waardoor belangrijke visuele kenmerken ontbreken.
 
-Daarnaast kunnen producten volledig gemist worden. Dit gebeurt vooral bij kleine objecten of objecten die gedeeltelijk verborgen zijn.
+Daarnaast worden veel producten volledig gemist. Dit gebeurt vooral bij kleine objecten of objecten die gedeeltelijk verborgen zijn of bij afbeeldingen die van een hoek genomen worden.
 
 Deze fouten hebben een directe impact op de volgende stappen in de pipeline. Slechte crops leiden tot minder betrouwbare embeddings en dus tot slechtere zoekresultaten.
+
+YOLO-modellen zijn niet specifiek getraind voor retail-omgevingen, daarom werd dit model gefinetuned op de SKU-110K dataset wat de prestaties aanzienlijk verbeterde. 
+
+\begin{table}[H]
+\centering
+\caption{Evaluatierapport van modelprestaties op de SKU-110K dataset (test\_0 t.e.m. test\_100)}
+\label{tab:evaluatie_yolo}
+\begin{tabular}{lr}
+\toprule
+\textbf{Algemene Statistieken} & \textbf{Waarde} \\
+\midrule
+Gescande afbeeldingen & 101 \\
+Totale detecties Base model (YOLO11s) & 552 \\
+Totale detecties Fine-tuned model & 14.859 \\
+Tooname in aantal detecties & +2.591,85\% \\
+\midrule
+\textbf{Procentuele Verbetering per Afbeelding} & \\
+\midrule
+Gemiddelde verbetering & +4.252,01\% \\
+Maximale uitschieter & +23.300,00\% \\
+Minimale uitschieter & +100,00\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+De resultaten in Tabel~\ref{tab:evaluatie_yolo} tonen aan dat het fine-tunen van YOLO11s op de SKU-110K dataset een zeer grote impact heeft op het aantal gedetecteerde producten. 
+
+Waar het originele basismodel slechts 552 detecties uitvoerde over de volledige testset, detecteerde het gefinetunede model 14.859 objecten. Dit komt overeen met een dataset-brede stijging van ongeveer 2.592\%.
+
+De sterke verbetering toont aan dat een generiek detectiemodel onvoldoende presteert voor dense retail-omgevingen, waarin veel kleine en sterk overlappende producten aanwezig zijn. Door fine-tuning op SKU-110K leert het model beter omgaan met deze specifieke context.
+
+Een hogere detectiegraad is essentieel voor de verdere stappen in de pipeline, aangezien niet-gedetecteerde producten ook niet kunnen worden geanalyseerd of gematcht.
 
 \section{Representatie van afbeeldingen via embeddings}
 
@@ -146,9 +178,27 @@ CLIP wordt gebruikt als eerste model voor het genereren van embeddings. Dit mode
 
 De output van CLIP is een vector van 512 dimensies. Deze vector encodeert algemene visuele kenmerken van de afbeelding.
 
-CLIP is sterk in het herkennen van globale eigenschappen zoals kleur, vorm en merkidentiteit. Hierdoor werkt het goed voor producten met duidelijke visuele kenmerken.
+CLIP is sterk in het herkennen van globale eigenschappen zoals kleur, vorm en merkidentiteit. Voor producten is dit echter beperkt doordat het model, net zoals elk ander model dat we gebruiken, niet specifiek getraind is voor retail-omgevingen.
 
-Er zijn echter beperkingen. CLIP maakt moeilijk onderscheid tussen producten die sterk op elkaar lijken. Variaties zoals smaakverschillen of light-versies van een product worden vaak als gelijkaardig beschouwd.
+CLIP maakt moeilijk onderscheid tussen producten die sterk op elkaar lijken. Variaties zoals smaakverschillen of light-versies van een product worden vaak als gelijkaardig beschouwd.
+
+Dit model werd ook gefinetuned op de OpenFoodFacts dataset, wat de prestaties voor top-1 en top-5 matches slechts minimaal verbeterde. Deze verbetering was mogelijk door beter in te spelen op de CLIP input. Zo reageert CLIP beter op volzinnen in plaats van enkel producteigenschappen. 
+
+\begin{table}[H]
+\centering
+\caption{Prestatievergelijking tussen Base CLIP en Fine-tuned CLIP ($N=200$)}
+\label{tab:clip_evaluatie}
+\begin{tabular}{lrrr}
+\toprule
+\textbf{Metriek} & \textbf{Base CLIP} & \textbf{Fine-tuned CLIP} & \textbf{Verbetering} \\
+\midrule
+Top-1 Nauwkeurigheid & 23,0\% & 27,0\% & +4,0 pp \\
+Top-5 Nauwkeurigheid & 39,5\% & 43,5\% & +4,0 pp \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Toch scoort dit model nog steeds minder goed als we zouden hopen. Dit toont aan dat er een duidelijke kloof is tussen algemene visuele representaties en de specifieke kenmerken die nodig zijn voor het onderscheiden van sterk gelijkende producten in een retailcontext.
 
 \section{Florence-2 als aanvullende encoder}
 
