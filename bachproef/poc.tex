@@ -208,7 +208,7 @@ De afbeelding wordt door de vision encoder van Florence-2 gestuurd. De output be
 
 Deze vector bevat meer detail dan de CLIP embedding. Subtiele verschillen in structuur en layout worden beter vastgelegd.
 
-Florence-2 is computationeel zwaarder dan CLIP, maar levert rijkere features op. Dit werd ook gedropt later in de poc omdat combinaties met enkel CLIP en OCR betere resultaten opleverden.
+Florence-2 is computationeel zwaarder dan CLIP, maar levert rijkere features op. Deze component werd later uit de PoC verwijderd omdat combinaties met enkel CLIP en OCR betere resultaten opleverden.
 
 \section{Tekstextractie met Florence-2 OCR}
 
@@ -226,7 +226,7 @@ De embeddings van CLIP en OCR worden samengevoegd tot één vector. Dit gebeurt 
 
 Eerst worden gewichten toegekend aan de verschillende embeddings. Dit laat toe om bepaalde componenten belangrijker te maken dan andere.
 
-Daarna worden de vectors samengevoegd via concatenatie. Dit betekent dat de vectors achter elkaar geplaatst worden tot één lange vector.
+Daarna worden de vectoren samengevoegd via concatenatie. Dit betekent dat de vectoren achter elkaar geplaatst worden tot één lange vector.
 
 Ten slotte wordt de gecombineerde vector genormaliseerd via L2-normalisatie. Hierdoor krijgt elke vector een lengte van 1. Dit zorgt ervoor dat vergelijkingen enkel gebaseerd zijn op richting en niet op schaal.
 
@@ -238,7 +238,7 @@ De dataset die gebruikt wordt in deze POC is gebaseerd op OpenFoodFacts. Deze da
 
 Elke afbeelding in de dataset wordt verwerkt via dezelfde pipeline als de crops. Dit betekent dat voor elke afbeelding een embedding wordt berekend.
 
-Naast embeddings wordt ook metadata opgeslagen. Deze metadata bevat informatie zoals productnaam, productcode en een URL naar de originele afbeelding. Dit word gebruikt om de resultaten na te kijken en te valideren maar ook zodat er later dan gebruik gemaakt kan worden voor andere mogelijke toepassingen.
+Naast embeddings wordt ook metadata opgeslagen. Deze metadata bevat informatie zoals productnaam, productcode en een URL naar de originele afbeelding. Dit wordt gebruikt om de resultaten na te kijken en te valideren maar ook zodat er later dan gebruik gemaakt kan worden voor andere mogelijke toepassingen.
 
 De embeddings en metadata worden opgeslagen zodat ze later efficiënt doorzocht kunnen worden.
 
@@ -246,11 +246,11 @@ De embeddings en metadata worden opgeslagen zodat ze later efficiënt doorzocht 
 
 Voor het zoeken naar gelijkaardige producten wordt gebruik gemaakt van FAISS. Dit is een library die geoptimaliseerd is voor het zoeken in grote verzamelingen vectoren.
 
-De gekozen index is IndexFlatIP. Dit type index slaat alle vectors exact op en gebruikt inner product als maat voor gelijkaardigheid.
+De gekozen index is IndexFlatIP. Dit type index slaat alle vectoren exact op en gebruikt inner product als maat voor gelijkaardigheid.
 
-Omdat alle vectors genormaliseerd zijn, komt inner product overeen met cosine similarity. Dit betekent dat de hoek tussen twee vectors bepaalt hoe gelijkaardig ze zijn.
+Omdat alle vectoren genormaliseerd zijn, komt inner product overeen met cosine similarity. Dit betekent dat de hoek tussen twee vectoren bepaalt hoe gelijkaardig ze zijn.
 
-FAISS maakt het mogelijk om snel de meest gelijkaardige vectors te vinden, zelfs in grote datasets.
+FAISS maakt het mogelijk om snel de meest gelijkaardige vectoren te vinden, zelfs in grote datasets.
 
 \section{Zoekproces}
 
@@ -258,7 +258,7 @@ Voor elke crop wordt het volgende proces uitgevoerd.
 
 Eerst wordt een embedding berekend via de combinatie van CLIP en OCR. Deze embedding stelt de query voor.
 
-Vervolgens wordt deze query naar de FAISS index gestuurd. De index zoekt naar de meest gelijkaardige vectors in de dataset.
+Vervolgens wordt deze query naar de FAISS index gestuurd. De index zoekt naar de meest gelijkaardige vectoren in de dataset.
 
 De output bestaat uit een lijst van indices en bijhorende similarity scores. Deze indices verwijzen naar specifieke producten in de dataset.
 

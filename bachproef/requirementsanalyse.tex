@@ -29,7 +29,7 @@ Op basis van prestatiedrempels kunnen we modellen objectief vergelijken en bekij
 
 \section{Robuustheid en generaliseerbaarheid}
 
-Retialomgevingen variëren veel, daarom moet het model robuust zijn tegen variaties in beeldcondities. Hiervoor kijken we naar:
+Retailomgevingen variëren sterk, daarom moet het model robuust zijn tegen variaties in beeldcondities. Hiervoor kijken we naar:
 \begin{itemize}
     \item variaties in belichting,
     \item verschillende camerahoeken en afstanden,
@@ -43,7 +43,7 @@ De modellen moeten goed werken op beelden die lijken op de trainingsdata maar he
 
 De bovenstaande vereisten worden rechtstreeks vertaald naar de gekozen architectuur van de proof-of-concept. Geen enkel afzonderlijk model voldoet aan alle functionele en prestatievereisten tegelijk. Daarom wordt een combinatie van modellen gebruikt, waarbij elke component een specifieke taak uitvoert.
 
-Voor objectdetectie wordt kijken we naar YOLO-modellen. Deze modellen zijn geschikt voor real-time detectie en kunnen meerdere objecten tegelijk verwerken binnen één afbeelding. Het gebruik van bounding boxes sluit aan bij de functionele vereiste om individuele producten te lokaliseren. Er gaat moetten afgewogen worden tussen verschillende YOLO-varianten, waarbij de trade-off tussen nauwkeurigheid en snelheid in overweging wordt genomen.
+Voor objectdetectie kijken we naar YOLO-modellen. Deze modellen zijn geschikt voor real-time detectie en kunnen meerdere objecten tegelijk verwerken binnen één afbeelding. Het gebruik van bounding boxes sluit aan bij de functionele vereiste om individuele producten te lokaliseren. Er moet worden afgewogen tussen verschillende YOLO-varianten, waarbij de trade-off tussen nauwkeurigheid en snelheid in overweging wordt genomen.
 
 Voor productidentificatie wordt niet gewerkt met een klassiek classificatiemodel, maar met een embedding-gebaseerde aanpak. In plaats van een vaste set klassen te voorspellen, wordt elk product voorgesteld als een vector in een hoge-dimensionale ruimte. Deze aanpak maakt het mogelijk om flexibel om te gaan met grote aantallen producten en ondersteunt het onderscheiden van visueel gelijkaardige items.
 

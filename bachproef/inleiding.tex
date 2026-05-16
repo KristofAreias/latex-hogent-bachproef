@@ -32,10 +32,12 @@ Deze bachelorproef richt zich specifiek op de technische haalbaarheid van automa
 \section{\IfLanguageName{dutch}{Onderzoeksvraag}{Research question}}%
 \label{sec:onderzoeksvraag}
 
+Deze bachelorproef beschouwt productherkenning als een tweestapsprobleem bestaande uit objectdetectie en similarity-based productidentificatie.
+
 De centrale onderzoeksvraag luidt:
 
 \begin{quote}
-\textbf{In welke mate kunnen bestaande AI-modellen, al dan niet met bijkomende fine-tuning, producten in Vlaamse supermarkt, beelden correct herkennen als eerste stap richting geautomatiseerde assortimentsinventarisatie?}
+\textbf{In welke mate kunnen bestaande AI-modellen, al dan niet met bijkomende fine-tuning, producten in Vlaamse supermarktbeelden correct herkennen als eerste stap richting geautomatiseerde assortimentsinventarisatie?}
 \end{quote}
 
 Om deze onderzoeksvraag te beantwoorden, wordt het probleem verder opgesplitst in een aantal deelvragen binnen het probleemdomein:
@@ -49,9 +51,9 @@ Om deze onderzoeksvraag te beantwoorden, wordt het probleem verder opgesplitst i
 \end{itemize}
 
 Daarnaast worden deelvragen geformuleerd binnen het oplossingsdomein, die focussen op de technische haalbaarheid van automatische productherkenning.
-Voor prestaties van modellen te evalueren kijken we vooral naar mAP@0.5:0.95, precision en recall. Precision geeft de nauwkeurigheid van de positieve voorspellingen aan, terwijl recall de hoeveelheid van relevante items die correct worden geïdentificeerd meet. En hoge recall betekent dat het model bijna niets over het hoofd ziet en hoge precision geeft aan dat het model weinig fouten maakt.
+Voor prestaties van modellen te evalueren kijken we vooral naar mAP@0.5:0.95, precision en recall. Precision geeft de nauwkeurigheid van positieve voorspellingen aan, terwijl recall meet hoeveel relevante items correct worden geïdentificeerd. Een hoge recall betekent dat het model bijna niets over het hoofd ziet en hoge precision geeft aan dat het model weinig fouten maakt.
 mAP@0.5:0.95 is een veelgebruikte metriek die we kunnen opdelen in 2 stukken. mAP@0.5 bekijkt of de prediction van waar het object is, minstens 50\% overlapt met waar het object effectief is. mAP@0.95 is hier een veel strengere versie van, waarbij er minstens 95\% overlap moet zijn. We nemen dan het gemiddelde van de scores. 
-Doordat we werken met beelden van winkelschappen, spreken we over objectdichtheid. Dit verwijst naar de dichtheid van objecten in zo een afbeelding. We spreken van hoge objectdichtheid wanneer de schappen optimaal benut worden, met weinig lege ruimte tussen producten. 
+Bij beelden van winkelschappen is objectdichtheid een belangrijke factor. Dit verwijst naar de dichtheid van objecten in zo een afbeelding. We spreken van hoge objectdichtheid wanneer de schappen optimaal benut worden, met weinig lege ruimte tussen producten. 
 YOLO-modellen zijn You Only Look Once-modellen, die snel en efficiënt zijn in het detecteren van objecten in afbeeldingen. Doordat deze modellen open-source zijn en performant, zijn ze ideaal voor deze toepassing. Deze informatie helpt om de deelvragen beter te begrijpen:
 \begin{itemize}
     \item Welke detectieprestaties behalen verschillende YOLO-modellen op supermarktbeelden met hoge objectdichtheid, uitgedrukt in mAP@0.5:0.95, precision en recall?
@@ -68,7 +70,6 @@ De doelstelling van deze bachelorproef is het uitvoeren van een technisch onderb
 
 Het beoogde resultaat is:
 \begin{itemize}
-    % \item een reproduceerbare experimentele evaluatie-opzet,
     \item een kwantitatieve vergelijking van modelprestaties,
     \item een proof-of-concept pipeline die detectie en metadata-koppeling integreert,
     \item concrete aanbevelingen over minimale prestatiedrempels voor inzetbaarheid in assortimentsmonitoring.
@@ -84,10 +85,6 @@ Het onderzoek wordt als succesvol beschouwd wanneer:
 \section{\IfLanguageName{dutch}{Opzet van deze bachelorproef}{Structure of this bachelor thesis}}%
 \label{sec:opzet-bachelorproef}
 
-% Het is gebruikelijk aan het einde van de inleiding een overzicht te
-% geven van de opbouw van de rest van de tekst. Deze sectie bevat al een aanzet
-% die je kan aanvullen/aanpassen in functie van je eigen tekst.
-
 De rest van deze bachelorproef is als volgt opgebouwd:
 
 In Hoofdstuk~\ref{ch:stand-van-zaken} bespreekt de stand van zaken binnen automatische productherkenning en objectdetectie in retailomgevingen. Hier worden relevante modelarchitecturen, evaluatiemetrieken en gekende uitdagingen in supermarktcontexten toegelicht.
@@ -95,5 +92,13 @@ In Hoofdstuk~\ref{ch:stand-van-zaken} bespreekt de stand van zaken binnen automa
 In Hoofdstuk~\ref{ch:methodologie} beschrijft de experimentele opzet van het onderzoek. Dit omvat de selectie en voorbereiding van beelddata, de configuratie van de gekozen AI-modellen, de operationalisering van evaluatiemetrieken en de experimentele vergelijkingsstrategie.
 
 % TODO: Vul hier aan voor je eigen hoofstukken, één of twee zinnen per hoofdstuk
+
+In Hoofdstuk~\ref{ch:requirementsanalyse} worden de functionele vereisten, prestatievereisten en vereisten rond robuustheid en generaliseerbaarheid geanalyseerd. Daarnaast wordt toegelicht hoe deze vereisten vertaald worden naar de gekozen modelarchitecturen en de opbouw van de pipeline.
+
+In Hoofdstuk~\ref{ch:selectie} wordt de selectie van modellen en datasets besproken. Hierbij wordt gemotiveerd waarom bepaalde objectdetectie-, vision-language- en embeddingmodellen gekozen werden, evenals de gebruikte datasets voor training, validatie en evaluatie.
+
+In Hoofdstuk~\ref{ch:poc} wordt de ontwikkeling van de proof-of-concept toegelicht. De volledige pipeline wordt besproken, van objectdetectie en embeddinggeneratie tot similarity search en productmatching. Daarnaast worden de implementatiekeuzes en technische uitdagingen behandeld.
+
+In Hoofdstuk~\ref{ch:experieval} wordt de experimentele evaluatie van het systeem gepresenteerd. Hierbij worden de prestaties van de verschillende modelcomponenten geanalyseerd, evenals de impact van gewichtsconfiguraties, finetuning, datasetkwaliteit, objectdetectie en OCR op de uiteindelijke resultaten.
 
 In Hoofdstuk~\ref{ch:conclusie}, tenslotte, wordt de conclusie gegeven en een antwoord geformuleerd op de onderzoeksvragen. Daarbij wordt ook een aanzet gegeven voor toekomstig onderzoek binnen dit domein.
