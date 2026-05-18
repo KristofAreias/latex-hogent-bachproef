@@ -122,15 +122,21 @@ Het aantal crops hangt af van het aantal gedetecteerde objecten. In een typische
 
 \subsection{Beperkingen van detectie}
 
-Hoewel yolo11s efficiënt is, zijn er beperkingen.
+Hoewel YOLO11s efficiënt is, zijn er beperkingen.
 
-Bounding boxes zijn niet altijd nauwkeurig. In sommige gevallen bevatten ze te veel achtergrond, wat de kwaliteit van de crop verlaagt. In andere gevallen wordt slechts een deel van het product gedetecteerd, waardoor belangrijke visuele kenmerken ontbreken.
+Bounding boxes zijn niet altijd nauwkeurig. In sommige gevallen bevatten ze te veel achtergrond, wat de kwaliteit van de crop verlaagt. 
 
-Daarnaast worden veel producten volledig gemist. Dit gebeurt vooral bij kleine objecten of objecten die gedeeltelijk verborgen zijn of bij afbeeldingen die van een hoek genomen worden.
+Tijdens het onderzoek werd geprobeerd dit probleem te verminderen door de achtergrond van crops automatisch te verwijderen met methodes zoals rembg \cite{gatis_rembg_2020}, rembg new\_session en BiRefNet \cite{peng2024birefnet}. 
 
-Deze fouten hebben een directe impact op de volgende stappen in de pipeline. Slechte crops leiden tot minder betrouwbare embeddings en dus tot slechtere zoekresultaten.
+In de praktijk leverden deze methodes echter zeer inconsistente resultaten op. Vaak ontbraken grote delen van het product of werd meer dan de helft van het product weggeknipt, waardoor de gegenereerde crops onbruikbaar werden voor verdere verwerking. Hierdoor konden deze technieken niet betrouwbaar geïntegreerd worden binnen de pipeline.
 
-YOLO-modellen zijn niet specifiek getraind voor retail-omgevingen, daarom werd dit model gefinetuned op de SKU-110K dataset wat de prestaties aanzienlijk verbeterde. 
+In andere gevallen wordt slechts een deel van het product gedetecteerd, waardoor belangrijke visuele kenmerken ontbreken.
+
+Daarnaast worden veel producten volledig gemist. Dit gebeurt vooral bij kleine objecten, objecten die gedeeltelijk verborgen zijn of afbeeldingen die vanuit een hoek genomen worden.
+
+Deze fouten hebben een directe impact op de volgende stappen in de pipeline. Slechte crops leiden tot minder betrouwbare embeddings en dus tot slechtere zoekresultaten. Indien consistente achtergrondverwijdering wel mogelijk zou zijn, kan dit potentieel een grote verbetering betekenen voor similarity-based productmatching.
+
+YOLO-modellen zijn niet specifiek getraind voor retailomgevingen. Daarom werd het model gefinetuned op de SKU-110K dataset, wat de prestaties aanzienlijk verbeterde.
 
 \begin{table}[H]
 \centering

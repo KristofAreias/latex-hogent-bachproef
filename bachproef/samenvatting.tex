@@ -46,9 +46,18 @@
 \chapter*{\IfLanguageName{dutch}{Samenvatting}{Abstract}}
 
 De transparantie over het voedingsaanbod in Vlaamse supermarkten is beperkt, hoewel gezonde en duurzame voeding steeds centraler staan in beleid en onderzoek. 
-Er bestaat geen geautomatiseerde manier om het werkelijke assortiment in kaart te brengen, waardoor onderzoekers, beleidsmakers en consumenten onvoldoende zicht hebben op de aanwezigheid van productcategorieën, duurzame alternatieven en marktverhoudingen. 
-Dit onderzoek evalueert bestaande computer vision-modellen (bijv. YOLO-achtige object detectors, multimodale OCR- en beeld-classificatiemodellen) op de taak van automatische productherkenning in beeldmateriaal uit Vlaamse supermarkten, met als doel de nauwkeurigheid van detectie te beoordelen en eventueel te verbeteren via fine-tuning.
-Het doel is een reproduceerbare methodologie te ontwikkelen die beelddata verwerkt en productinformatie herkent. 
-De aanpak omvat het verzamelen van representatieve beelddata en/of gebruik maken van openbaar beschikbare datasets, het testen van modellen zoals YOLOv8, het analyseren van prestaties via mAP en recall, aangevuld met precisionscores. 
-Verwacht wordt dat deze studie de haalbaarheid aantoont van automatische inventarisatie in een complex retailecosysteem en dat de resultaten bijdragen aan betere monitoring van duurzaamheid en gezondheid, met concrete meerwaarde voor onderzoekers, beleidsmakers, consumenten en retailers.
+Er bestaat momenteel geen geautomatiseerde manier om het werkelijke assortiment efficiënt in kaart te brengen, waardoor onderzoekers, beleidsmakers en consumenten onvoldoende zicht hebben op productcategorieën, duurzame alternatieven en marktverhoudingen.
 
+Deze bachelorproef onderzoekt in welke mate bestaande computer vision-modellen inzetbaar zijn voor automatische productherkenning in supermarktbeelden. Hierbij ligt de focus op objectdetectie en similarity-based productidentificatie binnen retailomgevingen met hoge objectdichtheid. Het doel van het onderzoek is het ontwikkelen van een reproduceerbare methodologie voor het detecteren en identificeren van producten op basis van beelddata.
+
+De ontwikkelde pipeline combineert objectdetectie via YOLO11s met multimodale embeddings gebaseerd op CLIP, OCR en Florence-2. De gegenereerde embeddings worden vervolgens doorzocht via FAISS similarity search om mogelijke productmatches terug te geven. Voor de evaluatie werd gebruik gemaakt van publieke retaildatasets zoals SKU-110K en OpenFoodFacts. De prestaties werden geanalyseerd aan de hand van detectiemetrics zoals mAP en recall, aangevuld met similarity-based evaluatie via top-k matching.
+
+De resultaten tonen aan dat fine-tuning een belangrijke impact heeft op detectieprestaties binnen supermarktbeelden. Daarnaast blijkt tekstinformatie afkomstig van productverpakkingen een belangrijke bijdrage te leveren aan correcte productmatching. Hoewel de ontwikkelde pipeline relevante top-5 resultaten oplevert, blijven betrouwbare top-1 voorspellingen op SKU-niveau moeilijk door de sterke visuele gelijkenissen tussen producten. De vooropgestelde prestatiedrempels voor fine-grained productidentificatie werden dan ook niet volledig bereikt.
+
+Deze bachelorproef toont aan dat automatische assortimentsinventarisatie technisch haalbaar is als onderzoeksrichting, maar dat betrouwbare SKU-level productherkenning binnen realistische retailomgevingen nog belangrijke uitdagingen bevat. De resultaten vormen een basis voor verder onderzoek naar multimodale retailanalyse en automatische monitoring van gezonde en duurzame voeding.
+
+\vspace{0.5cm}
+
+\noindent
+De broncode en implementatie van de proof-of-concept zijn beschikbaar op GitHub:
+\url{https://github.com/KristofAreias/latex-hogent-bachproef}
