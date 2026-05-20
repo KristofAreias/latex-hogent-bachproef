@@ -90,7 +90,7 @@ In veel gevallen bevat deze top-5 lijst correcte producten, maar de volgorde is 
             {\includegraphics[width=0.9\textwidth]{C:/Users/krist/Downloads/crop146_top5.png}};
 
     \end{tikzpicture}
-    \caption{De top 5 van 2 gecropte cola-flessen wordt bekeken. Boven goede voorspellingen maar onder heel verschillende. (v.l.n.r. crop4\_top5, crop24\_top5).}
+    \caption{De top 5 van 2 gecropte cola-flessen wordt bekeken. Boven goede voorspellingen maar onder verschillen ze meer en staat de correcte match niet in de lijst. (v.l.n.r. crop4\_top5, crop24\_top5).}
     \label{fig:top5_problemen}
 \end{figure}
 
@@ -129,7 +129,7 @@ Wanneer er een fout zit in deze metadata, bijvoorbeeld een verkeerde code of key
         \node[inner sep=0pt, right=of img0] (img1)
             {\includegraphics[width=0.3\textwidth]{C:/Users/krist/Downloads/foute_foto_vb2.jpg}};
 
-        \node[inner sep=0pt, right=3cm of img1] (img2)
+        \node[inner sep=0pt, right=2.5cm of img1] (img2)
             {\includegraphics[width=0.3\textwidth]{C:/Users/krist/Downloads/donker_wazig_vb.jpg}};
         
     \end{tikzpicture}
@@ -152,10 +152,10 @@ Producten die verder naar achter staan of gedeeltelijk verborgen zijn, werden va
     \centering
     \begin{tikzpicture}[node distance=0.5cm] 
         \node[inner sep=0pt] (img0) at (0,0)
-            {\includegraphics[width=0.5\textwidth]{C:/Users/krist/Downloads/test_17_comparison_aaanduiding.jpg}};
+            {\includegraphics[width=0.5\textwidth]{C:/Users/krist/OneDrive/Documents/HoGent IT/BachproefHoGent/latex-hogent-bachproef/bachproef/test_17_comparison.jpg}};
 
         \node[inner sep=0pt, right=of img0] (img1)
-            {\includegraphics[width=0.475\textwidth]{C:/Users/krist/Downloads/test_18_comparison_aanduiding.jpg}};
+            {\includegraphics[width=0.475\textwidth]{C:/Users/krist/OneDrive/Documents/HoGent IT/BachproefHoGent/latex-hogent-bachproef/bachproef/test_18_comparison.jpg}};
         
     \end{tikzpicture}
     \caption{Deze voorbeelden tonen het verschil in detectieprestaties na finetuning op de SKU-110K dataset (v.l.n.r. test\_17\_comparison, test\_18\_comparison).}
