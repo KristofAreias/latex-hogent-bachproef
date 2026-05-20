@@ -87,7 +87,7 @@ In veel gevallen bevat deze top-5 lijst correcte producten, maar de volgorde is 
             {\includegraphics[width=0.9\textwidth]{C:/Users/krist/Downloads/crop4_top5.jpg}};
             
         \node[inner sep=0pt, below=of img0] (img1)
-            {\includegraphics[width=0.9\textwidth]{C:/Users/krist/Downloads/crop24_top5.jpg}};
+            {\includegraphics[width=0.9\textwidth]{C:/Users/krist/Downloads/crop146_top5.png}};
 
     \end{tikzpicture}
     \caption{De top 5 van 2 gecropte cola-flessen wordt bekeken. Boven goede voorspellingen maar onder heel verschillende. (v.l.n.r. crop4\_top5, crop24\_top5).}
@@ -129,7 +129,7 @@ Wanneer er een fout zit in deze metadata, bijvoorbeeld een verkeerde code of key
         \node[inner sep=0pt, right=of img0] (img1)
             {\includegraphics[width=0.3\textwidth]{C:/Users/krist/Downloads/foute_foto_vb2.jpg}};
 
-        \node[inner sep=0pt, right=of img1] (img2)
+        \node[inner sep=0pt, right=3cm of img1] (img2)
             {\includegraphics[width=0.3\textwidth]{C:/Users/krist/Downloads/donker_wazig_vb.jpg}};
         
     \end{tikzpicture}
@@ -162,7 +162,7 @@ Producten die verder naar achter staan of gedeeltelijk verborgen zijn, werden va
     \label{fig:belang_fintuning_yolo}
 \end{figure}
 
-Daarnaast zijn de bounding boxes niet altijd nauwkeurig. Omdat de crops rechthoekig zijn, bevatten ze vaak ook delen van naburige producten. De producten hun achtergrond werwijderen werd geprobeerd maar was enorm inconsistent. Volledige producten werden verwijderd of slechts kleine stukjes werden ervan over gehouden.
+Daarnaast zijn de bounding boxes niet altijd nauwkeurig. Omdat de crops rechthoekig zijn, bevatten ze vaak ook delen van naburige producten. De producten hun achtergrond verwijderen werd geprobeerd maar was enorm inconsistent. Volledige producten werden verwijderd of slechts kleine stukjes werden ervan over gehouden.
 
 Wanneer deze naburige producten een andere kleur of vorm hebben, beïnvloedt dit de embedding sterk. Zelfs een klein stuk van een ander product kan de vectorrepresentatie veranderen.
 

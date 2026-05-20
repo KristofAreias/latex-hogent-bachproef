@@ -178,7 +178,7 @@ Embeddings lossen dit probleem op door afbeeldingen te projecteren in een vector
 
 Een embedding is een vector bestaande uit tientallen tot honderden getallen. De exacte waarden zijn niet interpreteerbaar voor mensen, maar de relatieve positie van vectoren ten opzichte van elkaar is betekenisvol.
 
-\section{CLIP als visuele encoder}
+\subsection{CLIP als visuele encoder}
 
 CLIP wordt gebruikt als eerste model voor het genereren van embeddings. Dit model is getraind op een grote dataset van afbeeldingen en bijhorende tekstbeschrijvingen.
 
@@ -206,7 +206,7 @@ Top-5 Nauwkeurigheid & 39,5\% & 43,5\% & +4,0 pp \\
 
 Toch scoort dit model nog steeds minder goed als we zouden hopen. Dit toont aan dat er een duidelijke kloof is tussen algemene visuele representaties en de specifieke kenmerken die nodig zijn voor het onderscheiden van sterk gelijkende producten in een retailcontext.
 
-\section{Florence-2 als aanvullende encoder}
+\subsection{Florence-2 als aanvullende encoder}
 
 Naast CLIP werd er ook Florence-2 gebruikt om extra visuele informatie te extraheren. Dit model is ontworpen voor meerdere visuele taken en kan fijnere details detecteren.
 
@@ -216,7 +216,7 @@ Deze vector bevat meer detail dan de CLIP embedding. Subtiele verschillen in str
 
 Florence-2 is computationeel zwaarder dan CLIP, maar levert rijkere features op. Deze component werd later uit de PoC verwijderd omdat combinaties met enkel CLIP en OCR betere resultaten opleverden.
 
-\section{Tekstextractie met Florence-2 OCR}
+\subsection{Tekstextractie met Florence-2 OCR}
 
 Een belangrijke uitbreiding in deze POC is het gebruik van OCR via Florence-2. Productverpakkingen bevatten vaak tekst zoals merknamen en productlabels. Deze informatie is zeer waardevol voor herkenning.
 
