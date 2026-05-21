@@ -198,18 +198,25 @@ CLIP is sterk in het herkennen van globale eigenschappen zoals kleur, vorm en me
 
 CLIP maakt moeilijk onderscheid tussen producten die sterk op elkaar lijken. Variaties zoals smaakverschillen of light-versies van een product worden vaak als gelijkaardig beschouwd.
 
-Dit model werd ook gefinetuned op de OpenFoodFacts dataset, wat de prestaties voor top-1 en top-5 matches slechts minimaal verbeterde. Deze verbetering was mogelijk door beter in te spelen op de CLIP input. Zo reageert CLIP beter op volzinnen in plaats van enkel producteigenschappen. 
+Dit model werd ook gefinetuned op de OpenFoodFacts dataset, wat de prestaties voor top-1 en top-5 matches verbeterde. Deze verbetering was mogelijk door beter in te spelen op de CLIP input. Zo reageert CLIP beter op volzinnen in plaats van enkel producteigenschappen.
+
+Voor de evaluatie van het gefinetunede model werd gebruik gemaakt van recall@1 (top-1), recall@5 (top-5) en Mean Reciprocal Rank (MRR). Deze metrics zijn geschikt voor retrieval en zoeksystemen, omdat ze meten hoe goed het correcte product teruggevonden wordt binnen de gegenereerde resultaten. Omdat elk product in deze dataset slechts één uniek correct label heeft, zijn recall@1 en recall@5 wiskundig gezien identiek aan top-1 en top-5 accuracy.
+
+Recall@1 meet het percentage gevallen waarbij het juiste product op de eerste positie staat, wat overeenkomt met de top-1 prestatie. Recall@5 kijkt of het correcte product binnen de eerste vijf resultaten voorkomt, wat de top-5 prestatie weerspiegelt. Deze metrics geven dus een direct beeld van hoe bruikbaar het systeem is in de praktijk, waar gebruikers meestal enkel de eerste resultaten bekijken.
+
+MRR houdt daarnaast rekening met de exacte positie van het correcte resultaat. Wanneer het juiste product hoger in de ranking staat, krijgt het model een hogere score. Hierdoor geeft MRR een nauwkeuriger beeld van de prestaties dan enkel recall.
 
 \begin{table}[H]
 \centering
-\caption{Prestatievergelijking tussen Base CLIP en Fine-tuned CLIP ($N=200$)}
+\caption{Prestatievergelijking tussen Base CLIP en Fine-tuned CLIP($N=200$)}
 \label{tab:clip_evaluatie}
 \begin{tabular}{lrrr}
 \toprule
-\textbf{Metriek} & \textbf{Base CLIP} & \textbf{Fine-tuned CLIP} & \textbf{Verbetering} \\
+\textbf{Metriek} & \textbf{Base CLIP} & \textbf{Fine-tuned CLIP} & \textbf{Late fusion (ft+base)} \\
 \midrule
-Top-1 Nauwkeurigheid & 23,0\% & 27,0\% & +4,0 pp \\
-Top-5 Nauwkeurigheid & 39,5\% & 43,5\% & +4,0 pp \\
+Top-1 Nauwkeurigheid (R@1) & 41,5\% & 45,5\% \\
+Top-5 Nauwkeurigheid (R@5) & 66,0\% & 68,0\% \\
+MRR                        & 0,5211 & 0,5549 \\
 \bottomrule
 \end{tabular}
 \end{table}

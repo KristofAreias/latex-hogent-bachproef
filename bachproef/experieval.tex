@@ -18,42 +18,39 @@ Voor elk van deze componenten werd een gewicht ingesteld. Deze gewichten bepalen
 \centering
 \caption{Invloed van verschillende gewichtsconfiguraties op product retrieval similarity.}
 \label{tab:fusion_weights}
-
 \begin{tabular}{lcccc}
 \toprule
 \textbf{Configuratie} & \textbf{CLIP} & \textbf{OCR} & \textbf{FL2} & \textbf{Similarity} \\
 \midrule
+Equal fusion                       & 0.33 & 0.33 & 0.33 & 0.6690 \\
 
-Equal fusion                       & 0.33 & 0.33 & 0.33 & 0.7362 \\
+CLIP-dominant                      & 0.70 & 0.20 & 0.10 & 0.6922 \\
+CLIP-dominant                      & 0.60 & 0.25 & 0.15 & 0.7160 \\
+CLIP-dominant                      & 0.50 & 0.30 & 0.20 & 0.7271 \\
 
-CLIP-dominant                      & 0.70 & 0.20 & 0.10 & 0.7878 \\
-CLIP-dominant                      & 0.60 & 0.25 & 0.15 & 0.8118 \\
-CLIP-dominant                      & 0.50 & 0.30 & 0.20 & 0.8179 \\
+OCR-dominant                       & 0.20 & 0.70 & 0.10 & 0.6723 \\
+OCR-dominant                       & 0.25 & 0.60 & 0.15 & 0.6985 \\
+OCR-dominant                       & 0.30 & 0.50 & 0.20 & 0.7147 \\
 
-OCR-dominant                       & 0.20 & 0.70 & 0.10 & 0.7059 \\
-OCR-dominant                       & 0.25 & 0.60 & 0.15 & 0.7221 \\
-OCR-dominant                       & 0.30 & 0.50 & 0.20 & 0.7516 \\
+FL2-dominant                       & 0.20 & 0.10 & 0.70 & 0.3283 \\
+FL2-dominant                       & 0.25 & 0.15 & 0.60 & 0.4210 \\
+FL2-dominant                       & 0.30 & 0.20 & 0.50 & 0.5206 \\
 
-FL2-dominant                       & 0.20 & 0.10 & 0.70 & 0.3725 \\
-FL2-dominant                       & 0.25 & 0.15 & 0.60 & 0.4764 \\
-FL2-dominant                       & 0.30 & 0.20 & 0.50 & 0.5870 \\
+CLIP + OCR                         & 0.55 & 0.45 & 0.00 & 0.7431 \\
+CLIP + OCR                         & 0.45 & 0.55 & 0.00 & 0.7377 \\
+\textbf{CLIP + OCR}                & \textbf{0.50} & \textbf{0.50} & \textbf{0.00} & \textbf{0.7433} \\
 
-\textbf{CLIP + OCR}                         & \textbf{0.55} & \textbf{0.45} & \textbf{0.00} & \textbf{0.8191} \\
-CLIP + OCR                         & 0.45 & 0.55 & 0.00 & 0.7904 \\
-CLIP + OCR                         & 0.50 & 0.50 & 0.00 & 0.8088 \\
+CLIP + FL2                         & 0.55 & 0.00 & 0.45 & 0.5267 \\
+CLIP + FL2                         & 0.50 & 0.00 & 0.50 & 0.4953 \\
+CLIP + FL2                         & 0.60 & 0.00 & 0.40 & 0.5525 \\
 
-CLIP + FL2                         & 0.55 & 0.00 & 0.45 & 0.6049 \\
-CLIP + FL2                         & 0.50 & 0.00 & 0.50 & 0.5695 \\
-CLIP + FL2                         & 0.60 & 0.00 & 0.40 & 0.6337 \\
+OCR + FL2                          & 0.00 & 0.55 & 0.45 & 0.5164 \\
+OCR + FL2                          & 0.00 & 0.50 & 0.50 & 0.4870 \\
+OCR + FL2                          & 0.00 & 0.45 & 0.55 & 0.4528 \\
 
-OCR + FL2                          & 0.00 & 0.55 & 0.45 & 0.5535 \\
-OCR + FL2                          & 0.00 & 0.50 & 0.50 & 0.5211 \\
-OCR + FL2                          & 0.00 & 0.45 & 0.55 & 0.4835 \\
-
-Alleen CLIP                        & 1.00 & 0.00 & 0.00 & 0.6741 \\
-Alleen OCR                         & 0.00 & 1.00 & 0.00 & 0.6172 \\
-Alleen FL2                         & 0.00 & 0.00 & 1.00 & 0.1381 \\
-
+Alleen CLIP                        & 1.00 & 0.00 & 0.00 & 0.5921 \\
+Alleen OCR                         & 0.00 & 1.00 & 0.00 & 0.5709 \\
+Alleen FL2                         & 0.00 & 0.00 & 1.00 & 0.1329 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -62,13 +59,13 @@ Door deze gewichten systematisch aan te passen, kon geobserveerd worden welke co
 
 Uit deze experimenten bleek dat de visuele component van Florence-2 weinig tot geen positieve impact had. In veel gevallen zorgde deze zelfs voor slechtere resultaten. Hierdoor werd besloten om Florence-2 visual volledig weg te laten in de uiteindelijke configuratie.
 
-De beste resultaten werden bekomen met een combinatie van CLIP en OCR. Hierbij werd een bijna gelijke verdeling gebruikt. Concreet gaf een configuratie met CLIP op 0.55 en OCR op 0.45 de meest consistente resultaten.
+De beste resultaten werden bekomen met een combinatie van CLIP en OCR. Hierbij werd een gelijke verdeling gebruikt. Concreet gaf een configuratie met CLIP op 0.50 en OCR op 0.50 de meest consistente resultaten.
 
 Dit toont aan dat tekstinformatie een zeer belangrijke rol speelt in productherkenning. Vooral bij producten met duidelijke merk- of productnamen op de verpakking helpt OCR om betere matches te vinden.
 
 \subsection{Finetuning van CLIP}
 
-Daarnaast werd ook geëxperimenteerd met finetuning van het CLIP-model. Hierbij werden verschillende batchgroottes, learning rates en aantallen epochs getest. Hoewel bepaalde configuraties lichte verbeteringen opleverden, presteerde het gefinetunede model in de meeste gevallen ongeveer even goed als het originele CLIP-model (Tabel~\ref{tab:clip_evaluatie}).
+Daarnaast werd ook geëxperimenteerd met finetuning van het CLIP-model. Hierbij werden verschillende batchgroottes, learning rates en aantallen epochs getest. Hoewel de configuraties verbeteringen opleverden, presteerde het gefinetunede model nog steeds onder de prestatievereisten (Tabel~\ref{tab:clip_evaluatie}).
 
 Een mogelijke verklaring hiervoor is dat CLIP reeds getraind is op een zeer grote hoeveelheid internetdata en daardoor sterke algemene representaties geleerd heeft. De gebruikte retaildataset was relatief klein en bevatte bovendien ruis en inconsistenties, waardoor het moeilijk was om het model verder te verbeteren zonder bestaande kennis te verstoren.
 
@@ -205,4 +202,3 @@ Deze mismatch tussen trainingsdata en toepassing verklaart een groot deel van de
 Het systeem werkt in veel gevallen redelijk goed, maar kleine veranderingen in input kunnen grote verschillen veroorzaken in output. Dit maakt het systeem gevoelig voor ruis en minder betrouwbaar in realistische scenario's.
 
 De combinatie van datasetproblemen, detectiefouten en vooral modelbeperkingen zorgt ervoor dat de resultaten niet altijd stabiel zijn.
-
