@@ -16,12 +16,12 @@ De algemene flow van het systeem is als volgt:
         arrow/.style={thick,->,>=stealth}
     }
 
-    \node (img) [box] {Schapafbeelding};
-    \node (yolo) [box, below of=img] {Objectdetectie};
-    \node (crops) [box, below of=yolo] {Productextractie};
-    \node (emb) [box, below of=crops] {Vertaling naar vectoren};
-    \node (faiss) [box, below of=emb] {Gelijk product zoeken};
-    \node (top) [box, below of=faiss] {Meest gelijkaardige producten};
+    \node (img) [box] {Schapafbeelding (input)};
+    \node (yolo) [box, below of=img] {Objectdetectie (YOLO11s)};
+    \node (crops) [box, below of=yolo] {Productextractie (crops)};
+    \node (emb) [box, below of=crops] {Vertaling naar vectoren (embeddings)};
+    \node (faiss) [box, below of=emb] {Gelijk product zoeken (FAISS)};
+    \node (top) [box, below of=faiss] {Meest gelijkaardige producten tonen (Top-5)};
 
     \draw [arrow] (img) -- (yolo);
     \draw [arrow] (yolo) -- (crops);
@@ -97,7 +97,7 @@ Voor elke detectie produceert het model:
     \item Een confidence score die aangeeft hoe zeker het model is
 \end{itemize}
 
-Op basis van deze bounding boxes worden crops gegenereerd. Elke crop bevat een uitgesneden deel van de originele afbeelding en stelt idealiter één product voor.
+Op basis van deze bounding boxes worden crops gegenereerd. Elke crop bevat een uitgesneden deel van de originele afbeelding en stelt idealiter één product voor. Dit stelt de productextractiestap voor.
 
 Het aantal crops hangt af van het aantal gedetecteerde objecten. In een typische afbeelding kan dit variëren van enkele tientallen tot meer dan honderd producten.
 
@@ -126,7 +126,7 @@ Hoewel YOLO11s efficiënt is, zijn er beperkingen.
 
 Bounding boxes zijn niet altijd nauwkeurig. In sommige gevallen bevatten ze te veel achtergrond, wat de kwaliteit van de crop verlaagt. 
 
-Tijdens het onderzoek werd geprobeerd dit probleem te verminderen door de achtergrond van crops automatisch te verwijderen met methodes zoals rembg \cite{gatis_rembg_2020}, rembg new\_session en BiRefNet \cite{peng2024birefnet}. 
+Tijdens het onderzoek werd geprobeerd dit probleem te verminderen door de achtergrond van crops automatisch te verwijderen met methodes zoals rembg \cite{gatis_rembg_2020}, rembg new\_session en BiRefNet \cite{peng2024birefnet}.
 
 In de praktijk leverden deze methodes echter zeer inconsistente resultaten op. Vaak ontbraken grote delen van het product of werd meer dan de helft van het product weggeknipt, waardoor de gegenereerde crops onbruikbaar werden voor verdere verwerking. Hierdoor konden deze technieken niet betrouwbaar geïntegreerd worden binnen de pipeline.
 
@@ -163,6 +163,16 @@ Minimale uitschieter & +100,00\% \\
 De resultaten in Tabel~\ref{tab:evaluatie_yolo} tonen aan dat het fine-tunen van YOLO11s op de SKU-110K dataset een zeer grote impact heeft op het aantal gedetecteerde producten. 
 
 Waar het originele basismodel slechts 552 detecties uitvoerde over de volledige testset, detecteerde het gefinetunede model 14.859 objecten. Dit komt overeen met een dataset-brede stijging van ongeveer 2.592\%.
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[node distance=0.5cm] 
+        \node[inner sep=0pt] (img0) at (0,0)
+            {\includegraphics[width=0.9\textwidth]{C:/Users/krist/OneDrive/Documents/HoGent IT/BachproefHoGent/latex-hogent-bachproef/bachproef/test_16_comparison.jpg}};
+    \end{tikzpicture}
+    \caption{Voorbeeld van afbeelding waar het aantal gedetecteerde producten aanzienlijk is verbeterd (v.l.n.r. test\_16\_comparison).}
+    \label{fig:detectie_verbetering}
+\end{figure}
 
 De sterke verbetering toont aan dat een generiek detectiemodel onvoldoende presteert voor dense retail-omgevingen, waarin veel kleine en sterk overlappende producten aanwezig zijn. Door fine-tuning op SKU-110K leert het model beter omgaan met deze specifieke context.
 
