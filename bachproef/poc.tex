@@ -87,9 +87,9 @@ Door deze complexiteit is het niet mogelijk om de volledige afbeelding rechtstre
 
 \section{Objectdetectie met YOLO11s}
 
-Voor het detecteren van individuele producten wordt gebruik gemaakt van het model yolo11s. Dit model analyseert de volledige afbeelding en probeert objecten te lokaliseren via bounding boxes.
+Voor het detecteren van individuele producten wordt gebruik gemaakt van het model YOLO11s. Dit model analyseert de volledige afbeelding en probeert objecten te lokaliseren via bounding boxes.
 
-Oorspronkelijk werd ook yolov8n meegenomen maar yolo11s presteert al veel beter en is nog steeds snel genoeg, dus is er besloten om vooral op dit model te focussen en yolov8n achter te laten.
+Oorspronkelijk werd ook YOLOv8n meegenomen maar YOLOv11s presteert al veel beter en is nog steeds snel genoeg, dus is er besloten om vooral op dit model te focussen en YOLOv8n achter te laten.
 
 Voor elke detectie produceert het model:
 \begin{itemize}
@@ -121,6 +121,7 @@ Het aantal crops hangt af van het aantal gedetecteerde objecten. In een typische
 \end{figure}
 
 \subsection{Beperkingen van detectie}
+\label{subsec:beperkingen_detectie}
 
 Hoewel YOLO11s efficiënt is, zijn er beperkingen.
 
@@ -235,7 +236,7 @@ Florence-2 is computationeel zwaarder dan CLIP, maar levert rijkere features op.
 
 \subsection{Tekstextractie met Florence-2 OCR}
 
-Een belangrijke uitbreiding in deze POC is het gebruik van OCR via Florence-2. Productverpakkingen bevatten vaak tekst zoals merknamen en productlabels. Deze informatie is zeer waardevol voor herkenning.
+Een belangrijke uitbreiding in deze PoC is het gebruik van OCR via Florence-2. Productverpakkingen bevatten vaak tekst zoals merknamen en productlabels. Deze informatie is zeer waardevol voor herkenning.
 
 De OCR-module van Florence-2 wordt gebruikt om tekst uit elke crop te extraheren. De output is een string die de herkende tekst bevat.
 
@@ -257,11 +258,11 @@ Het resultaat is één uniforme representatie per afbeelding.
 
 \section{Dataset en preprocessing}
 
-De dataset die gebruikt wordt in deze POC is gebaseerd op OpenFoodFacts. Deze dataset werd gefilterd op belgische producten en hun afbeeldingen van de voorkant van het product en bevat na deze filtering rond de 70.000 productafbeeldingen, waarvan ongeveer 46.000 unieke producten.
+De dataset die gebruikt wordt in deze PoC is gebaseerd op OpenFoodFacts. Deze dataset werd gefilterd op belgische producten en hun afbeeldingen van de voorkant van het product en bevat na deze filtering rond de 70.000 productafbeeldingen, waarvan ongeveer 46.000 unieke producten.
 
 Elke afbeelding in de dataset wordt verwerkt via dezelfde pipeline als de crops. Dit betekent dat voor elke afbeelding een embedding wordt berekend.
 
-Naast embeddings wordt ook metadata opgeslagen. Deze metadata bevat informatie zoals productnaam, productcode en een URL naar de originele afbeelding. Dit wordt gebruikt om de resultaten na te kijken en te valideren maar ook zodat er later dan gebruik gemaakt kan worden voor andere mogelijke toepassingen.
+Naast embeddings wordt ook metadata opgeslagen. Deze metadata bevat informatie zoals productnaam, productcode en een URL naar de originele afbeelding. Dit wordt gebruikt om de resultaten na te kijken en te valideren maar ook zodat er later dan gebruik van gemaakt kan worden voor andere mogelijke toepassingen.
 
 De embeddings en metadata worden opgeslagen zodat ze later efficiënt doorzocht kunnen worden.
 

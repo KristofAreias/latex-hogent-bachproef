@@ -10,22 +10,22 @@ Op basis van de literatuur en de gedefinieerde criteria wordt een selectie gemaa
 
 \subsection{CNN-gebaseerde objectdetectie}
 
-Als representatief model voor klassieke deep learning detectie wordt YOLOv8 gekozen \autocite{yolov8_ultralytics}. YOLO-modellen staan bekend om hun goede balans tussen snelheid en nauwkeurigheid en worden vaak gebruikt in real-time toepassingen \cite{ultralytics_docs}.
+Als representatief model voor klassieke deep learning detectie wordt YOLOv8 gekozen \autocite{yolov8_ultralytics}. YOLO-modellen staan bekend om hun goede balans tussen snelheid en nauwkeurigheid en worden vaak gebruikt in real-time toepassingen \autocite{ultralytics_docs}.
 
-Volgens de literatuur worden CNN-modellen vaak gebruikt binnen retailtoepassingen, omdat ze zeer geschikt zijn voor het herkennen van producten \autocite{MELEK2024108452}. Ze zijn bovendien ook snel en betrouwbaar bij real-time systemen \cite{chadha2025vision}. 
+Volgens de literatuur worden CNN-modellen vaak gebruikt binnen retailtoepassingen, omdat ze zeer geschikt zijn voor het herkennen van producten \autocite{MELEK2024108452}. Ze zijn bovendien ook snel en betrouwbaar bij real-time systemen \autocite{chadha2025vision}. 
 Echter, CNN-modellen kunnen moeite hebben met het onderscheiden van sterk gelijkende producten, vooral in drukke beelden \autocite{PETTERSSON202410549}.
 
 \subsection{Transformer-gebaseerde detectie}
 
 Daarnaast wordt een transformer-gebaseerd model geselecteerd. Volgens de literatuur biedt dit type model voordelen bij complexe beelden waar vele objecten en overlappende producten in voorkomen \autocite{zhu2021}.
 
-Modellen zoals RT-DETR maken gebruik van deze transformer-architectuur die de globale context beter begrijpt dan CNN-modellen, wat zeker ten goede komt bij beelden met hoge objectdensiteit zoals in een supermarkt \cite{carion2020endtoendobjectdetectiontransformers}.
+Modellen zoals RT-DETR maken gebruik van deze transformer-architectuur die de globale context beter begrijpt dan CNN-modellen, wat zeker ten goede komt bij beelden met hoge objectdensiteit zoals in een supermarkt \autocite{carion2020endtoendobjectdetectiontransformers}.
 Dit maakt het model bijzonder geschikt voor supermarktbeelden met hoge objectdensiteit.
 
-Initieel werd er gekozen voor RT-DETR vanwege de sterke prestaties in objectdetectie, maar door gebrek aan hardwarecapaciteit werd uiteindelijk gekozen voor een lichtere variant, namelijk YOLOv11s \cite{ultralytics_docs}. 
-Dit is een groot nadeel van transformer-gebaseerde modellen: ze vragen steeds meer rekenkracht en geheugen \cite{zhao2024detrsbeatyolosrealtime}, wat een uitdaging kan zijn bij het trainen en implementeren op consumentenhardware.
-Moderne YOLO-architecturen maken steeds meer gebruik van aandachtmechanismen ("attention"). Dit helpt het model om zich te richten op de meest relevante delen van een beeld en zijn geïnspireerd door transformer-architecturen \autocite{vaswani2023attentionneed}.
-Hoewel YOLOv11s een hybride aanpak is, doordat het zowel CNN-gebaseerd als transformer-gebaseerd is, blijft het binnen de context van deze proef steeds relevant \cite{yolo11_ultralytics}.
+Initieel werd er gekozen voor RT-DETR vanwege de sterke prestaties in objectdetectie, maar door gebrek aan hardwarecapaciteit werd uiteindelijk gekozen voor een lichtere variant, namelijk YOLOv11s \autocite{ultralytics_docs}. 
+Dit is een groot nadeel van transformer-gebaseerde modellen: ze vragen steeds meer rekenkracht en geheugen \autocite{zhao2024detrsbeatyolosrealtime}, wat een uitdaging kan zijn bij het trainen en implementeren op consumentenhardware.
+Moderne YOLO-architecturen maken steeds meer gebruik van aandachtmechanismen (attention). Dit helpt het model om zich te richten op de meest relevante delen van een beeld en zijn geïnspireerd door transformer-architecturen \autocite{vaswani2023attentionneed}.
+Hoewel YOLOv11s een hybride aanpak is, doordat het zowel CNN-gebaseerd als transformer-gebaseerd is, blijft het binnen de context van deze proef steeds relevant \autocite{yolo11_ultralytics}.
 
 We zien een goede verbetering met YOLOv11s tegenover YOLOv8n, dus zal er vooral op dit model gefocust worden. We zien wel dat YOLOv11s al de limieten van de hardware nadert. Het is niet nuttig verdere YOLO modellen te testen doordat deze veel trager en meer belastend zijn voor minimale verbetering.
 
@@ -36,26 +36,26 @@ Om de beperkingen van visuele gelijkenis tussen producten te onderzoeken, wordt 
 
 Volgens \textcite{PETTERSSON202410549} kan het combineren van beeld en tekst helpen bij het onderscheiden van sterk gelijkende producten op SKU-niveau.
 
-Om de beperkingen van visuele gelijkenis tussen producten te onderzoeken, werd eerst gekeken naar vision-language modellen zoals CLIP. CLIP combineert beeld en tekst waardoor het beter kan omgaan met subtiele verschillen tussen producten \cite{DBLP:journals/corr/abs-2103-00020}. Volgens \textcite{PETTERSSON202410549} helpt deze combinatie om producten die er bijna hetzelfde uitzien toch beter van elkaar te onderscheiden, bijvoorbeeld op SKU-niveau.  
+Om de beperkingen van visuele gelijkenis tussen producten te onderzoeken, werd eerst gekeken naar vision-language modellen zoals CLIP. CLIP combineert beeld en tekst waardoor het beter kan omgaan met subtiele verschillen tussen producten \autocite{DBLP:journals/corr/abs-2103-00020}. Volgens \textcite{PETTERSSON202410549} helpt deze combinatie om producten die er bijna hetzelfde uitzien toch beter van elkaar te onderscheiden, bijvoorbeeld op SKU-niveau.  
 
-Daarna is er gekozen om OWL-v2 van Google te bekijken. Dit model is interessant omdat het objectdetectie kan uitvoeren op basis van tekst \cite{minderer2024scalingopenvocabularyobjectdetection}. Dit betekent dat je simpelweg beschrijft wat je zoekt (bijvoorbeeld “blikje cola”), en het model probeert dat object in een afbeelding te vinden. 
+Daarna is er gekozen om OWL-v2 van Google te bekijken. Dit model is interessant omdat het objectdetectie kan uitvoeren op basis van tekst \autocite{minderer2024scalingopenvocabularyobjectdetection}. Dit betekent dat je simpelweg beschrijft wat je zoekt (bijvoorbeeld “blikje cola”), en het model probeert dat object in een afbeelding te vinden. 
 
-Het probleem is dat OWL-v2 vrij zwaar is en veel rekenkracht nodig heeft. Daarom werd ook NanoOWL getest, een lichtere implementatie die bedoeld is om sneller en efficiënter te werken op minder krachtige hardware \cite{nvidia_nanoowl_2024}. 
+Het probleem is dat OWL-v2 vrij zwaar is en veel rekenkracht nodig heeft. Daarom werd ook NanoOWL getest, een lichtere implementatie die bedoeld is om sneller en efficiënter te werken op minder krachtige hardware \autocite{nvidia_nanoowl_2024}. 
 
 In de praktijk bleek dit echter niet zo handig, omdat je op voorhand trefwoorden moet meegeven van wat het model moet detecteren. Voor veel producten is dat moeilijk, zeker als ze visueel sterk op elkaar lijken. Bij testen met één product werkte het model wel, maar met een zeer lage zekerheid, wat het onbetrouwbaar maakt.
 
-Daarna werd gekeken naar LLaVA (Large Language and Vision Assistant) \cite{liu2023improvedllava, liu2023llava}, een model dat zowel tekst als beeld kan verwerken. Het grote voordeel hiervan is dat het niet alleen visuele kenmerken kan beschrijven, zoals verpakking en kleur, maar ook tekst op producten kan lezen en interpreteren \cite{liu2023visualinstructiontuning}.  
+Daarna werd gekeken naar LLaVA (Large Language and Vision Assistant) \autocite{liu2023improvedllava, liu2023llava}, een model dat zowel tekst als beeld kan verwerken. Het grote voordeel hiervan is dat het niet alleen visuele kenmerken kan beschrijven, zoals verpakking en kleur, maar ook tekst op producten kan lezen en interpreteren \autocite{liu2023visualinstructiontuning}.  
 
 Dit zou nuttig kunnen zijn omdat productverpakkingen vaak tekst bevatten die helpt bij identificatie, denk aan zero varianten bijvoorbeeld. Het nadeel is opnieuw dat dit model vrij zwaar is en dus minder geschikt voor snelle of praktische toepassingen.
 
-Uiteindelijk is gekozen voor een compacter en sneller alternatief: Microsoft Florence-2. Dit model is ontwikkeld door Microsoft en is specifiek getraind voor verschillende visuele taken zoals objectdetectie, beeldbeschrijving en tekstherkenning \cite{xiao2023florence2advancingunifiedrepresentation}.  
+Uiteindelijk is gekozen voor een compacter en sneller alternatief: Microsoft Florence-2. Dit model is ontwikkeld door Microsoft en is specifiek getraind voor verschillende visuele taken zoals objectdetectie, beeldbeschrijving en tekstherkenning \autocite{xiao2023florence2advancingunifiedrepresentation}.  
 
 Het model heeft ook handige modi die direct bruikbaar zijn:
 
 \begin{itemize}
     \item \textbf{Detailed Caption}: in deze modus genereert het model automatisch een uitgebreide beschrijving van wat er op de afbeelding te zien is. Dit betekent dat het zelf kenmerken zoals kleur, materiaal en type product benoemt, zonder dat je dit vooraf moet ingeven.
     
-    \item \textbf{OCR (Optical Character Recognition)}: dit is een techniek waarbij tekst uit afbeeldingen wordt gelezen. In het geval van Florence-2 kan het model dus woorden herkennen die op een verpakking staan, zoals merknamen of productinformatie \cite{ocribm}.  
+    \item \textbf{OCR (Optical Character Recognition)}: dit is een techniek waarbij tekst uit afbeeldingen wordt gelezen. In het geval van Florence-2 kan het model dus woorden herkennen die op een verpakking staan, zoals merknamen of productinformatie \autocite{ocribm}.  
 \end{itemize}
 
 Door deze combinatie kan Florence-2 zelf een product analyseren en beschrijven zonder vooraf input van de gebruiker. Dit maakt het model praktischer en betrouwbaarder voor het onderscheiden van sterk gelijkende producten.

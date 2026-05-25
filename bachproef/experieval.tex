@@ -141,7 +141,7 @@ Deze inconsistenties maken het moeilijk voor het model om consistente embeddings
 
 Naast de dataset speelt ook de detectiestap een belangrijke rol in de fouten, maar deze konden geminimaliseerd worden.
 
-Zowel yolov8n als yolo11s basis modellen toonden inconsistent gedrag bij het detecteren van producten. Vooral bij afbeeldingen die onder een hoek genomen zijn, werden vaak enkel de producten die zich dicht bij de camera bevinden correct gedetecteerd.
+Zowel YOLOv8n als YOLOv11s basis modellen toonden inconsistent gedrag bij het detecteren van producten. Vooral bij afbeeldingen die onder een hoek genomen zijn, werden vaak enkel de producten die zich dicht bij de camera bevinden correct gedetecteerd.
 
 Producten die verder naar achter staan of gedeeltelijk verborgen zijn, werden vaak gemist. Dit zorgde ervoor dat een hoop producten in een afbeelding niet verwerkt wordt. Na finetuning op de SKU-110K dataset werd dit probleem quasi opgelost, maar het blijft een uitdaging bij bepaalde hoeken of slechte beeldkwaliteit.
 
@@ -159,7 +159,7 @@ Producten die verder naar achter staan of gedeeltelijk verborgen zijn, werden va
     \label{fig:belang_fintuning_yolo}
 \end{figure}
 
-Daarnaast zijn de bounding boxes niet altijd nauwkeurig. Omdat de crops rechthoekig zijn, bevatten ze vaak ook delen van naburige producten. De producten hun achtergrond verwijderen werd geprobeerd maar was enorm inconsistent. Volledige producten werden verwijderd of slechts kleine stukjes werden ervan over gehouden.
+Daarnaast zijn de bounding boxes niet altijd nauwkeurig. Omdat de crops rechthoekig zijn, bevatten ze vaak ook delen van naburige producten. De producten hun achtergrond verwijderen werd geprobeerd maar was enorm inconsistent. Volledige producten werden verwijderd of slechts kleine stukjes werden ervan over gehouden. Dit werd reeds besproken in \ref{subsec:beperkingen_detectie}.
 
 Wanneer deze naburige producten een andere kleur of vorm hebben, beïnvloedt dit de embedding sterk. Zelfs een klein stuk van een ander product kan de vectorrepresentatie veranderen.
 
