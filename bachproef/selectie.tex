@@ -29,8 +29,30 @@ Hoewel YOLOv11s een hybride aanpak is, doordat het zowel CNN-gebaseerd als trans
 
 We zien een goede verbetering met YOLOv11s tegenover YOLOv8n, dus zal er vooral op dit model gefocust worden. We zien wel dat YOLOv11s al de limieten van de hardware nadert. Het is niet nuttig verdere YOLO modellen te testen doordat deze veel trager en meer belastend zijn voor minimale verbetering.
 
+\begin{table}[h]
+\centering
+\begin{tabular}{llcccc}
+\hline
+Model & Status & mAP50 & mAP50-95 & Recall & Precision \\ 
+\hline
+YOLOv8n  & Basis & 0,115\% & 0,0494\% & 0,818\% & 22,9\% \\
+YOLOv11s & Basis & 0,117\% & 0,0576\% & 0,635\% & 22,7\% \\
+YOLOv8n  & Finetuned   & 83,6\% & 48,5\% & 79,0\% & 87,8\% \\
+YOLOv11s & Finetuned   & 87,2\% & 52,3\% & 82,4\% & 90,1\% \\
+\hline
+\end{tabular}
+\caption{Vergelijking van de prestaties van YOLOv11s en YOLOv8n voor, en na fine-tuning op SKU-110K.}
+\label{tab:yolo_resultaten}
+\end{table}
+
+YOLOv11s behaalt op de testdataset een mAP50-score van 87,2 procent, een mAP50-95 van 52,3 procent, een recall van 82,4 procent en een precision van 90,1 procent. YOLOv8n behaalt een mAP50-score van 83,6 procent, een mAP50-95 van 48,5 procent, een recall van 79 procent en een precision van 87,8 procent.
+
+Hieruit blijkt dat YOLOv11s voldoet aan de vooropgestelde prestatievereisten, terwijl YOLOv8n verschillende drempels niet behaalt.
+
+De evaluatie van de ongetrainde modellen toont aan dat beide modellen zonder training quasi geen bruikbare detectieresultaten behalen. De zeer lage mAP50- en mAP50-95-scores tonen aan dat training essentieel is om producten correct te kunnen detecteren binnen supermarktbeelden.
 
 \subsection{Multimodale benadering}
+\label{sec:multimodale_benadering}
 
 Om de beperkingen van visuele gelijkenis tussen producten te onderzoeken, wordt een vision-language model zoals CLIP bekeken.
 
@@ -66,6 +88,7 @@ Florence-2 werd initieel geïntegreerd als aanvullende visuele encoder, maar exp
 Lichtere varianten werden vaak gekozen tijdens deze proef door het gebrek aan hardware capaciteiten maar ook zodat de modellen uiteindelijk op consumentenhardware zou kunnen draaien zoals slimme camera's en handscanners.
 
 \section{Geselecteerde datasets}
+\label{sec:sel_datasets}
 
 Er werd gekozen voor dataset SKU-110K \autocite{goldman2019dense} vanwege de hoge dichtheid aan objecten en de aanwezigheid van sterk gelijkende producten, wat aansluit bij de functionele vereisten van onze proef. Dit is een enorm grote dataset met 110.000 geannoteerde producten in 11.762 beelden, wat voldoende is voor training en evaluatie voor de gekozen modellen. Het is irrelevant dat deze dataset niet specifiek gericht is op de Belgische markt, omdat het vooral gaat om het trainen van modellen die kunnen omgaan met hoge objectdensiteit, wat universeel is.
 

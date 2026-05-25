@@ -17,13 +17,14 @@ Op basis van de literatuurstudie kunnen we de volgende functionele vereisten ops
 
 
 \section{Prestatievereisten}
+\label{sec:prestatievereisten}
 
 Op basis van prestatiedrempels kunnen we modellen objectief vergelijken en bekijken. We kiezen onze modellen op basis van volgende criteria:
 \begin{itemize}
-    \item Het model moet een mAP-score behalen op de testdataset van minstens 85 procent.
-    \item Het model moet een hoge recall behalen van minstens 80 procent, aangezien het missen van producten vermeden moet worden.
-    \item Het model moet een hoge precision behalen die minstens 85 procent bedraagt, aangezien het model accuraat moet zijn over de herkenning van de producten.
-    \item Voor classificatie moet een hoge recall@1 (Top-1 accuracy) worden nagestreefd die een drempelwaarde heeft van minstens 75 procent.
+    \item Het model moet een mAP-score behalen op de testdataset van minstens 85\% en mAP50-95 van minstens 50\%.
+    \item Het model moet een hoge recall behalen van minstens 80\%, aangezien het missen van producten vermeden moet worden.
+    \item Het model moet een hoge precision behalen die minstens 85\% bedraagt, aangezien het model accuraat moet zijn over de herkenning van de producten.
+    \item Voor classificatie moet een hoge recall@1 (Top-1 accuracy) worden nagestreefd die een drempelwaarde heeft van minstens 75\%.
     \item Recall@5 (Top-5 accuracy) wordt gebruikt als aanvullende metric voor visueel gelijkaardige producten.
 \end{itemize}
 

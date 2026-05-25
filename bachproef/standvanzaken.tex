@@ -51,7 +51,7 @@
 
 Dit hoofdstuk bouwt voort op de inleiding en plaatst het onderzoek in de bredere wetenschappelijke context van automatische productherkenning in retailomgevingen. Waar het vorige hoofdstuk het probleem en de onderzoeksvraag definieerde, bespreekt dit hoofdstuk bestaande datasets, methodes en manieren om resultaten te evalueren binnen grocery product recognition. Deze literatuurstudie vormt de theoretische basis voor de experimentele opzet die in het volgende hoofdstuk wordt beschreven.
 
-\subsection*{1. Productherkenning als detectie- en identificatieprobleem}
+\section{Productherkenning als detectie- en identificatieprobleem}
 
 Automatische productherkenning in supermarktcontext kan worden opgevat als een tweestapsprobleem bestaande uit (1) lokalisatie van producten in een schapbeeld en (2) identificatie op merk- of SKU-niveau. Volgens \textcite{MELEK2024108452} moet een goed werkend systeem niet alleen objecten correct detecteren, maar ze ook tot op productniveau kunnen onderscheiden. Dit is nodig omdat toepassingen in de retail vaak een hoge nauwkeurigheid per individueel product vereisen.
 
@@ -68,7 +68,7 @@ In tegenstelling tot algemene objectdetectietaken (zoals COCO), hebben supermark
 
 Productherkenning moet niet alleen goed omgaan met overlappende producten en verschillen in grootte, maar ook met producten die sterk op elkaar lijken.
 
-\subsection*{2. Datasetkarakteristieken en representativiteit}
+\section{Datasetkarakteristieken en representativiteit}
 
 Datasetkwaliteit vormt een fundamentele beperkende factor binnen grocery product recognition. De systematische review van \textcite{MELEK2024108452} toont aan dat bestaande datasets op meerdere punten tekortschieten:
 
@@ -87,7 +87,7 @@ Daarnaast tonen recente studies aan dat domeinadaptatie belangrijk is om het ver
 
 De kwaliteit en representativiteit van datasets is dus geen detail, maar heeft een grote invloed op hoe goed modellen presteren en is hierdoor een enorm belangrijk onderdeel in de proef.
 
-\subsection*{3. Klassieke computer vision benaderingen}
+\section{Klassieke computer vision benaderingen}
 
 Voor de opkomst van deep learning maakten productherkenningssystemen gebruik van handgemaakte visuele kenmerken zoals:
 \begin{itemize}
@@ -101,7 +101,7 @@ Voor de opkomst van deep learning maakten productherkenningssystemen gebruik van
 
 Hoewel deze technieken historisch belangrijk zijn, werken ze minder goed bij grote productassortimenten en wanneer producten binnen dezelfde categorie sterk van elkaar verschillen.
 
-\subsection*{4. CNN-gebaseerde objectdetectie en embedding-methoden}
+\section{CNN-gebaseerde objectdetectie en embedding-methoden}
 
 Met de introductie van convolutionele neurale netwerken (CNN’s) verschoof de focus naar modellen die end-to-end getraind kunnen worden.
 
@@ -120,7 +120,7 @@ Hoewel CNN-gebaseerde systemen duidelijke prestatievoordelen bieden, blijven ze 
 
 Ook hier blijft de kwaliteit van de trainingsdata een belangrijke factor.
 
-\subsection*{5. Transformer-gebaseerde detectiearchitecturen}
+\section{Transformer-gebaseerde detectiearchitecturen}
 
 Recente ontwikkelingen in objectdetectie maken steeds vaker gebruik van transformer-modellen als alternatief voor de klassieke methodes.
 
@@ -130,7 +130,7 @@ Een verbeterde versie hiervan is Deformable DETR. Dit model werkt efficiënter d
 
 Transformer-gebaseerde modellen bieden theoretische voordelen bij complexere beelden, maar vereisen ook grotere trainingsdatasets.
 
-\subsection*{6. Fine-grained classificatie op SKU-niveau}
+\section{Fine-grained classificatie op SKU-niveau}
 
 Productherkenning in retail gaat verder dan gewone objectdetectie, omdat producten tot op SKU-niveau herkend moeten worden. Dit betekent dat het systeem zeer kleine visuele verschillen moet kunnen onderscheiden.
 
@@ -138,7 +138,7 @@ Productherkenning in retail gaat verder dan gewone objectdetectie, omdat product
 
 Daarom is het nodig om representaties te gebruiken die gevoelig zijn voor subtiele verschillen, zonder dat ze te sterk reageren op irrelevante details.
 
-\subsection*{7. Multimodale benaderingen met beeld en tekst}
+\section{Multimodale benaderingen met beeld en tekst}
 
 Om verwarring tussen sterk gelijkende producten te verminderen, kan men beeld- en tekstinformatie combineren.
 
@@ -148,18 +148,7 @@ Vision-language modellen zoals CLIP leren een gezamenlijke ruimte voor beeld en 
 
 Dergelijke multimodale modellen zijn robuuster tegen overlappende producten en visuele verwarring.
 
-% weggelaten want niet toepasbaar binnen deze proef.
-% \subsection*{8. Open-vocabulary en zero-shot detectie}
-
-% Traditionele detectiemodellen werken vaak met een vaste set categorieën. In retail verandert het assortiment echter voortdurend, omdat er regelmatig nieuwe producten worden geïntroduceerd.
-
-% Open-vocabulary detectie combineert visuele detectie met tekstuele aanwijzingen. Met Grounding DINO kunnen objecten worden gedetecteerd op basis van vrije tekstbeschrijvingen \autocite{wei2020retail}, waardoor het model minder afhankelijk is van vaste labels.
-
-% Zero-shot herkenning via vision-language modellen maakt het mogelijk om producten van niet-getrainde categorieën te classificeren \autocite{radford2021clip}. Dit opent mogelijkheden voor monitoring van dynamische assortimenten.
-
-% De uitdagingen van open-set herkenning worden besproken in de literatuur \autocite{peng2021rp2klargescaleretailproduct}, waar wordt benadrukt dat modellen onbekende klassen moeten kunnen detecteren zonder verkeerde toewijzingen.
-
-\subsection*{9. Generaliseerbaarheid en domeinadaptatie}
+\section{Generaliseerbaarheid en domeinadaptatie}
 
 In retailherkenning is domeinverschuiving een terugkerend probleem.
 
@@ -167,7 +156,7 @@ Volgens \textcite{FRANCO2017163} presteren modellen minder goed als testbeelden 
 
 Het is daarom belangrijk om de generaliseerbaarheid te evalueren onder verschillende beeldomstandigheden, niet alleen op uniforme testsets.
 
-\subsection*{10. Evaluatiekaders voor retaildetectie}
+\section{Evaluatiekaders voor retaildetectie}
 
 Evaluatie van productherkenning vereist een combinatie van detectie- en classificatiemetrieken.
 
@@ -175,11 +164,12 @@ Mean Average Precision (mAP) wordt gebruikt om lokalisatiekwaliteit te meten \au
 
 Recall meet hoeveel producten daadwerkelijk worden gevonden. In retailtoepassingen is dit cruciaal, omdat het missen van een product (false negative) vaak grotere gevolgen heeft dan een fout-positief detectie, bijvoorbeeld bij voorraadmonitoring of prijscontrole \autocite{FRANCO2017163}. Precision wordt minder zwaar meegewogen, omdat enkele foutieve detecties relatief makkelijk handmatig of automatisch gecorrigeerd kunnen worden. Andere metrics zoals F1-score wegen false positives en false negatives gelijk, maar dat weerspiegelt niet de praktijkbehoefte in winkels.
 
-% Voor fine-grained classificatie worden Top-1 en Top-5 accuracy gebruikt \autocite{PETTERSSON202410549}. Top-1 laat zien of het model exact het juiste product (SKU) voorspelt. Top-5 is nuttig wanneer producten visueel sterk op elkaar lijken; het geeft aan of het juiste product in de vijf beste voorspellingen zit. Andere metrics zoals macro-F1 of gemiddelde accuracy over alle categorieën zijn minder informatief bij grote hoeveelheden SKU’s, omdat zij de prestatie per klasse gelijk wegen en de impact van veelvoorkomende producten onderschatten.
+Voor fine-grained classificatie worden Top-1 en Top-5 accuracy gebruikt \autocite{PETTERSSON202410549}. Top-1 laat zien of het model exact het juiste product (SKU) voorspelt. Top-5 is nuttig wanneer producten visueel sterk op elkaar lijken; het geeft aan of het juiste product in de vijf beste voorspellingen zit. Andere metrics zoals macro-F1 of gemiddelde accuracy over alle categorieën zijn minder informatief bij grote hoeveelheden SKU’s, omdat zij de prestatie per klasse gelijk wegen en de impact van veelvoorkomende producten onderschatten.
 
 Bij open-set scenario’s moet gekeken worden naar foutieve toewijzing van onbekende producten \autocite{peng2021rp2klargescaleretailproduct}. Klassieke metrics zoals mAP negeren onbekende klassen volledig, waardoor ze onvoldoende weergeven hoe goed een model onbekende producten kan herkennen zonder deze verkeerd in te delen. Dit is van groot belang in dynamische retailomgevingen, waar regelmatig nieuwe producten verschijnen.
 
-\subsection*{11. Geïdentificeerde tekortkomingen in de literatuur}
+\section{Geïdentificeerde tekortkomingen in de literatuur}
+\label{sec:tekortkomingen_lit}
 
 Uit de literatuur blijkt dat er verschillende belangrijke gaten bestaan in onderzoek naar automatische productherkenning in supermarkten.
 
@@ -193,7 +183,7 @@ De evaluatie van nieuwe of onbekende producten blijft beperkt. Modellen worden v
 
 Kortom, ondanks vooruitgang in technologie is er nog steeds nood aan systematische, reproduceerbare evaluaties in echte winkelomstandigheden.
 
-\subsection*{12. Positionering van dit onderzoek binnen de literatuur}
+\section{Positionering van dit onderzoek binnen de literatuur}
 
 Deze bachelorproef onderzoekt hoe goed bestaande AI-modellen werken voor het automatisch detecteren van producten in echte supermarktbeelden.
 

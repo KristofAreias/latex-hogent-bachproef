@@ -64,6 +64,7 @@ De beste resultaten werden bekomen met een combinatie van CLIP en OCR. Hierbij w
 Dit toont aan dat tekstinformatie een zeer belangrijke rol speelt in productherkenning. Vooral bij producten met duidelijke merk- of productnamen op de verpakking helpt OCR om betere matches te vinden.
 
 \subsection{Finetuning van CLIP}
+\label{sec:finetuning_clip}
 
 Daarnaast werd ook geëxperimenteerd met finetuning van het CLIP-model. Hierbij werden verschillende batchgroottes, learning rates en aantallen epochs getest. Hoewel de configuraties verbeteringen opleverden, presteerde het gefinetunede model nog steeds onder de prestatievereisten (Tabel~\ref{tab:clip_evaluatie}).
 
@@ -72,6 +73,7 @@ Een mogelijke verklaring hiervoor is dat CLIP reeds getraind is op een zeer grot
 Wel bleek dat preprocessing van productnamen een duidelijke positieve impact had. Door tekst te normaliseren, bijvoorbeeld via lowercase-conversie en het verwijderen van speciale karakters, ontstonden consistentere embeddings en stabielere similarity scores.
 
 \section{Analyse van resultaten}
+\label{sec:analyse_resultaten}
 
 Bij het analyseren van de resultaten werd voornamelijk gekeken naar de top-5 matches die door het systeem worden teruggegeven.
 
@@ -102,6 +104,7 @@ Omgekeerd gebeurt hetzelfde. Een Coca-Cola Zero fles kan soms gematcht worden me
 Daarnaast speelt taal ook een rol. Productnamen verschillen soms per regio. Zo kan ``Coca-Cola Zero'' ook aangeduid worden als ``Coke Zero''. OCR kan deze variaties oppikken, maar dit zorgt niet altijd voor consistente embeddings.
 
 \section{Problemen met de dataset}
+\label{sec:problemen_dataset}
 
 Een deel van de problemen kan gelinkt worden aan de dataset. Omdat de gebruikte dataset afkomstig is van OpenFoodFacts en bestaat uit uploads van verschillende gebruikers, varieert de datakwaliteit sterk. 
 

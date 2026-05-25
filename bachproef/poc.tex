@@ -4,7 +4,7 @@
 In dit hoofdstuk bespreken we de ontwikkeling van een proof-of-concept (PoC) voor het detecteren van producten in supermarktbeelden. Hierin zal de implementatie van de geselecteerde modellen beschreven worden, net als de uitdagingen en oplossingen die we tegenkwamen tijdens het ontwikkelingsproces.
 
 \section{Pipeline en architectuur}
-
+\label{sec:poc_pipeline}
 De proof-of-concept bestaat uit een volledige pipeline die start bij een afbeelding van een winkelschap en eindigt bij een lijst van mogelijke productmatches. Elke stap in deze pipeline heeft een specifieke functie en beïnvloedt rechtstreeks de kwaliteit van het eindresultaat.
 
 De algemene flow van het systeem is als volgt:
@@ -86,6 +86,7 @@ Verder spelen lichtomstandigheden een belangrijke rol. Reflecties op verpakkinge
 Door deze complexiteit is het niet mogelijk om de volledige afbeelding rechtstreeks te gebruiken voor productherkenning. De afbeelding moet eerst opgesplitst worden in afzonderlijke producten.
 
 \section{Objectdetectie met YOLO11s}
+\label{sec:objectdetectie_yolo11s}
 
 Voor het detecteren van individuele producten wordt gebruik gemaakt van het model YOLO11s. Dit model analyseert de volledige afbeelding en probeert objecten te lokaliseren via bounding boxes.
 
@@ -190,6 +191,7 @@ Embeddings lossen dit probleem op door afbeeldingen te projecteren in een vector
 Een embedding is een vector bestaande uit tientallen tot honderden getallen. De exacte waarden zijn niet interpreteerbaar voor mensen, maar de relatieve positie van vectoren ten opzichte van elkaar is betekenisvol.
 
 \subsection{CLIP als visuele encoder}
+\label{sec:clip_embedding}
 
 CLIP wordt gebruikt als eerste model voor het genereren van embeddings. Dit model is getraind op een grote dataset van afbeeldingen en bijhorende tekstbeschrijvingen.
 
@@ -213,7 +215,7 @@ MRR houdt daarnaast rekening met de exacte positie van het correcte resultaat. W
 \label{tab:clip_evaluatie}
 \begin{tabular}{lrrr}
 \toprule
-\textbf{Metriek} & \textbf{Base CLIP} & \textbf{Fine-tuned CLIP} & \textbf{Late fusion (ft+base)} \\
+\textbf{Metriek} & \textbf{Base CLIP} & \textbf{Fine-tuned CLIP} \\
 \midrule
 Top-1 Nauwkeurigheid (R@1) & 41,5\% & 45,5\% \\
 Top-5 Nauwkeurigheid (R@5) & 66,0\% & 68,0\% \\
@@ -289,6 +291,7 @@ De output bestaat uit een lijst van indices en bijhorende similarity scores. Dez
 Ten slotte wordt de metadata opgehaald voor deze indices. Dit resulteert in een lijst van mogelijke productmatches, inclusief naam en andere informatie.
 
 \section{Factoren die de kwaliteit beïnvloeden}
+\label{sec:factoren_kwaliteit}
 
 De prestaties van het systeem worden beïnvloed door verschillende factoren die elkaar onderling versterken. Een eerste belangrijke factor is de kwaliteit van de detectie. Wanneer bounding boxes onnauwkeurig zijn, bevatten de crops vaak delen van andere producten of achtergrondinformatie, wat leidt tot minder betrouwbare input voor de embeddingmodellen.
 
