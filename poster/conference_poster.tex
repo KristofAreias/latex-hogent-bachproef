@@ -74,7 +74,6 @@ In welke mate kunnen bestaande AI-modellen, al dan niet met fine-tuning, product
 
 \section{Methodologie}
 Het onderzoek werd uitgevoerd in vijf fasen:
-\vspace{-4em}
 \begin{itemize}
     \setlength{\itemsep}{0pt}
     \setlength{\parskip}{0pt}
@@ -86,85 +85,148 @@ Het onderzoek werd uitgevoerd in vijf fasen:
     \item Experimentele evaluatie 
     \item Analyse van de resultaten 
 \end{itemize}
-\vspace{-4em}
 Op basis van een literatuurstudie werden prestatiecriteria opgesteld en geschikte modellen en datasets geselecteerd. Vervolgens werd een proof-of-concept ontwikkeld voor automatische productherkenning in supermarktbeelden. De prestaties werden geëvalueerd aan de hand van detectiemetrics (mAP, precision, recall) en retrievalmetrics (Recall@1, Recall@5 en MRR).
 
 \section{Experimenten} 
 
 Er werd een end-to-end pipeline ontwikkeld die start met objectdetectie via YOLO11s en eindigt met similarity-based productmatching. 
-
-\noindent
-\begin{minipage}{\linewidth}
-\centering
+\break
+\makebox[\linewidth][c]{%
 
 \begin{minipage}[t]{0.3\linewidth}
 \centering
 
-\resizebox{\linewidth}{!}{
 \begin{tikzpicture}[node distance=1.3cm, font=\small]
-    \tikzset{
-        box/.style={rectangle, rounded corners,
-        minimum width=3.2cm, minimum height=0.7cm,
-        inner sep=3pt, text centered,
-        draw=black, fill=blue!10},
-        arrow/.style={thick,->,>=stealth}
-    }
-
-    \node (img) [box] {Schapafbeelding (input)};
-    \node (yolo) [box, below of=img] {Objectdetectie (YOLO11s)};
-    \node (crops) [box, below of=yolo] {Productextractie (crops)};
-    \node (emb) [box, below of=crops] {Vectoren (embeddings)};
-    \node (faiss) [box, below of=emb] {FAISS search};
-    \node (top) [box, below of=faiss] {Top-5 resultaten};
-
-    \draw [arrow] (img) -- (yolo);
-    \draw [arrow] (yolo) -- (crops);
-    \draw [arrow] (crops) -- (emb);
-    \draw [arrow] (emb) -- (faiss);
-    \draw [arrow] (faiss) -- (top);
-\end{tikzpicture}
+\tikzset{
+    box/.style={rectangle, rounded corners,
+    minimum width=3.2cm, minimum height=0.7cm,
+    inner sep=3pt, text centered,
+    draw=black, fill=blue!10},
+    arrow/.style={thick,->,>=stealth}
 }
 
+\node (img) [box] {Schapafbeelding (input)};
+\node (yolo) [box, below of=img] {Objectdetectie (YOLO11s)};
+\node (crops) [box, below of=yolo] {Productextractie (crops)};
+\node (emb) [box, below of=crops] {Vectoren (embeddings)};
+\node (faiss) [box, below of=emb] {FAISS search};
+\node (top) [box, below of=faiss] {Top-5 resultaten};
+
+\draw [arrow] (img) -- (yolo);
+\draw [arrow] (yolo) -- (crops);
+\draw [arrow] (crops) -- (emb);
+\draw [arrow] (emb) -- (faiss);
+\draw [arrow] (faiss) -- (top);
+
+\end{tikzpicture}
 \end{minipage}
-\hfill
 
-\begin{minipage}[t]{0.65\linewidth}
-\centering
+\begin{minipage}[t]{0.17\linewidth}
+\includegraphics[width=\linewidth]
+{C:/Users/krist/OneDrive/Documents/HoGent IT/BachproefHoGent/latex-hogent-bachproef/bachproef/datasets/SKU-110K_fixed/images/test_16.jpg}
+\end{minipage}
 
-\includegraphics[width=0.3\linewidth]
-{C:/Users/krist/OneDrive/Documents/HoGent IT/BachproefHoGent/latex-hogent-bachproef/bachproef/datasets/SKU-110K_fixed/images/test_0.jpg}
-\includegraphics[width=0.11\linewidth]
+\begin{minipage}[t]{0.13\linewidth}
+\includegraphics[width=0.48\linewidth]
 {C:/Users/krist/Downloads/crop_ex1.jpg}
-\includegraphics[width=0.9\textwidth]
-{C:/Users/krist/Downloads/crop4_top5.jpg}
+\end{minipage}
+
+\begin{minipage}[t]{0.0925\linewidth}
+\includegraphics[width=0.48\linewidth]
+{C:/Users/krist/Downloads/crop_ex2.jpg}
 
 \end{minipage}
 
-\captionof{figure}{fgjfdnhgjkflsghnkshgndfgjkdfnsfdkjgnfgfkgjnj}
-\end{minipage}
-
-
-Gedetecteerde producten werden uitgesneden tot crops, waarna multimodale embeddings werden gegenereerd met CLIP, OCR via Florence-2 en Florence-2 visual. Productmatches werden gezocht via FAISS similarity search op een OpenFoodFacts-referentiedataset. 
-
-De experimenten onderzochten de impact van fine-tuning van YOLO11s op SKU-110K, de impact van fine-tuning van CLIP op OpenFoodFacts, verschillende combinaties van CLIP-, OCR- en Florence-2-embeddings, de invloed van verschillende embeddinggewichten enachtergrondverwijdering als mogelijke verbetering van productmatching. 
-
-% \section{Sectie met figuur}
-
-% De {\LaTeX} figure-omgeving bepaalt zelf waar een afbeelding komt en dat is meestal niet op de plek in de tekst waar de figure-omgeving gedefinieerd wordt. Als je wilt forceren dat afbeeldingen toch in de flow van de tekst blijven, dan kan je dat zoals hieronder:
+}
 
 % \begin{center}
 %   \captionsetup{type=figure}
 %   \includegraphics[width=1.0\linewidth]{grail}
-%   \captionof{figure}{He hasn't got shit all over him. The nose? Where'd you get the coconuts? What do you mean? We shall say `Ni' again to you, if you do not appease us}
-% \end{center}
+%   \captionof{figure}{}
+% \end{center} 
 
-% Let er wel op dat dit tot problemen met bladschikking kan leiden.
+De experimenten onderzochten de impact van fine-tuning van YOLO11s op SKU-110K, de impact van fine-tuning van CLIP op OpenFoodFacts, verschillende combinaties van CLIP-, OCR- en Florence-2-embeddings, de invloed van verschillende embeddinggewichten en achtergrondverwijdering als mogelijke verbetering van productmatching. 
 
 \section{Conclusies} 
 
-Fine-tuning bleek essentieel voor productdetectie in supermarktbeelden. Het gefinetunede YOLO11s-model behaalde aanzienlijk betere detectieresultaten dan het basismodel en vormde geen belangrijke bottleneck meer binnen de pipeline. Voor productidentificatie leverde de combinatie van CLIP- en OCR-embeddings de beste resultaten op. 
+Fine-tuning bleek essentieel voor productdetectie in supermarktbeelden. Het gefinetunede YOLO11s-model behaalde aanzienlijk betere detectieresultaten dan het basismodel en vormde geen belangrijke bottleneck meer binnen de pipeline. 
+
+% \begin{center}
+%   \captionsetup{type=figure}
+%   \includegraphics[width=0.2\textwidth]{C:/Users/krist/OneDrive/Documents/HoGent IT/BachproefHoGent/latex-hogent-bachproef/bachproef/test_16_comparison.jpg}
+%   \captionof{figure}{}
+% \end{center} 
+
+% \begin{table}[H]
+% \centering
+% \caption{Invloed van verschillende gewichtsconfiguraties op product retrieval similarity.}
+% \label{tab:fusion_weights}
+% \begin{tabular}{lcccc}
+% \toprule
+% \textbf{Configuratie} & \textbf{CLIP} & \textbf{OCR} & \textbf{FL2} & \textbf{Similarity} \\
+% \midrule
+% CLIP-dominant                      & 0.70 & 0.20 & 0.10 & 0.6922 \\
+% OCR-dominant                       & 0.20 & 0.70 & 0.10 & 0.6723 \\
+% FL2-dominant                       & 0.20 & 0.10 & 0.70 & 0.3283 \\
+% CLIP + OCR                         & 0.55 & 0.45 & 0.00 & 0.7431 \\
+% CLIP + OCR                         & 0.45 & 0.55 & 0.00 & 0.7377 \\
+% \textbf{CLIP + OCR}                & \textbf{0.50} & \textbf{0.50} & \textbf{0.00} & \textbf{0.7433} \\
+% \bottomrule
+% \end{tabular}
+% \end{table}
+\break
+\makebox[\linewidth][c]{%
+
+\begin{minipage}[t]{0.22\linewidth}
+\centering
+
+\includegraphics[width=\linewidth]
+{C:/Users/krist/OneDrive/Documents/HoGent IT/BachproefHoGent/latex-hogent-bachproef/bachproef/test_16_comparison.jpg}
+
+\vspace{0.5em}
+
+{\small Figuur 1: Vergelijking van productmatchingresultaten.}
+
+\end{minipage}
+
+\hspace{0.03\linewidth}
+
+\begin{minipage}[t]{0.70\linewidth}
+\centering
+
+{\small Tabel 1: Invloed van verschillende gewichtsconfiguraties op product retrieval similarity.}
+
+\vspace{0.5em}
+
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Configuratie} & \textbf{CLIP} & \textbf{OCR} & \textbf{FL2} & \textbf{Similarity} \\
+\midrule
+CLIP-dominant       & 0.70 & 0.20 & 0.10 & 0.6922 \\
+OCR-dominant        & 0.20 & 0.70 & 0.10 & 0.6723 \\
+FL2-dominant        & 0.20 & 0.10 & 0.70 & 0.3283 \\
+CLIP + OCR          & 0.55 & 0.45 & 0.00 & 0.7431 \\
+CLIP + OCR          & 0.45 & 0.55 & 0.00 & 0.7377 \\
+\textbf{CLIP + OCR} & \textbf{0.50} & \textbf{0.50} & \textbf{0.00} & \textbf{0.7433} \\
+\bottomrule
+\end{tabular}
+}
+
+\end{minipage}
+
+}
+
+Voor productidentificatie leverde de combinatie van CLIP- en OCR-embeddings de beste resultaten op. 
 
 Tekstinformatie afkomstig van verpakkingen bleek cruciaal voor het onderscheiden van sterk gelijkende producten, terwijl Florence-2 visual weinig meerwaarde bood. Hoewel de pipeline vaak relevante producten in de top-5 resultaten terugvond, bleef betrouwbare top-1 identificatie op SKU-niveau moeilijk. 
+
+\begin{center}
+  \captionsetup{type=figure}
+  \includegraphics[width=0.4\textwidth]{C:/Users/krist/Downloads/crop4_top5.jpg}
+  \includegraphics[width=0.4\textwidth]{C:/Users/krist/Downloads/crop146_top5.png}
+  \captionof{figure}{Voorbeelden van top-5 resultaten (v.l.n.r. crop4\_top5, crop24\_top5)}
+\end{center} 
 
 De grootste uitdaging ligt daardoor niet langer bij objectdetectie, maar bij similarity-based matching tussen visueel sterk gelijkende producten. De resultaten tonen aan dat automatische assortimentsinventarisatie technisch haalbaar is, maar dat verdere verbeteringen nodig zijn voor betrouwbare SKU-level productherkenning in realistische retailomgevingen.
 
