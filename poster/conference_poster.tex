@@ -6,6 +6,12 @@
 
 \documentclass[a0,portrait]{hogent-poster}
 
+\usepackage[
+    backend=biber,
+    style=apa
+]{biblatex}
+
+\addbibresource{poster.bib}
 % Info over de opleiding
 \course{Bachelorproef}
 \studyprogramme{toegepaste informatica}
@@ -34,7 +40,7 @@
 
 De transparantie over het voedingsaanbod in Vlaamse supermarkten is beperkt, waardoor inzicht in productcategorieën, duurzame alternatieven en marktverhoudingen ontbreekt. Deze bachelorproef onderzoekt de inzetbaarheid van computer vision voor automatische productherkenning in supermarktbeelden, met als doel een reproduceerbare methodologie voor assortimentsinventarisatie te ontwikkelen.
 
-De ontwikkelde pipeline combineert objectdetectie met YOLO11s, multimodale embeddings via CLIP en OCR, en productmatching met FAISS similarity search. Voor de evaluatie werden de retaildatasets SKU-110K en OpenFoodFacts gebruikt.
+De ontwikkelde pipeline combineert objectdetectie met YOLO11s \autocite{yolo11_ultralytics}, multimodale embeddings via CLIP \autocite{DBLP:journals/corr/abs-2103-00020} en OCR \autocite{xiao2023florence2advancingunifiedrepresentation}, en productmatching met FAISS similarity search \autocite{johnson2019billion}. Voor de evaluatie werden de retaildatasets SKU-110K \autocite{goldman2019dense} en OpenFoodFacts \autocite{openfoodfacts} gebruikt.
 
 De resultaten tonen aan dat fine-tuning de detectieprestaties aanzienlijk verbetert en dat tekstinformatie op verpakkingen een belangrijke bijdrage levert aan correcte productmatching. Hoewel de pipeline relevante top-5 resultaten behaalt, blijft betrouwbare SKU-level identificatie uitdagend door sterke visuele gelijkenissen tussen producten.
 
@@ -215,4 +221,12 @@ Ook de uitbreiding en kwaliteitsverbetering van referentiedatasets biedt mogelij
 Ten slotte is verdere validatie op beelden uit Vlaamse supermarkten nodig om de praktische inzetbaarheid van de voorgestelde pipeline voor automatische assortimentsinventarisatie te onderzoeken.
 
 \end{multicols}
+
+\section*{Referenties}
+
+\begin{minipage}{0.75\linewidth}
+\renewcommand*{\bibfont}{\fontsize{14}{15}\selectfont}
+\printbibliography[heading=none]
+\end{minipage}
+
 \end{document}
