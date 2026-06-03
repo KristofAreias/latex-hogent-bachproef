@@ -29,6 +29,7 @@
 
 \maketitle
 
+\vspace{-2.5em}
 \begin{abstract}
 
 De transparantie over het voedingsaanbod in Vlaamse supermarkten is beperkt, waardoor inzicht in productcategorieën, duurzame alternatieven en marktverhoudingen ontbreekt. Deze bachelorproef onderzoekt de inzetbaarheid van computer vision voor automatische productherkenning in supermarktbeelden, met als doel een reproduceerbare methodologie voor assortimentsinventarisatie te ontwikkelen.
@@ -40,7 +41,7 @@ De resultaten tonen aan dat fine-tuning de detectieprestaties aanzienlijk verbet
 De studie toont aan dat automatische assortimentsinventarisatie haalbaar is, maar dat verdere verbeteringen nodig zijn voor nauwkeurige productherkenning in realistische retailomgevingen.
 
 \end{abstract}
-
+\vspace{-1.5em}
 \begin{multicols}{2} % This is how many columns your poster will be broken into, a portrait poster is generally split into 2 columns
 
 \section{Introductie}
@@ -93,7 +94,7 @@ Er werd een end-to-end pipeline ontwikkeld die start met objectdetectie via YOLO
 \break
 \makebox[\linewidth][c]{%
 
-\begin{minipage}[t]{0.3\linewidth}
+\begin{minipage}[t]{0.4\linewidth}
 \centering
 
 \begin{tikzpicture}[node distance=1.3cm, font=\small]
@@ -151,52 +152,20 @@ De experimenten onderzochten de impact van fine-tuning van YOLO11s op SKU-110K, 
 
 Fine-tuning bleek essentieel voor productdetectie in supermarktbeelden. Het gefinetunede YOLO11s-model behaalde aanzienlijk betere detectieresultaten dan het basismodel en vormde geen belangrijke bottleneck meer binnen de pipeline. 
 
-% \begin{center}
-%   \captionsetup{type=figure}
-%   \includegraphics[width=0.2\textwidth]{C:/Users/krist/OneDrive/Documents/HoGent IT/BachproefHoGent/latex-hogent-bachproef/bachproef/test_16_comparison.jpg}
-%   \captionof{figure}{}
-% \end{center} 
-
-% \begin{table}[H]
-% \centering
-% \caption{Invloed van verschillende gewichtsconfiguraties op product retrieval similarity.}
-% \label{tab:fusion_weights}
-% \begin{tabular}{lcccc}
-% \toprule
-% \textbf{Configuratie} & \textbf{CLIP} & \textbf{OCR} & \textbf{FL2} & \textbf{Similarity} \\
-% \midrule
-% CLIP-dominant                      & 0.70 & 0.20 & 0.10 & 0.6922 \\
-% OCR-dominant                       & 0.20 & 0.70 & 0.10 & 0.6723 \\
-% FL2-dominant                       & 0.20 & 0.10 & 0.70 & 0.3283 \\
-% CLIP + OCR                         & 0.55 & 0.45 & 0.00 & 0.7431 \\
-% CLIP + OCR                         & 0.45 & 0.55 & 0.00 & 0.7377 \\
-% \textbf{CLIP + OCR}                & \textbf{0.50} & \textbf{0.50} & \textbf{0.00} & \textbf{0.7433} \\
-% \bottomrule
-% \end{tabular}
-% \end{table}
-\break
 \makebox[\linewidth][c]{%
 
-\begin{minipage}[t]{0.22\linewidth}
+\begin{minipage}[c]{0.45\linewidth}
 \centering
 
 \includegraphics[width=\linewidth]
 {C:/Users/krist/OneDrive/Documents/HoGent IT/BachproefHoGent/latex-hogent-bachproef/bachproef/test_16_comparison.jpg}
 
-\vspace{0.5em}
-
-{\small Figuur 1: Vergelijking van productmatchingresultaten.}
-
 \end{minipage}
-
-\hspace{0.03\linewidth}
-
-\begin{minipage}[t]{0.70\linewidth}
+\hspace{0.02\linewidth}
+\begin{minipage}[c]{0.52\linewidth}
 \centering
 
-{\small Tabel 1: Invloed van verschillende gewichtsconfiguraties op product retrieval similarity.}
-
-\vspace{0.5em}
+\scriptsize
 
 \resizebox{\linewidth}{!}{%
 \begin{tabular}{lcccc}
@@ -217,14 +186,19 @@ CLIP + OCR          & 0.45 & 0.55 & 0.00 & 0.7377 \\
 
 }
 
-Voor productidentificatie leverde de combinatie van CLIP- en OCR-embeddings de beste resultaten op. 
+\captionsetup{type=figure}
+\captionof{figure}{
+Vergelijking van detectieresultaten op SKU-110K (links) en invloed van verschillende gewichtsconfiguraties op product retrieval similarity (rechts).
+}
+
+Voor productidentificatie leverde de combinatie van CLIP- en OCR-embeddings de beste resultaten op zoals te zien is op de rechtse tabel. 
 
 Tekstinformatie afkomstig van verpakkingen bleek cruciaal voor het onderscheiden van sterk gelijkende producten, terwijl Florence-2 visual weinig meerwaarde bood. Hoewel de pipeline vaak relevante producten in de top-5 resultaten terugvond, bleef betrouwbare top-1 identificatie op SKU-niveau moeilijk. 
 
 \begin{center}
   \captionsetup{type=figure}
-  \includegraphics[width=0.4\textwidth]{C:/Users/krist/Downloads/crop4_top5.jpg}
-  \includegraphics[width=0.4\textwidth]{C:/Users/krist/Downloads/crop146_top5.png}
+  \includegraphics[width=0.45\textwidth]{C:/Users/krist/Downloads/crop4_top5.jpg}
+  \includegraphics[width=0.45\textwidth]{C:/Users/krist/Downloads/crop146_top5.png}
   \captionof{figure}{Voorbeelden van top-5 resultaten (v.l.n.r. crop4\_top5, crop24\_top5)}
 \end{center} 
 
